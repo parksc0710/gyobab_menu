@@ -1,4 +1,4 @@
-package com.park.gyobab;
+package com.park.gyobab.controller.main;
 
 import java.text.DateFormat;
 import java.util.Date;
