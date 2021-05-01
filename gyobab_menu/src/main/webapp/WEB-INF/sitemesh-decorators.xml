@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/views/decorators">
+
+	<excludes>
+		<!-- <pattern>/index.jsp</pattern>
+		<pattern>/giveRedirect.cgn</pattern>
+		<pattern>/event/**</pattern> -->
+	</excludes>
+	
+	<decorator name="main" page="default.jsp">
+    	<pattern>/*</pattern>
+    </decorator>
+    
+	    
+</decorators>
