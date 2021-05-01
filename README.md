@@ -27,15 +27,14 @@
 
 ## 테이블 생성 
 - 유저 테이블<br>
-CREATE TABLE 'member' (
-  'member_id' int(11) NOT NULL AUTO_INCREMENT,
-  'member_email' varchar(100) NOT NULL,
-  'member_pw' varchar(45) DEFAULT NULL,
-  'member_name' varchar(45) DEFAULT NULL,
-  'member_grant' varchar(45) DEFAULT NULL,
-  'create_date' datetime DEFAULT CURRENT_TIMESTAMP,
-  'update_date' datetime DEFAULT CURRENT_TIMESTAMP,
-  'act_flg' bit(1) DEFAULT b'1',
-  'del_flg' bit(1) DEFAULT b'0',
-  PRIMARY KEY ('member_id')
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='회원 테이블';
+CREATE TABLE `member` 
+( `member_id` int(11) NOT NULL AUTO_INCREMENT, 
+`member_email` varchar(100) NOT NULL, 
+`member_name` varchar(45) DEFAULT NULL, 
+`member_grant` varchar(45) DEFAULT NULL,
+`create_date` datetime DEFAULT CURRENT_TIMESTAMP, 
+`update_date` datetime DEFAULT CURRENT_TIMESTAMP, 
+`act_flg` bit(1) DEFAULT 1, 
+`del_flg` bit(1) DEFAULT 0, 
+PRIMARY KEY (`member_id`) 
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT="회원 테이블";
