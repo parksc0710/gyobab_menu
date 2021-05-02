@@ -13,6 +13,7 @@
 	
 	<!-- 공통 추가 -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<%@ include file="/WEB-INF/views/decorators/commonDecorator/commonInclude.jsp" %>
 	<!-- //공통 추가 -->
 
@@ -24,19 +25,22 @@
 	
 	<decorator:head />
 </head>
-<body>
-	<div id="wrap">
+<body class="adminbody-void">
+	<div id="main" class="enlarged forced">
 		<!-- header -->
 		<%@ include file="/WEB-INF/views/decorators/header.jsp" %>
 		<!-- //header -->
 		
 		<!-- content -->
-		<decorator:body />
+		<div class="content-page">
+			<decorator:body />
+		</div>
 		<!-- //content -->
 		
 		<!-- footer -->
 		<%@ include file="/WEB-INF/views/decorators/footer.jsp" %>
 		<!-- //footer -->
 	</div>
+	<script src="assets/js/admin.js"></script>
 </body>
 </html>

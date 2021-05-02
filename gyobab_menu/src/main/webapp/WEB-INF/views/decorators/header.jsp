@@ -1,17 +1,91 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-    <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">오늘의 교밥</a>
-        <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            Menu
-            <i class="fas fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">Portfolio</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Contact</a></li>
+ <!-- top bar navigation -->
+<div class="headerbar">
+
+    <!-- LOGO -->
+    <div class="headerbar-left">
+        <a href="${pageContext.request.contextPath}" class="logo">
+            <img alt="Logo" src="assets/images/logo.png" />
+            <span>오늘의 교밥</span>
+        </a>
+    </div>
+
+    <nav class="navbar-custom">
+
+        <ul class="list-inline float-right mb-0">
+            <li class="list-inline-item dropdown notif">
+                <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" aria-haspopup="false" aria-expanded="false">
+                    <img src="assets/images/avatars/admin.png" alt="Profile image" class="avatar-rounded">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+                    <!-- item-->
+                    <div class="dropdown-item noti-title">
+                        <h5 class="text-overflow">
+                            <small>Hello, admin</small>
+                        </h5>
+                    </div>
+
+                    <!-- item-->
+                    <a href="profile.html" class="dropdown-item notify-item">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+
+                    <!-- item-->
+                    <a href="#" class="dropdown-item notify-item">
+                        <i class="fas fa-power-off"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </li>
+
+        </ul>
+
+        <ul class="list-inline menu-left mb-0">
+            <li class="float-left">
+                <button class="button-menu-mobile open-left">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </li>
+        </ul>
+
+    </nav>
+
+</div>
+<!-- End Navigation -->
+
+<!-- Left Sidebar -->
+<div class="left main-sidebar">
+    <div class="sidebar-inner leftscroll">
+        <div id="sidebar-menu">
+
+            <ul>
+                <li class="submenu">
+                    <a class="active" href="index.html">
+                        <i class="fas fa-bars"></i>
+                        <span> Dashboard </span>
+                    </a>
+                </li>
+
+                <li class="submenu">
+                    <a href="users.html">
+                        <i class="fas fa-user"></i>
+                        <span> Users </span>
+                    </a>
+                </li>
+
+                <li class="submenu">
+                    <a href="blog.html">
+                        <i class="fas fa-file-alt"></i>
+                        <span> Blog </span>
+                    </a>
+                </li>
+
             </ul>
+
+            <div class="clearfix"></div>
+
         </div>
     </div>
-</nav>
+</div>
+<!-- End Sidebar -->
