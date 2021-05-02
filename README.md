@@ -30,14 +30,13 @@
 CREATE TABLE `member` 
 ( `member_id` int(11) NOT NULL AUTO_INCREMENT, 
 `member_email` varchar(100) NOT NULL, 
-`member_name` varchar(45) DEFAULT NULL, 
-`member_grant` varchar(45) DEFAULT NULL,
+`member_name` varchar(45) DEFAULT NULL,
 `create_date` datetime DEFAULT CURRENT_TIMESTAMP, 
 `update_date` datetime DEFAULT CURRENT_TIMESTAMP, 
 `act_flg` bit(1) DEFAULT 1, 
 `del_flg` bit(1) DEFAULT 0, 
 PRIMARY KEY (`member_id`) 
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT="회원 테이블";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT="회원 테이블";
 
 - 권한 테이블<br>
 CREATE TABLE `grant` 
@@ -49,7 +48,7 @@ CREATE TABLE `grant`
 `act_flg` bit(1) DEFAULT 1, 
 `del_flg` bit(1) DEFAULT 0, 
 PRIMARY KEY (`grant_id`) 
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT="권한 테이블";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT="권한 테이블";
 
 - 맴버-권한 연결 테이블<br>
 CREATE TABLE `member_grant` 
@@ -59,4 +58,4 @@ CREATE TABLE `member_grant`
 PRIMARY KEY (`member_grant_id`),
 FOREIGN KEY (`member_id`) REFERENCES `member`.`member_id`,
 FOREIGN KEY (`grant_id`) REFERENCES `grant`.`grant_id`
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT="맴버-권한 테이블";
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT="맴버-권한 테이블";
