@@ -38,3 +38,17 @@ CREATE TABLE `member`
 `del_flg` bit(1) DEFAULT 0, 
 PRIMARY KEY (`member_id`) 
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT="회원 테이블";
+
+- 권한 테이블<br>
+CREATE TABLE `grant` 
+( `grant_id` int(11) NOT NULL AUTO_INCREMENT, 
+`grant_name` varchar(45) DEFAULT NULL,
+`create_date` datetime DEFAULT CURRENT_TIMESTAMP, 
+`update_date` datetime DEFAULT CURRENT_TIMESTAMP, 
+`update_member` int(11) null,
+`act_flg` bit(1) DEFAULT 1, 
+`del_flg` bit(1) DEFAULT 0, 
+PRIMARY KEY (`grant_id`) 
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT="권한 테이블";
+
+- 맴버 : 권한 연결 테이블<br>
