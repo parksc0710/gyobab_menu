@@ -51,7 +51,7 @@ CREATE TABLE `grant`
 PRIMARY KEY (`grant_id`) 
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT="권한 테이블";
 
-- 맴버 : 권한 연결 테이블<br>
+- 맴버-권한 연결 테이블<br>
 CREATE TABLE `member_grant` 
 ( `member_grant_id` int(11) NOT NULL AUTO_INCREMENT, 
 `member_id` int(11) ,
