@@ -23,6 +23,15 @@
 	
 	<context:component-scan base-package="com.park.gyobab" />
 	
-	
+	 <!-- interceptor 등록 -->
+
+	<beans:bean id="loginIntercepter" class="com.park.gyobab.controller.LoginIntercepter" />
+
+	<interceptors>
+		<interceptor>
+			<mapping path="/*"/>
+			<beans:ref bean="loginIntercepter"/>
+		</interceptor>
+	</interceptors>
 	
 </beans:beans>

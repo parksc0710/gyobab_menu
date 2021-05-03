@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+
  <!-- top bar navigation -->
 <div class="headerbar">
 
@@ -11,35 +13,66 @@
     </div>
 
     <nav class="navbar-custom">
+    
+    	<security:authorize ifNotGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
+	    	<ul class="list-inline float-right mb-0">
+	            <li class="list-inline-item dropdown notif">
+	                <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" aria-haspopup="false" aria-expanded="false">
+	                    Login
+	                </a>
+	                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+	                    <div class="dropdown-item noti-title">
+	                        <h5 class="text-overflow">
+	                            <small>SNS Login</small>
+	                        </h5>
+	                    </div>
+	                    
+	                    <a href="${googleUrl }" class="dropdown-item notify-item">
+	                        <img src="assets/images/login_icon/google.png">
+	                        <span>Google</span>
+	                    </a>
+	                    
+	                    <a href="${naverUrl }" class="dropdown-item notify-item">
+	                         <img src="assets/images/login_icon/naver.png">
+	                        <span>Naver</span>
+	                    </a>
+	                    
+	                    <a href="${kakaoUrl }" class="dropdown-item notify-item">
+	                         <img src="assets/images/login_icon/kakao.png">
+	                        <span>Kakao</span>
+	                    </a>
+	                    
+	                </div>
+	            </li>
+	        </ul>
+        </security:authorize>
 
-        <ul class="list-inline float-right mb-0">
-            <li class="list-inline-item dropdown notif">
-                <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" aria-haspopup="false" aria-expanded="false">
-                    <img src="assets/images/avatars/admin.png" alt="Profile image" class="avatar-rounded">
-                </a>
-                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
-                    <!-- item-->
-                    <div class="dropdown-item noti-title">
-                        <h5 class="text-overflow">
-                            <small>Hello, admin</small>
-                        </h5>
-                    </div>
-
-                    <!-- item-->
-                    <a href="profile.html" class="dropdown-item notify-item">
-                        <i class="fas fa-user"></i>
-                        <span>Profile</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="#" class="dropdown-item notify-item">
-                        <i class="fas fa-power-off"></i>
-                        <span>Logout</span>
-                    </a>
-                </div>
-            </li>
-
-        </ul>
+		<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
+			<ul class="list-inline float-right mb-0">
+	            <li class="list-inline-item dropdown notif">
+	                <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" aria-haspopup="false" aria-expanded="false">
+	                    <img src="assets/images/avatars/admin.png" alt="Profile image" class="avatar-rounded">
+	                </a>
+	                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+	                    <div class="dropdown-item noti-title">
+	                        <h5 class="text-overflow">
+	                            <small>Hello, admin</small>
+	                        </h5>
+	                    </div>
+	
+	                    <a href="profile.html" class="dropdown-item notify-item">
+	                        <i class="fas fa-user"></i>
+	                        <span>Profile</span>
+	                    </a>
+	
+	                    <a href="#" class="dropdown-item notify-item">
+	                        <i class="fas fa-power-off"></i>
+	                        <span>Logout</span>
+	                    </a>
+	                </div>
+	            </li>
+	        </ul>
+        </security:authorize>
 
         <ul class="list-inline menu-left mb-0">
             <li class="float-left">

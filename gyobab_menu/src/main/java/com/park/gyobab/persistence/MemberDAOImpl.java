@@ -30,45 +30,26 @@ public class MemberDAOImpl implements MemberDAO {
 		sqlSession.insert(namespace + ".insertMember", vo); 
 		
 	}
-
+	
 	@Override
-	public MemberVO selectMember(Integer member_id) throws Exception {
-		return (MemberVO) sqlSession.selectOne(namespace + ".selectMember", member_id); 
+	public MemberVO selectMemberById(int member_id) throws Exception {
+		MemberVO tmpVO = (MemberVO) sqlSession.selectOne(namespace + ".selectMemberById", member_id);
+		return tmpVO;
 	}
 
 	@Override
-	public MemberVO selectMemberWithPw(String user_id, String user_pw) throws Exception {
-
-		Map<String, Object> paramMap = new HashMap<String, Object>();
+	public MemberVO selectMemberByEmail(String member_email) throws Exception {
 		
-		paramMap.put("user_id", user_id);
-		paramMap.put("user_pw", user_pw);
-			
-		return (MemberVO) sqlSession.selectOne(namespace + ".selectMemberWithPw", paramMap); 
+		MemberVO tmpVO = (MemberVO) sqlSession.selectOne(namespace + ".selectMemberByEmail", member_email);
 		
+		return tmpVO;
 	}
-
+	
 	@Override
-	public void insertGrantUser(String user_id) {
-		sqlSession.insert(namespace + ".insertGrantUser", user_id); 
-	}
-
-	@Override
-	public Integer selectMemberID(String user_id) throws Exception {
+	public Integer selectMemberIdByEmail(String member_email) throws Exception {
 		int member_id = 0;
 		
-		MemberVO tmpVO = (MemberVO) sqlSession.selectOne(namespace + ".selectMemberID", user_id);
-		
-		member_id = tmpVO.getMember_id();
-		
-		return member_id;
-	}
-
-	@Override
-	public Integer selectMemberEmail(String user_email) throws Exception {
-		int member_id = 0;
-		
-		MemberVO tmpVO = (MemberVO) sqlSession.selectOne(namespace + ".selectMemberEmail", user_email);
+		MemberVO tmpVO = (MemberVO) sqlSession.selectOne(namespace + ".selectMemberIdByEmail", member_email);
 		
 		member_id = tmpVO.getMember_id();
 		

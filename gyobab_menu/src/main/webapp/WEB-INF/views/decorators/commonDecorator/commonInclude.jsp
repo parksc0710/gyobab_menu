@@ -4,7 +4,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="assets/js/jquery-1.10.2.min.js"></script>
 
 <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="assets/font-awesome/css/all.css" rel="stylesheet" type="text/css" />

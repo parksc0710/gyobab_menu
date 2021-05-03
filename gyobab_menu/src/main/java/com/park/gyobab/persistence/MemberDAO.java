@@ -7,15 +7,11 @@ public interface MemberDAO {
 	public String getTime();
 	
 	public void insertMember(MemberVO vo);
-	
-	public MemberVO selectMember(Integer member_id) throws Exception;
-	
-	public MemberVO selectMemberWithPw(String user_id, String user_pw) throws Exception;
-	
-	public void insertGrantUser(String user_id);
 
-	public Integer selectMemberID(String user_id) throws Exception;
+	public MemberVO selectMemberById(int member_id) throws Exception;
 	
-	public Integer selectMemberEmail(String user_email) throws Exception;
+	public MemberVO selectMemberByEmail(String member_email) throws Exception;
+	
+	public Integer selectMemberIdByEmail(String member_email) throws Exception;
 
 }

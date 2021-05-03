@@ -12,26 +12,30 @@ public class MemberServiceImpl implements MemberService {
 
 	@Inject
 	private MemberDAO dao;
-	
+
 	@Override
-	public void regist(MemberVO member) throws Exception {
-		dao.insertMember(member);
+	public void insertMember(MemberVO vo) {
+		dao.insertMember(vo);
 	}
 
 	@Override
-	public MemberVO selectOne(Integer member_id) throws Exception {
-		return dao.selectMember(member_id);
+	public MemberVO selectMemberById(int member_id) throws Exception {
+		MemberVO tmpVo = dao.selectMemberById(member_id); 
+		return tmpVo;
 	}
 
 	@Override
-	public MemberVO selectMemberWithPw(String user_id, String user_pw) throws Exception {
+	public MemberVO selectMemberByEmail(String member_email) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		MemberVO tmpVo = dao.selectMemberByEmail(member_email); 
+		return tmpVo;
 	}
 
 	@Override
-	public void registGrantUser(String user_id) throws Exception {
-		dao.insertGrantUser(user_id);
+	public Integer selectMemberIdByEmail(String member_email) throws Exception {
+		// TODO Auto-generated method stub
+		int tmpId = dao.selectMemberIdByEmail(member_email); 
+		return tmpId;
 	}
 
 
