@@ -25,15 +25,6 @@ public class HomeController{
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		if(auth != null) {
-			MemberVO nowUser = (MemberVO) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-			System.out.println(nowUser.getMember_email() + " // " + nowUser.getMember_grant());
-		} else {
-			System.out.println("nowUser is null");
-		}
-		
-		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		

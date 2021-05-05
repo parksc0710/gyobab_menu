@@ -48,6 +48,7 @@
         </security:authorize>
 
 		<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
+			<security:authentication property="principal.member_name" var="memberName"/>
 			<ul class="list-inline float-right mb-0">
 	            <li class="list-inline-item dropdown notif">
 	                <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" aria-haspopup="false" aria-expanded="false">
@@ -56,7 +57,7 @@
 	                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
 	                    <div class="dropdown-item noti-title">
 	                        <h5 class="text-overflow">
-	                            <small>Hello, admin</small>
+	                            <small>${memberName }</small>
 	                        </h5>
 	                    </div>
 	
@@ -65,7 +66,7 @@
 	                        <span>Profile</span>
 	                    </a>
 	
-	                    <a href="#" class="dropdown-item notify-item">
+	                    <a href="${pageContext.request.contextPath}/logout" class="dropdown-item notify-item">
 	                        <i class="fas fa-power-off"></i>
 	                        <span>Logout</span>
 	                    </a>
