@@ -59,9 +59,9 @@ public class GetOAuthResource {
 			final HttpResponse response = client.execute(post);
 			final int responseCode = response.getStatusLine().getStatusCode();
 
-			System.out.println("\nSending 'POST' request to URL : " + requestUrl);
-			System.out.println("Post parameters : " + postParams);
-			System.out.println("Response Code : " + responseCode);
+			//System.out.println("\nSending 'POST' request to URL : " + requestUrl);
+			//System.out.println("Post parameters : " + postParams);
+			//System.out.println("Response Code : " + responseCode);
 
 			// JSON 형태 반환값 처리
 			ObjectMapper mapper = new ObjectMapper();
@@ -98,8 +98,8 @@ public class GetOAuthResource {
 			
 			final int responseCode = response.getStatusLine().getStatusCode();
 
-			System.out.println("\nSending 'POST' request to URL : " + requestUrl);
-			System.out.println("Response Code : " + responseCode);
+			//System.out.println("\nSending 'POST' request to URL : " + requestUrl);
+			//System.out.println("Response Code : " + responseCode);
 
 			// JSON 형태 반환값 처리
 			ObjectMapper mapper = new ObjectMapper();
@@ -137,8 +137,8 @@ public class GetOAuthResource {
 			ObjectMapper mapper = new ObjectMapper();
 			returnNode = mapper.readTree(response.getEntity().getContent());
 			
-			System.out.println("\nSending 'GET' request to URL : " + requestUrl);
-			System.out.println("Response Code : " + responseCode);
+			//System.out.println("\nSending 'GET' request to URL : " + requestUrl);
+			//System.out.println("Response Code : " + responseCode);
 
 
 		} catch (UnsupportedEncodingException e) {

@@ -130,7 +130,7 @@ public class SignController {
 		GetOAuthResource getOAuthResource = new GetOAuthResource(clientId, clientSecret, myRedirectURI, authorizationRequestURI, resourceOwnerRequestURI);
 		
 		// 코드 발급
-		System.out.println("code : " + code);
+		//System.out.println("code : " + code);
 		
 		// Access Token // Refresh Token 발급
 		JsonNode jsonToken = getOAuthResource.getAccessToken(code);
@@ -140,9 +140,9 @@ public class SignController {
 			refreshToken = jsonToken.get("refresh_token").toString();
 		}
 		String expiresTime = jsonToken.get("expires_in").toString();
-		System.out.println("Access Token : " + accessToken);
-		System.out.println("Refresh Token : " + refreshToken);
-		System.out.println("Expires Time : " + expiresTime);
+		//System.out.println("Access Token : " + accessToken);
+		//System.out.println("Refresh Token : " + refreshToken);
+		//System.out.println("Expires Time : " + expiresTime);
 
 		// Access Token으로 사용자 정보 반환
 		JsonNode userInfo;
@@ -152,7 +152,7 @@ public class SignController {
 			userInfo = getOAuthResource.getUserInfoPost(accessToken);
 		}
 		
-		System.out.println(userInfo.toString());
+		//System.out.println(userInfo.toString());
 		
 		if(resourceServer.equals("kakao")) {
 			try {
