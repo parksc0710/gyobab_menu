@@ -15,8 +15,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -152,13 +155,24 @@ public class SignController {
 		System.out.println(userInfo.toString());
 		
 		if(resourceServer.equals("kakao")) {
-			resourceValue = userInfo.get("kakao_account").get(resourceKey).asText();
+			try {
+				resourceValue = userInfo.get("kakao_account").get(resourceKey).asText();
+			} catch (Exception e) {
+				resourceValue = "";
+			}
 		} else if(resourceServer.equals("naver")) {
-			resourceValue = userInfo.get("response").get(resourceKey).asText();
+			try {
+				resourceValue = userInfo.get("response").get(resourceKey).asText();
+			} catch (Exception e) {
+				resourceValue = "";
+			}
 		} else {
-			resourceValue = userInfo.get(resourceKey).asText();
+			try {
+				resourceValue = userInfo.get(resourceKey).asText();
+			} catch (Exception e) {
+				resourceValue = "";
+			}
 		}
-		
 		
 		return resourceValue;
 		
@@ -167,7 +181,7 @@ public class SignController {
 	
 	// 카카오 로그인 콜백
 	@RequestMapping(value = "/kakaoLogin")
-	public String kakaoLogin(@RequestParam("code") String code, HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttr) throws Exception {
+	public String kakaoLogin(@RequestParam("code") String code, HttpSession session, HttpServletRequest request, Model model) throws Exception {
 
 		String socialMail = getOAuthResource(code, "kakao");
 		
@@ -178,18 +192,14 @@ public class SignController {
 			return "redirect:/";
 		}
 		
-		Map<String, Object> socialInfoMap = new HashMap<String,Object>(); 
-		socialInfoMap.put("type", "kakao"); 
-		socialInfoMap.put("socialMail", socialMail);
+		model.addAttribute("socialMail", socialMail);
 		
-		redirectAttr.addFlashAttribute("SocialInfo", socialInfoMap);
-		
-		return "redirect:/sign/snsup.cgn";
+		return "sign/snsup";
 	}
 	
 	// 구글 로그인 콜백
 	@RequestMapping(value = "/googleLogin")
-	public String googleLogin(@RequestParam("code") String code, HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttr) throws Exception {
+	public String googleLogin(@RequestParam("code") String code, HttpSession session, HttpServletRequest request, Model model) throws Exception {
 
 		String socialMail = getOAuthResource(code, "google");
 		
@@ -200,19 +210,15 @@ public class SignController {
 			return "redirect:/";
 		}
 		
-		Map<String, Object> socialInfoMap = new HashMap<String,Object>(); 
-		socialInfoMap.put("type", "google"); 
-		socialInfoMap.put("socialMail", socialMail);
+		model.addAttribute("socialMail", socialMail);
 		
-		redirectAttr.addFlashAttribute("SocialInfo", socialInfoMap);
-		
-		return "redirect:/sign/snsup.cgn";
+		return "sign/snsup";
 		
 	}
 	
 	// 네이버 로그인 콜백
 	@RequestMapping(value = "/naverLogin")
-	public String naverLogin(@RequestParam("code") String code, HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttr) throws Exception {
+	public String naverLogin(@RequestParam("code") String code, HttpSession session, HttpServletRequest request, Model model) throws Exception {
 
 		String socialMail = getOAuthResource(code, "naver");
 		
@@ -223,14 +229,53 @@ public class SignController {
 			return "redirect:/";
 		}
 		
-		Map<String, Object> socialInfoMap = new HashMap<String,Object>(); 
-		socialInfoMap.put("type", "naver"); 
-		socialInfoMap.put("socialMail", socialMail);
+		model.addAttribute("socialMail", socialMail);
 		
-		redirectAttr.addFlashAttribute("SocialInfo", socialInfoMap);
+		return "sign/snsup";
 		
-		return "redirect:/sign/snsup.cgn";
+	}
+	
+	@RequestMapping(value = "checkNick", produces = "application/json;charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkNick( 
+							@RequestParam(value = "nickname", required = true) String nickname
+						) throws Exception {
 		
+		String rtn = "";
+		
+		int tmpMember = 0;
+		
+		tmpMember =	service.selectMemberIdByName(nickname);
+		
+		if(tmpMember > 0) {
+			rtn = "fail";
+		} else {
+			rtn = "success";
+		}
+		
+		return rtn;
+	}
+	
+	@RequestMapping(value = "singup", produces = "application/json;charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public String singup( 
+			@RequestParam(value = "email", required = true) String email,				
+			@RequestParam(value = "nickname", required = true) String nickname,
+			HttpServletRequest request
+						) throws Exception {
+		
+		String rtn = "";
+		
+		//System.out.println("email : " + email + " // nickname : " + nickname);
+		MemberVO tmp = new MemberVO();
+		tmp.setMember_email(email);
+		tmp.setMember_name(nickname);
+		service.insertMember(tmp);
+		service.insertMemberGrantUser(tmp);
+		
+		socialLoginDo(request, "", email);
+		
+		return rtn;
 	}
 	
 	// 소셜 로그인 성공 후 처리할 작업 설정

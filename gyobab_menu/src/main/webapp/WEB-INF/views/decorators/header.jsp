@@ -6,7 +6,7 @@
 
     <!-- LOGO -->
     <div class="headerbar-left">
-        <a href="${pageContext.request.contextPath}" class="logo">
+        <a href="${pageContext.request.contextPath}/main.do" class="logo">
             <img alt="Logo" src="assets/images/logo.png" />
             <span>오늘의 교밥</span>
         </a>

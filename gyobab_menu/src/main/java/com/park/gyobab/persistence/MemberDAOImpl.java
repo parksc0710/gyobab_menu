@@ -32,6 +32,12 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	
 	@Override
+	public void insertMemberGrantUser(MemberVO vo) {
+		sqlSession.insert(namespace + ".insertGrantUser", vo); 
+		
+	}
+	
+	@Override
 	public MemberVO selectMemberById(int member_id) throws Exception {
 		MemberVO tmpVO = (MemberVO) sqlSession.selectOne(namespace + ".selectMemberById", member_id);
 		return tmpVO;
@@ -52,6 +58,15 @@ public class MemberDAOImpl implements MemberDAO {
 		MemberVO tmpVO = (MemberVO) sqlSession.selectOne(namespace + ".selectMemberIdByEmail", member_email);
 		
 		member_id = tmpVO.getMember_id();
+		
+		return member_id;
+	}
+
+	@Override
+	public Integer selectMemberIdByName(String member_name) throws Exception {
+		int member_id = 0;
+		
+		member_id = sqlSession.selectOne(namespace + ".selectMemberIdByName", member_name);
 		
 		return member_id;
 	}

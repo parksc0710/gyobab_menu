@@ -9,6 +9,20 @@
   		select now();
   	</select>
   	
+  	<insert id="insertMember">
+  		INSERT INTO `member`
+			(member_email, member_name)
+		VALUES
+			(#{member_email}, #{member_name});
+  	</insert>
+  	
+  	<insert id="insertGrantUser">
+		INSERT INTO `member_grant`
+			(member_id, grant_id)
+		VALUES
+		    ((SELECT member_id FROM `member` WHERE member_email = #{member_email}), (SELECT grant_id FROM `grant` WHERE grant_name = 'USER'))
+  	</insert>
+  	
   	<select id="selectMemberByEmail" resultType="com.park.gyobab.domain.MemberVO">
   		select a.member_id, a.member_email, a.member_name, c.grant_name as 'member_grant', a.create_date, a.update_date, a.act_flg, a.del_flg 
   		from `member` a
@@ -17,6 +31,12 @@
 		inner join `grant` c
 		on b.grant_id = c.grant_id
 		where a.member_email = #{member_email}
+  	</select>
+  	
+  	<select id="selectMemberIdByName" resultType="Integer">
+  		select count(member_id) 
+  		from `member` 		
+		where member_name = #{member_name} and act_flg = 1 and del_flg = 0
   	</select>
   	
   	<!-- <insert id="insertMember">

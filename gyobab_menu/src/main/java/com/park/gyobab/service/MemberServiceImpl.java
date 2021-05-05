@@ -19,6 +19,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public void insertMemberGrantUser(MemberVO vo) {
+		dao.insertMemberGrantUser(vo);
+	}
+	
+	@Override
 	public MemberVO selectMemberById(int member_id) throws Exception {
 		MemberVO tmpVo = dao.selectMemberById(member_id); 
 		return tmpVo;
@@ -38,5 +43,10 @@ public class MemberServiceImpl implements MemberService {
 		return tmpId;
 	}
 
+	@Override
+	public Integer selectMemberIdByName(String member_name) throws Exception {
+		int tmpId = dao.selectMemberIdByName(member_name); 
+		return tmpId;
+	}
 
 }
