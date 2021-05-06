@@ -90,7 +90,7 @@ public class SignController {
 	// Oauth2.0으로 이메일 주소 불러오는 메소드
 	public String getOAuthResource(String code, String resourceServer) throws UnsupportedEncodingException {
 		
-		String serverName = request.getServerName().equals("localhost") ? "https://" + request.getServerName() + ":8443" : "https://" + request.getServerName() + ":8444";
+		String serverName = request.getServerName().equals("localhost") ? "https://" + request.getServerName() + ":8443" : "https://" + request.getServerName();
 		
 		//System.out.println("serverName : " + serverName);
 		

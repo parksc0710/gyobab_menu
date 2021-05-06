@@ -13,7 +13,7 @@ public class LoginIntercepter extends HandlerInterceptorAdapter{
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
 		
-		String serverName = request.getServerName().equals("localhost") ? "https://" + request.getServerName() + ":8443" : "https://" + request.getServerName() + ":8444";
+		String serverName = request.getServerName().equals("localhost") ? "https://" + request.getServerName() + ":8443" : "https://" + request.getServerName();
 		
 		// 소셜 로그인 URL 추가
 		// 카카오 로그인 URL 생성
