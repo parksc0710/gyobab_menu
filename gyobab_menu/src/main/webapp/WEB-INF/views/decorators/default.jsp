@@ -14,6 +14,7 @@
 	<!-- 공통 추가 -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/png"  href="${pageContext.request.contextPath}/assets/images/favicon.ico"/>
 	<%@ include file="/WEB-INF/views/decorators/commonDecorator/commonInclude.jsp" %>
 	<!-- //공통 추가 -->
 
