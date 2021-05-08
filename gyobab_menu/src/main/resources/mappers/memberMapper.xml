@@ -39,6 +39,22 @@
 		where member_name = #{member_name} and act_flg = 1 and del_flg = 0
   	</select>
   	
+  	<select id="selectMembers" resultType="com.park.gyobab.domain.MemberVO">
+  		SELECT `member`.`member_id`,
+		    `member`.`member_email`,
+		    `member`.`member_name`,
+		    `member`.`create_date`,
+		    `member`.`update_date`,
+		    `member`.`act_flg`,
+		    `member`.`del_flg`,
+		    `grant`.`grant_name` as 'member_grant'
+		FROM `gyobab`.`member`  
+		INNER JOIN `gyobab`.`member_grant` 
+		ON `member`.`member_id` = `member_grant`.`member_id`
+		INNER JOIN `gyobab`.`grant`
+		ON `member_grant`.`grant_id` = `grant`.`grant_id`
+  	</select>
+  	
   	<!-- <insert id="insertMember">
   		INSERT INTO member
 			(user_id, user_pw, user_email, act_flg, del_flg)

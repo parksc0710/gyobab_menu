@@ -1014,7 +1014,7 @@ body.adminbody .main-sidebar.left {
 }
 
 body.adminbody-void {
-    min-height: 1170px
+    /* min-height: 1170px */
 }
 
 .mobile.smallscreen .sidebar-inner.leftscroll {

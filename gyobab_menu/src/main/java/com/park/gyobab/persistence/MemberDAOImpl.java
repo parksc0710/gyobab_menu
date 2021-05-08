@@ -1,6 +1,7 @@
 package com.park.gyobab.persistence;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -69,6 +70,13 @@ public class MemberDAOImpl implements MemberDAO {
 		member_id = sqlSession.selectOne(namespace + ".selectMemberIdByName", member_name);
 		
 		return member_id;
+	}
+
+	@Override
+	public List<MemberVO> selectMembers() throws Exception {
+		List<MemberVO> list = sqlSession.selectList(namespace + ".selectMembers");
+
+		return list;
 	}
 
 }

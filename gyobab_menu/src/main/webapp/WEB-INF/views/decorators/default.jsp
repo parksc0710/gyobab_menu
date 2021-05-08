@@ -41,6 +41,6 @@
 		<%@ include file="/WEB-INF/views/decorators/footer.jsp" %>
 		<!-- //footer -->
 	</div>
-	<script src="assets/js/admin.js"></script>
+	<script src="${pageContext.request.contextPath}/assets/js/admin.js"></script>
 </body>
 </html>

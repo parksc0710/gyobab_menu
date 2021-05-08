@@ -7,7 +7,7 @@
     <!-- LOGO -->
     <div class="headerbar-left">
         <a href="${pageContext.request.contextPath}/main.do" class="logo">
-            <img alt="Logo" src="assets/images/logo.png" />
+            <img alt="Logo" src="${pageContext.request.contextPath}/assets/images/logo.png" />
             <span>오늘의 교밥</span>
         </a>
     </div>
@@ -28,17 +28,17 @@
 	                    </div>
 	                    
 	                    <a href="${googleUrl }" class="dropdown-item notify-item">
-	                        <img src="assets/images/login_icon/google.png">
+	                        <img src="${pageContext.request.contextPath}/assets/images/login_icon/google.png">
 	                        <span>Google</span>
 	                    </a>
 	                    
 	                    <a href="${naverUrl }" class="dropdown-item notify-item">
-	                         <img src="assets/images/login_icon/naver.png">
+	                         <img src="${pageContext.request.contextPath}/assets/images/login_icon/naver.png">
 	                        <span>Naver</span>
 	                    </a>
 	                    
 	                    <a href="${kakaoUrl }" class="dropdown-item notify-item">
-	                         <img src="assets/images/login_icon/kakao.png">
+	                         <img src="${pageContext.request.contextPath}/assets/images/login_icon/kakao.png">
 	                        <span>Kakao</span>
 	                    </a>
 	                    
@@ -46,13 +46,42 @@
 	            </li>
 	        </ul>
         </security:authorize>
+        
+        <security:authorize ifAnyGranted="ROLE_OPERATOR">
+       		<security:authentication property="principal.member_name" var="memberName"/>
+			<ul class="list-inline float-right mb-0">
+	            <li class="list-inline-item dropdown notif">
+	                <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" aria-haspopup="false" aria-expanded="false">
+	                    <img src="${pageContext.request.contextPath}/assets/images/avatars/admin.png" alt="Profile image" class="avatar-rounded">
+	                </a>
+	                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+	                    <div class="dropdown-item noti-title">
+	                        <h5 class="text-overflow">
+	                            <small>${memberName }</small>
+	                        </h5>
+	                    </div>
+	
+	                    <a href="${pageContext.request.contextPath}/ou/main.do" class="dropdown-item notify-item">
+	                        <i class="fas fa-user"></i>
+	                        <span>회원 관리</span>
+	                    </a>
+	
+	                    <a href="${pageContext.request.contextPath}/logout" class="dropdown-item notify-item">
+	                        <i class="fas fa-power-off"></i>
+	                        <span>Logout</span>
+	                    </a>
+	                </div>
+	            </li>
+	        </ul>
+	    </security:authorize>
+    
 
-		<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
+		<security:authorize ifAnyGranted="ROLE_ADMIN, ROLE_USER">
 			<security:authentication property="principal.member_name" var="memberName"/>
 			<ul class="list-inline float-right mb-0">
 	            <li class="list-inline-item dropdown notif">
 	                <a class="nav-link dropdown-toggle nav-user" data-toggle="dropdown" href="#" aria-haspopup="false" aria-expanded="false">
-	                    <img src="assets/images/avatars/admin.png" alt="Profile image" class="avatar-rounded">
+	                    <img src="${pageContext.request.contextPath}/assets/images/avatars/admin.png" alt="Profile image" class="avatar-rounded">
 	                </a>
 	                <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
 	                    <div class="dropdown-item noti-title">

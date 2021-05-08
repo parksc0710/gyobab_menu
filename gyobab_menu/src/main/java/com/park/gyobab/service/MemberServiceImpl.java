@@ -1,5 +1,7 @@
 package com.park.gyobab.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
@@ -47,6 +49,12 @@ public class MemberServiceImpl implements MemberService {
 	public Integer selectMemberIdByName(String member_name) throws Exception {
 		int tmpId = dao.selectMemberIdByName(member_name); 
 		return tmpId;
+	}
+
+	@Override
+	public List<MemberVO> selectMembers() throws Exception {
+		List<MemberVO> list = dao.selectMembers();
+		return list;
 	}
 
 }
