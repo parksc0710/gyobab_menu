@@ -273,9 +273,20 @@ public class SignController {
 		service.insertMember(tmp);
 		service.insertMemberGrantUser(tmp);
 		
-		socialLoginDo(request, "", email);
+		//socialLoginDo(request, "", email);
+		
+		rtn = nickname;
 		
 		return rtn;
+	}
+	
+	@RequestMapping(value = "/singupcomp")
+	public String singupcomp(@RequestParam(value = "nickname", required = true) String nickname, Model model) throws Exception {
+		
+		model.addAttribute("nickname", nickname);
+		
+		return "sign/snsupcomp";
+		
 	}
 	
 	// 소셜 로그인 성공 후 처리할 작업 설정

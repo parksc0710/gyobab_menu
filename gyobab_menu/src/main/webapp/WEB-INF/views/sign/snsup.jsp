@@ -130,8 +130,7 @@
 			       url: "${pageContext.request.contextPath}/singup.do",
 			       data : {email : email, nickname : nickName},
 			       success: function(rtn) {
-		        	  alert("회원가입이 완료되었습니다!");
-		        	  window.location.href = '${pageContext.request.contextPath}/main.do';
+		        	  window.location.href = '${pageContext.request.contextPath}/singupcomp.do?nickname='+rtn;
 			       },
 			       error:function(request,status,error){
 			           alert("회원가입에 실패했습니다. 관리자에게 문의하세요.");
