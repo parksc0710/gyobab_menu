@@ -28,17 +28,25 @@
   	
   	<insert id="insertMember">
   		INSERT INTO `member`
-			(member_email, member_name, member_grant)
+			(member_email, member_name, member_grant, member_pass)
 		VALUES
-			(#{member_email}, #{member_name}, (SELECT grant_id FROM `grant` WHERE grant_name = 'USER'));
+			(#{member_email}, #{member_name}, (SELECT grant_id FROM `grant` WHERE grant_name = 'USER'), #{member_pass});
   	</insert>
   	
   	<select id="selectMemberByEmail" resultMap="MemberVO">
-  		select a.member_id, a.member_email, a.member_name, b.grant_id, b.grant_name , a.create_date, a.update_date, a.act_flg, a.del_flg 
+  		select a.member_id, a.member_email, a.member_name, b.grant_id, b.grant_name , a.member_pass, a.create_date, a.update_date, a.act_flg, a.del_flg 
   		from `member` a		
 		inner join `grant` b
 		on a.member_grant = b.grant_id
 		where a.member_email = #{member_email}
+  	</select>
+  	
+	<select id="selectMemberById" resultMap="MemberVO">
+  		select a.member_id, a.member_email, a.member_name, b.grant_id, b.grant_name , a.member_pass, a.create_date, a.update_date, a.act_flg, a.del_flg 
+  		from `member` a		
+		inner join `grant` b
+		on a.member_grant = b.grant_id
+		where a.member_id = #{member_id}
   	</select>
   	
   	<select id="selectMemberIdByName" resultType="Integer">

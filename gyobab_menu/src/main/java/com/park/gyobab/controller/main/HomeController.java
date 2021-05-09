@@ -57,7 +57,7 @@ public class HomeController{
 		
 		file.transferTo(new File(filePath,stoName));
 		
-		System.out.println(stoName);
+		//System.out.println(stoName);
 
 		return stoName;
 	}

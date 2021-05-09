@@ -261,6 +261,7 @@ public class SignController {
 	public String singup( 
 			@RequestParam(value = "email", required = true) String email,				
 			@RequestParam(value = "nickname", required = true) String nickname,
+			@RequestParam(value = "pass", required = true) String pass,
 			HttpServletRequest request
 						) throws Exception {
 		
@@ -270,6 +271,7 @@ public class SignController {
 		MemberVO tmp = new MemberVO();
 		tmp.setMember_email(email);
 		tmp.setMember_name(nickname);
+		tmp.setMember_pass(pass);
 		service.insertMember(tmp);
 		
 		//socialLoginDo(request, "", email);

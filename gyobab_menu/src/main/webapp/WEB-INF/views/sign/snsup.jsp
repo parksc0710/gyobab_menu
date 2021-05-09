@@ -31,6 +31,18 @@
                 <input type="text" class="form-control" id="memberName" placeholder="" maxlength=10>
                 <small id="numberlHelp" class="form-text text-muted">다른 사람에게 보여질 닉네임입니다. 중복 되지 않는 닉네임을 사용하여주세요.</small>
             </div>
+            <div class="form-group beforeSpan">
+              <label for="exampleInputEmail1"><b>교회 출입 바코드 (선택)</b></label>
+              <input type="hidden" value="" id="memberPassVal"/>
+              <div id=preView style="width:200px;"></div>
+              <div id=uploadForm>
+             	 <form id="passForm" name="frm" method="post">
+					<input type="file" id="imageUploadFile" name="file" />
+					<a href="javascript:void(0);" class="button" onclick="fileUpload();"><span class="new">등록</span></a>	
+				 </form>
+		      </div>
+              <small id="numberlHelp" class="form-text text-muted">온누리교회 출입 바코드를 저장할 수 있습니다.</small>
+          </div>
             <br>
             <button type="submit" class="btn btn-primary" id="joinBtn">가입하기</button>
 	
@@ -122,13 +134,14 @@
 			
 			var email = "${socialMail }";
 			var nickName = $("#memberName").val();
+			var pass = $("#memberPassVal").val();
 			
 			$.ajax({
 			       type: "post", 
 			       dataType: "text", 
 			       contentType: "application/x-www-form-urlencoded;charset=utf-8",
 			       url: "${pageContext.request.contextPath}/singup.do",
-			       data : {email : email, nickname : nickName},
+			       data : {email : email, nickname : nickName, pass:pass},
 			       success: function(rtn) {
 		        	  window.location.href = '${pageContext.request.contextPath}/singupcomp.do?nickname='+rtn;
 			       },
@@ -139,5 +152,44 @@
 		}
 		
 	});
+	
+	function fileUpload() {
+		var form = jQuery("#passForm")[0];
+		var formData = new FormData(form);
+
+		jQuery.ajax({
+			url : "${pageContext.request.contextPath}/fupload.do",
+			type : "POST",
+			processData : false,
+			contentType : false,
+			dataType: "text",
+			data : formData,
+			success : function(filename) {
+				afterUpload(filename);
+			},
+			error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		    }
+		});
+	}
+	
+	function afterUpload(filename) {
+		var filePath = "https://www.gyobab.shop:8883/images/" + filename;
+		$("#memberPassVal").val(filePath);
+		$("#preView").html("<img src='"+filePath+"' />");
+		$("#uploadForm").empty();
+		$("#uploadForm").html('<a href="javascript:void(0);" class="button" onclick="fileUpdate();"><span class="new">변경</span></a>');
+	}
+	
+	function fileUpdate() {
+		$("#preView").empty();
+		$("#uploadForm").empty();
+		$("#memberPassVal").val("");
+		
+		var tmpHtml = '<form id="passForm" name="frm" method="post"><input type="file" id="imageUploadFile" name="file" />';
+		tmpHtml += '<a href="javascript:void(0);" class="button" onclick="fileUpload();"><span class="new">등록</span></a></form>';
+		
+		$("#uploadForm").append(tmpHtml);
+	}
 	
 </script>
