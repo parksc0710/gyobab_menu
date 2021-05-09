@@ -19,7 +19,7 @@
 	<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
 	<security:authentication property="principal.member_pass" var="memberPass"/>
 	<c:choose>
-		<c:when test="${memberPass != null || memberPass != '' }">
+		<c:when test="${memberPass }">
 			<div class="row">
 			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
 			        <div class="card mb-3">
@@ -41,8 +41,8 @@
 			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
 			        <div class="card mb-3">
 			            <div class="card-header">
-			                <h3>내 온누리교회 바코드</h3><a href="${pageContext.request.contextPath}/user/main.do" target="_blank" class="btn btn-primary btn-sm btn-block" style="width:150px;">
-								<i class="fas fa-search"></i> 등록하러 가기</a>
+			                <h3 style="display:inline"><b>내 온누리교회 바코드</b></h3><a href="${pageContext.request.contextPath}/user/main.do" class="btn btn-primary btn-sm btn-block" style="width:80px;display:inline;float: right;">
+								<i class="fas fa-search"></i> 등록</a>
 			            </div>
 			            <div class="card-body">
 			            	온누리 교회 바코드를 등록하시면 편리하게 볼 수 있습니다.
