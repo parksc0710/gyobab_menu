@@ -15,13 +15,13 @@
               <label for="exampleInputEmail1">E-mail</label>
               <input type="text" class="form-control" id="memberEmail" placeholder="${nowUser.member_email }" readonly>
               <small id="emailHelp" class="form-text text-muted">이메일 주소는 변경할 수 없습니다. </small>
-          </div>
+          </div><br>
           <div class="form-group beforeSpan">
               <label for="exampleInputEmail1"><b>닉네임</b></label>
               <input type="text" class="form-control" id="memberName" maxlength=10 value="${nowUser.member_name }" readonly>
               <small id="numberlHelp" class="form-text text-muted"></small>
-              <a href="javascript:setNameInput();" class="btn btn-primary btn-sm btn-block" style="width:150px" id="nickChangeBtn"><i class="far fa-edit"></i>닉네임 변경하기</a>
-          </div>
+              <a href="javascript:setNameInput();" class="btn btn-primary btn-sm btn-block" style="width:150px" id="nickChangeBtn"><i class="far fa-edit"></i> 닉네임 변경</a>
+          </div><br>
           <div class="form-group beforeSpan">
               <label for="exampleInputEmail1"><b>교회 출입 바코드</b></label>
               <input type="hidden" value="${nowUser.member_pass }" id="memberPassVal"/>
@@ -30,19 +30,23 @@
               	 <div id=uploadForm>
 	             	 <form id="passForm" name="frm" method="post">
 						<input type="file" id="imageUploadFile" name="file" />
-						<a href="javascript:void(0);" class="button" onclick="fileUpload();"><span class="new">등록</span></a>	
+						<a href="javascript:void(0);" class="btn btn-primary btn-sm btn-block" onclick="fileUpload();" style="width:80px;display:inline;float: right;">
+							<i class="far fa-edit"></i> 등록
+						</a>	
 					 </form>
 				 </div>
               </c:if>
               <c:if test="${nowUser.member_pass != null }">
              	 <div id=preView style="width:200px;"><img src="${nowUser.member_pass }"></div>
              	 <div id=uploadForm>
-				 	<a href="javascript:void(0);" class="button" onclick="fileUpdate();"><span class="new">변경</span></a>
+				 	<a href="javascript:void(0);" class="btn btn-primary btn-sm btn-block" onclick="fileUpdate();" style="width:80px;display:inline;float: left;">
+				 		<i class="far fa-edit"></i> 변경
+				 	</a>
 				 </div>	
               </c:if>
               <small id="numberlHelp" class="form-text text-muted"></small>
           </div>
-          <br>
+          <br><br><br><br>
           <button type="submit" class="btn btn-primary" id="submitBtn">수정하기</button>
 
    </div>
@@ -195,7 +199,9 @@
 			$("#memberPassVal").val(filePath);
 			$("#preView").html("<img src='"+filePath+"' />");
 			$("#uploadForm").empty();
-			$("#uploadForm").html('<a href="javascript:void(0);" class="button" onclick="fileUpdate();"><span class="new">변경</span></a>');
+			var tmpHtml = '<a href="javascript:void(0);" class="btn btn-primary btn-sm btn-block" onclick="fileUpdate();" style="width:80px;display:inline;float: left;">';
+			tmpHtml += '<i class="far fa-edit"></i> 변경</a>'
+			$("#uploadForm").html(tmpHtml);
 		}
 		
 		function fileUpdate() {
@@ -203,7 +209,8 @@
 			$("#uploadForm").empty();
 			
 			var tmpHtml = '<form id="passForm" name="frm" method="post"><input type="file" id="imageUploadFile" name="file" />';
-			tmpHtml += '<a href="javascript:void(0);" class="button" onclick="fileUpload();"><span class="new">등록</span></a></form>';
+			tmpHtml += '<a href="javascript:void(0);" class="btn btn-primary btn-sm btn-block" onclick="fileUpload();" style="width:80px;display:inline;float: right;">';
+			tmpHtml += '<i class="far fa-edit"></i> 등록</a></form>';
 			
 			$("#uploadForm").append(tmpHtml);
 		}
