@@ -26,7 +26,7 @@
 								</a>
 			            </div>
 			            <div class="card-body">
-			            	<img src="${memberPass }" style="display: block; margin: 0px auto;"/>
+			            	<img src="${memberPass }" style="display: block; margin: 0px auto; width: 100%"/>
 			            </div>
 			        </div>
 			    </div>

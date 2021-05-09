@@ -26,7 +26,7 @@
               <label for="exampleInputEmail1"><b>교회 출입 바코드</b></label>
               <input type="hidden" value="${nowUser.member_pass }" id="memberPassVal"/>
               <c:if test="${nowUser.member_pass eq null }">
-              	 <div id=preView style="width:200px;"></div>
+              	 <div id=preView style="width:100%;max-width:700px"></div>
               	 <div id=uploadForm>
 	             	 <form id="passForm" name="frm" method="post">
 						<input type="file" id="imageUploadFile" name="file" />
@@ -37,7 +37,7 @@
 				 </div>
               </c:if>
               <c:if test="${nowUser.member_pass != null }">
-             	 <div id=preView style="width:200px;"><img src="${nowUser.member_pass }"></div>
+             	 <div id=preView style="width:100%;max-width:700px"><img src="${nowUser.member_pass }" style="width:100%"></div>
              	 <div id=uploadForm>
 				 	<a href="javascript:void(0);" class="btn btn-primary btn-sm btn-block" onclick="fileUpdate();" style="width:80px;display:inline;float: left;">
 				 		<i class="far fa-edit"></i> 변경
@@ -197,7 +197,7 @@
 		function afterUpload(filename) {
 			var filePath = "https://www.gyobab.shop:8883/images/" + filename;
 			$("#memberPassVal").val(filePath);
-			$("#preView").html("<img src='"+filePath+"' />");
+			$("#preView").html("<img src='"+filePath+"' style='width:100%'/>");
 			$("#uploadForm").empty();
 			var tmpHtml = '<a href="javascript:void(0);" class="btn btn-primary btn-sm btn-block" onclick="fileUpdate();" style="width:80px;display:inline;float: left;">';
 			tmpHtml += '<i class="far fa-edit"></i> 변경</a>'
