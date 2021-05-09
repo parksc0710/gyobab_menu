@@ -20,11 +20,18 @@
               <label for="exampleInputEmail1"><b>닉네임</b></label>
               <input type="text" class="form-control" id="memberName" maxlength=10 value="${nowUser.member_name }" readonly>
               <small id="numberlHelp" class="form-text text-muted"></small>
-              <a href="javascript:setNameInput();" class="btn btn-primary btn-sm btn-block" style="width:150px"><i class="far fa-edit"></i>닉네임 변경하기</a>
+              <a href="javascript:setNameInput();" class="btn btn-primary btn-sm btn-block" style="width:150px" id="nickChangeBtn"><i class="far fa-edit"></i>닉네임 변경하기</a>
           </div>
           <div class="form-group beforeSpan">
               <label for="exampleInputEmail1"><b>교회 출입 바코드</b></label>
-              <input type="text" class="form-control" id="memberName" maxlength=10 value="${nowUser.member_name }" readonly>
+              <c:if test="${nowUser.member_pass eq null }">
+             	 <form id="updateForm1" name="updateForm1" method="post">
+					<input type="file" id="imageUploadFile" name="imageUploadFile" />
+					<a href="javascript:void(0);" class="button" onclick="jsFileUpload('pass','updateForm1');"><span class="new">등록</span></a>	
+				 </form>
+              </c:if>
+              <c:if test="${nowUser.member_pass != null }">
+              </c:if>
               <small id="numberlHelp" class="form-text text-muted"></small>
           </div>
           <br>
@@ -43,6 +50,7 @@
    		function setNameInput() {
    			$("#memberName").attr("readonly", false);
    			alert("변경할 닉네임을 입력하여주세요!");
+   			$("#nickChangeBtn").hide();
    		}
    		
    		//닉네임 input blur 이벤트
@@ -150,6 +158,88 @@
    			}
    			
    		});
+   		
+   		function jsFileUpload(gubun, frmId) {
+   			var size = $("#"+frmId)["0"]["0"].files["0"].size;
+   			//alert(size);
+   			if(size > 10*1024*1024)	{
+   				alert("파일 업로드 용량 초과(10MB)");
+   				return false;
+   			}
+   			
+   			$.imageFileUpload({
+   				 url: '${pageContext.request.contextPath}/fupload.cgn'
+   				,formId: frmId //'updateForm'
+   				,success: function(fileName) {
+   					//alert(fileName);
+
+   					if(gubun == "pass")	{
+   						$("#thumbfile").val(fileName);
+   						//$("#"+frmId).html("<a href=\"#;\" class=\"button\" onclick=\"jsFileRemove(\'"+gubun+"\',\'"+frmId+"\');\"><img src=\""+fileName.replace("/data/www","http:/")+"\"/> <span class=\"delete\">삭제</span></a>");
+   						$("#"+frmId).html("<img src=\""+fileName+"\"/> <a href=\"#;\" class=\"button\" onclick=\"jsFileRemove(\'"+gubun+"\',\'"+frmId+"\');\"><span class=\"delete\">삭제</span></a>");
+   					} else {
+   						$("#attachfile").val(fileName);
+   						//$("#"+frmId).html("<a href=\"#;\" class=\"button\" onclick=\"jsFileRemove(\'"+gubun+"\',\'"+frmId+"\');\"> * "+fileName.replace("/data/www","http:/")+" <span class=\"delete\">삭제</span></a>");
+   						$("#"+frmId).html(" * "+fileName+" <a href=\"#;\" class=\"button\" onclick=\"jsFileRemove(\'"+gubun+"\',\'"+frmId+"\');\"><span class=\"delete\">삭제</span></a>");
+   					}
+   					
+   				}
+   				,error: function(e) {
+   					alert(JSON.stringify(e));
+   				}
+   			});
+   		};
+   		
+   		function jsFileRemove(gubun, frmId) 	{
+   			var filenameTxt = $("#"+gubun+"file").val();
+   				
+   			$.ajax({ 
+   				url: "${pageContext.request.contextPath}/fremove.cgn" , 
+   				type: "POST",
+   				data: {filename : filenameTxt},
+   				success: function(data) {
+   					//alert(data);
+   					if(data){
+   						//파일 삭제
+   						$("#"+gubun+"file").val("");
+   						$("#"+frmId).html("<input type=\"file\" id=\"imageUploadFile\" name=\"imageUploadFile\" /><a href=\"#;\" class=\"button\" onclick=\"jsFileUpload(\'"+gubun+"\',\'"+frmId+"\');\"> <span class=\"new\">추가</span></a>");
+   					}
+   					else
+   						alert("파일삭제에 실패하였습니다.");
+   				}
+   				,error: function(e) {
+   					alert(JSON.stringify(e));
+   				}
+   			});
+   		}
+   		
+   		$.imageFileUpload = function(args) {
+   			var targetFormObj = $('#' + args.formId);
+   			var targetForm = targetFormObj[0];
+   			var iframeName = '__imageUploadIframe';
+   			targetFormObj.attr('enctype', 'multipart/form-data');
+   			targetForm.method = 'POST';
+   			targetForm.target = iframeName;
+   			targetForm.action = args.url;
+   			$('body').append('<iframe id="' + iframeName + '" name="' + iframeName + '" style="display:none;" src=""></iframe>');
+   			$('iframe#'+iframeName).bind('load', function (){
+   				var hiddenIframe = $('#__imageUploadIframe');
+   				var err;
+   				var fileName;
+   				try {
+   					fileName = eval(hiddenIframe.contents().find('body').text())[0];
+   				} catch (e) {
+   					err = e;
+   				}
+   				hiddenIframe.remove();
+   				targetFormObj.attr('enctype', 'application/x-www-form-urlencoded');
+   				if(fileName != null && fileName != '')
+   					args.success(fileName);
+   				else
+   					args.error(err);
+   			});
+   			targetForm.submit();
+   		};	
    </script>
    
 </div>
