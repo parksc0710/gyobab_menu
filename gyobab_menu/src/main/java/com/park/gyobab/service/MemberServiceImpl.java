@@ -57,4 +57,9 @@ public class MemberServiceImpl implements MemberService {
 		return list;
 	}
 
+	@Override
+	public void updateMember(MemberVO vo) {
+		dao.updateMember(vo);
+	}
+
 }

@@ -90,7 +90,7 @@
 	                        </h5>
 	                    </div>
 	
-	                    <a href="profile.html" class="dropdown-item notify-item">
+	                    <a href="${pageContext.request.contextPath}/user/main.do" class="dropdown-item notify-item">
 	                        <i class="fas fa-user"></i>
 	                        <span>Profile</span>
 	                    </a>

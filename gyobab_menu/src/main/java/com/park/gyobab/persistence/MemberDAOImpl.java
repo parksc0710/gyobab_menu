@@ -79,4 +79,9 @@ public class MemberDAOImpl implements MemberDAO {
 		return list;
 	}
 
+	@Override
+	public void updateMember(MemberVO vo) {
+		sqlSession.update(namespace + ".updateMember", vo); 
+	}
+
 }

@@ -22,7 +22,7 @@
 	    <div class="card-body">
 	
             <div class="form-group">
-                <label for="exampleInputEmail1">E-mail 주소</label>
+                <label for="exampleInputEmail1">E-mail</label>
                 <input type="text" class="form-control" id="memberEmail" placeholder="${socialMail }" readonly>
                 <small id="emailHelp" class="form-text text-muted">이메일 주소는 가입 후 변경할 수 없고, 다른 사람에게 노출되지 않습니다. </small>
             </div>

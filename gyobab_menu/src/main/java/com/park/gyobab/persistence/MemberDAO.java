@@ -22,4 +22,6 @@ public interface MemberDAO {
 	
 	public List<MemberVO> selectMembers() throws Exception;
 
+	public void updateMember(MemberVO vo);
+	
 }

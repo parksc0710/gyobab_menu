@@ -19,4 +19,6 @@ public interface MemberService {
 	public Integer selectMemberIdByName(String member_name) throws Exception;
 	
 	public List<MemberVO> selectMembers() throws Exception;
+	
+	public void updateMember(MemberVO vo);
 }
