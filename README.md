@@ -59,3 +59,10 @@ PRIMARY KEY (`member_grant_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT="맴버-권한 테이블";
 ALTER TABLE `member_grant` add constraint FOREIGN KEY (`member_id`) REFERENCES `member`(`member_id`);
 ALTER TABLE `member_grant` add constraint FOREIGN KEY (`grant_id`) REFERENCES `grant`(`grant_id`);
+
+
+
+<br><br>
+
+# To Do List <br>
+- 일반 USER 개인 정보 조회 및 수정(출입 바코드 업로드 및 출력 기능 포함) 
