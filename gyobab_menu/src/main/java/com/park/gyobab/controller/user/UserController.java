@@ -40,6 +40,7 @@ public class UserController {
 	public String update( 
 			@RequestParam(value = "memberId", required = true) int memberId,				
 			@RequestParam(value = "nickname", required = true) String nickname,
+			@RequestParam(value = "memberpass", required = true) String memberpass,
 			HttpServletRequest request
 						) throws Exception {
 		
@@ -54,6 +55,7 @@ public class UserController {
 		//System.out.println("email : " + email + " // nickname : " + nickname);
 		MemberVO tmp = nowUser;
 		tmp.setMember_name(nickname);
+		tmp.setMember_pass(memberpass);
 		
 		service.updateMember(tmp);
 		

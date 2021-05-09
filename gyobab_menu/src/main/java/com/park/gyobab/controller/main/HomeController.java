@@ -45,59 +45,21 @@ public class HomeController{
 	
 	@RequestMapping(value = "fupload", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
 	@ResponseBody
-	protected String mediaUpload(HttpServletRequest request) {
+	protected String mediaUpload(HttpServletRequest request, MultipartHttpServletRequest mtf) throws IllegalStateException, IOException {
 		
-		String rtn = "false";
-		
-		UUID uuid = UUID.randomUUID();
-		
-		MultipartHttpServletRequest mpRequest = (MultipartHttpServletRequest)request;
-		Iterator<String> fileIterator = mpRequest.getFileNames();
-		
-		List<String> fileNames = new ArrayList<String>();
+		MultipartFile file = mtf.getFile("file");
 
-		File dirname = new File("/home/parksc0710/serv/tc1/webapps/ROOT/assets/images/upload/");
-
-		while(fileIterator.hasNext()) {
-			
-			MultipartFile file = mpRequest.getFile(fileIterator.next());
-			
-			if(file.getSize() <= 10*1024*1024) {
-				if(!file.isEmpty() && file.getSize() > 0) {
-	
-					String filename = null;
-					File storeFile = null;
-
-					int fnum = 0;
-						do {
-							if(fnum == 0)
-								filename = uuid + file.getOriginalFilename();
-							else
-								filename = Integer.toString(fnum) + uuid + file.getOriginalFilename();
-								
-							storeFile = new File(dirname, filename);
-							fnum++;
-						}
-						while(storeFile.exists());
-					
-					try {
-						FileUtils.copyInputStreamToFile(file.getInputStream(), storeFile);
-						storeFile.setReadable(true, false);						
-						
-						fileNames.add("resources/upload/" + filename);
-						rtn = "true";
-					}
-					catch(IOException e) {
-						System.out.println(e.getMessage());
-					}
-				}
-				else {
-					fileNames.add("");
-				}
-			}
-		}
+		String oriName = file.getOriginalFilename();
+		long fileSize = file.getSize();
+		String ext = oriName.substring(oriName.lastIndexOf("."));
+		String stoName = UUID.randomUUID()+ext;
+		String filePath = "/home/parksc0710/serv/image/webapps/ROOT/images/";
 		
-		return rtn;
+		file.transferTo(new File(filePath,stoName));
+		
+		System.out.println(stoName);
+
+		return stoName;
 	}
 	
 }

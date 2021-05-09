@@ -24,13 +24,21 @@
           </div>
           <div class="form-group beforeSpan">
               <label for="exampleInputEmail1"><b>교회 출입 바코드</b></label>
+              <input type="hidden" value="${nowUser.member_pass }" id="memberPassVal"/>
               <c:if test="${nowUser.member_pass eq null }">
-             	 <form id="updateForm1" name="updateForm1" method="post">
-					<input type="file" id="imageUploadFile" name="imageUploadFile" />
-					<a href="javascript:void(0);" class="button" onclick="jsFileUpload('pass','updateForm1');"><span class="new">등록</span></a>	
-				 </form>
+              	 <div id=preView style="width:200px;"></div>
+              	 <div id=uploadForm>
+	             	 <form id="passForm" name="frm" method="post">
+						<input type="file" id="imageUploadFile" name="file" />
+						<a href="javascript:void(0);" class="button" onclick="fileUpload();"><span class="new">등록</span></a>	
+					 </form>
+				 </div>
               </c:if>
               <c:if test="${nowUser.member_pass != null }">
+             	 <div id=preView style="width:200px;"><img src="${nowUser.member_pass }"></div>
+             	 <div id=uploadForm>
+				 	<a href="javascript:void(0);" class="button" onclick="fileUpdate();"><span class="new">변경</span></a>
+				 </div>	
               </c:if>
               <small id="numberlHelp" class="form-text text-muted"></small>
           </div>
@@ -43,11 +51,12 @@
    
    		var memberId = "${nowUser.member_id }";
    
-		var isNickChecked = false;
+		var isNickChecked = true;
 	
 		var oldName = "${nowUser.member_name }";
 		
    		function setNameInput() {
+   			isNickChecked = false;
    			$("#memberName").attr("readonly", false);
    			alert("변경할 닉네임을 입력하여주세요!");
    			$("#nickChangeBtn").hide();
@@ -140,13 +149,14 @@
    			} else {
    				
    				var nickName = $("#memberName").val();
+   				var memberPassVal = $("#memberPassVal").val();
    				
    				$.ajax({
    				       type: "post", 
    				       dataType: "text", 
    				       contentType: "application/x-www-form-urlencoded;charset=utf-8",
    				       url: "${pageContext.request.contextPath}/user/update.do",
-   				       data : {memberId : memberId, nickname : nickName},
+   				       data : {memberId : memberId, nickname : nickName, memberpass: memberPassVal},
    				       success: function(rtn) {
    				    	  alert("정보 수정이 완료되었습니다.");
    			        	  window.location.href = '${pageContext.request.contextPath}/main.do';
@@ -159,87 +169,44 @@
    			
    		});
    		
-   		function jsFileUpload(gubun, frmId) {
-   			var size = $("#"+frmId)["0"]["0"].files["0"].size;
-   			//alert(size);
-   			if(size > 10*1024*1024)	{
-   				alert("파일 업로드 용량 초과(10MB)");
-   				return false;
-   			}
-   			
-   			$.imageFileUpload({
-   				 url: '${pageContext.request.contextPath}/fupload.cgn'
-   				,formId: frmId //'updateForm'
-   				,success: function(fileName) {
-   					//alert(fileName);
+ 		
+		function fileUpload() {
+			var form = jQuery("#passForm")[0];
+			var formData = new FormData(form);
 
-   					if(gubun == "pass")	{
-   						$("#thumbfile").val(fileName);
-   						//$("#"+frmId).html("<a href=\"#;\" class=\"button\" onclick=\"jsFileRemove(\'"+gubun+"\',\'"+frmId+"\');\"><img src=\""+fileName.replace("/data/www","http:/")+"\"/> <span class=\"delete\">삭제</span></a>");
-   						$("#"+frmId).html("<img src=\""+fileName+"\"/> <a href=\"#;\" class=\"button\" onclick=\"jsFileRemove(\'"+gubun+"\',\'"+frmId+"\');\"><span class=\"delete\">삭제</span></a>");
-   					} else {
-   						$("#attachfile").val(fileName);
-   						//$("#"+frmId).html("<a href=\"#;\" class=\"button\" onclick=\"jsFileRemove(\'"+gubun+"\',\'"+frmId+"\');\"> * "+fileName.replace("/data/www","http:/")+" <span class=\"delete\">삭제</span></a>");
-   						$("#"+frmId).html(" * "+fileName+" <a href=\"#;\" class=\"button\" onclick=\"jsFileRemove(\'"+gubun+"\',\'"+frmId+"\');\"><span class=\"delete\">삭제</span></a>");
-   					}
-   					
-   				}
-   				,error: function(e) {
-   					alert(JSON.stringify(e));
-   				}
-   			});
-   		};
-   		
-   		function jsFileRemove(gubun, frmId) 	{
-   			var filenameTxt = $("#"+gubun+"file").val();
-   				
-   			$.ajax({ 
-   				url: "${pageContext.request.contextPath}/fremove.cgn" , 
-   				type: "POST",
-   				data: {filename : filenameTxt},
-   				success: function(data) {
-   					//alert(data);
-   					if(data){
-   						//파일 삭제
-   						$("#"+gubun+"file").val("");
-   						$("#"+frmId).html("<input type=\"file\" id=\"imageUploadFile\" name=\"imageUploadFile\" /><a href=\"#;\" class=\"button\" onclick=\"jsFileUpload(\'"+gubun+"\',\'"+frmId+"\');\"> <span class=\"new\">추가</span></a>");
-   					}
-   					else
-   						alert("파일삭제에 실패하였습니다.");
-   				}
-   				,error: function(e) {
-   					alert(JSON.stringify(e));
-   				}
-   			});
-   		}
-   		
-   		$.imageFileUpload = function(args) {
-   			var targetFormObj = $('#' + args.formId);
-   			var targetForm = targetFormObj[0];
-   			var iframeName = '__imageUploadIframe';
-   			targetFormObj.attr('enctype', 'multipart/form-data');
-   			targetForm.method = 'POST';
-   			targetForm.target = iframeName;
-   			targetForm.action = args.url;
-   			$('body').append('<iframe id="' + iframeName + '" name="' + iframeName + '" style="display:none;" src=""></iframe>');
-   			$('iframe#'+iframeName).bind('load', function (){
-   				var hiddenIframe = $('#__imageUploadIframe');
-   				var err;
-   				var fileName;
-   				try {
-   					fileName = eval(hiddenIframe.contents().find('body').text())[0];
-   				} catch (e) {
-   					err = e;
-   				}
-   				hiddenIframe.remove();
-   				targetFormObj.attr('enctype', 'application/x-www-form-urlencoded');
-   				if(fileName != null && fileName != '')
-   					args.success(fileName);
-   				else
-   					args.error(err);
-   			});
-   			targetForm.submit();
-   		};	
-   </script>
+			jQuery.ajax({
+				url : "${pageContext.request.contextPath}/fupload.do",
+				type : "POST",
+				processData : false,
+				contentType : false,
+				dataType: "text",
+				data : formData,
+				success : function(filename) {
+					afterUpload(filename);
+				},
+				error:function(request,status,error){
+			        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			    }
+			});
+		}
+		
+		function afterUpload(filename) {
+			var filePath = "https://www.gyobab.shop:8883/images/" + filename;
+			$("#memberPassVal").val(filePath);
+			$("#preView").html("<img src='"+filePath+"' />");
+			$("#uploadForm").empty();
+			$("#uploadForm").html('<a href="javascript:void(0);" class="button" onclick="fileUpdate();"><span class="new">변경</span></a>');
+		}
+		
+		function fileUpdate() {
+			$("#preView").empty();
+			$("#uploadForm").empty();
+			
+			var tmpHtml = '<form id="passForm" name="frm" method="post"><input type="file" id="imageUploadFile" name="file" />';
+			tmpHtml += '<a href="javascript:void(0);" class="button" onclick="fileUpload();"><span class="new">등록</span></a></form>';
+			
+			$("#uploadForm").append(tmpHtml);
+		}
+	</script>
    
 </div>

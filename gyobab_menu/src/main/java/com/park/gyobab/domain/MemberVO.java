@@ -1,5 +1,6 @@
 package com.park.gyobab.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -11,9 +12,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Alias("MemberVO")
-public class MemberVO implements UserDetails{
+public class MemberVO implements UserDetails, Serializable{
 	 
-    private int member_id;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5568707156178057112L;
+	
+	private int member_id;
     private String member_email;
     private String member_name;
     private GrantVO grantVO;

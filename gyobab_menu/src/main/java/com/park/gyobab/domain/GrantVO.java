@@ -1,18 +1,25 @@
 package com.park.gyobab.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
 @Alias("GrantVO")
-public class GrantVO {
-    private int grant_id;
+public class GrantVO implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7911766164009948346L;
+	
+	private int grant_id;
     private String grant_name;
     private Date create_date;
     private Date update_date;
     private int update_member;
     private boolean act_flg;
     private boolean del_flg;
+    
 	public int getGrant_id() {
 		return grant_id;
 	}

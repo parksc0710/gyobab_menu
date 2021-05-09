@@ -64,7 +64,7 @@
   	
   	<update id="updateMember" parameterType="com.park.gyobab.domain.MemberVO">
   		UPDATE `member`
-			set member_name = #{member_name}
+			set member_name = #{member_name}, member_pass = #{member_pass}
 		WHERE
 			member_id = #{member_id}
   	</update>
