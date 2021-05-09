@@ -7,6 +7,10 @@
 
 <div class="content">
 	<img src="https://www.gyobab.shop:8883/images/hello.jpg" style="width:100%;max-width:639px;"/><br>
+	<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
+	<security:authentication property="principal.member_name" var="memberName"/>
+		<h4><b>${memberName}</b>님 안녕하세요!</h4><br>
+	</security:authorize>
 	이미지가 보이지 않으면 아래 버튼을 눌러서 인증서 허용을 해주세요.<br>
 	<a href="https://www.gyobab.shop:8883/images/hello.jpg" target="_blank" class="btn btn-primary btn-sm btn-block" style="width:150px;">
 		<i class="fas fa-search"></i> 인증서 허용하기
