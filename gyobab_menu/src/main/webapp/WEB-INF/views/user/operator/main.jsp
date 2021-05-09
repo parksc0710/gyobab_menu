@@ -37,7 +37,7 @@
 									<tbody>
 										<c:forEach var="list" items="${list}">
 											<tr role="row" class="odd">
-												<td class="sorting_1">${list.member_grant}</td>
+												<td class="sorting_1">${list.grantVO.grant_name}</td>
 												<td class="sorting_1">${list.member_email}</td>
 												<td class="sorting_1">${list.member_name}</td>
 												<td class="sorting_1"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${list.create_date}" /></td>

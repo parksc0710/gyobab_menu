@@ -5,16 +5,19 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.type.Alias;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+@Alias("MemberVO")
 public class MemberVO implements UserDetails{
 	 
     private int member_id;
     private String member_email;
     private String member_name;
-    private String member_grant;
+    private GrantVO grantVO;
+    private String member_pass;
     private Date create_date;
     private Date update_date;
     private boolean act_flg;
@@ -22,6 +25,12 @@ public class MemberVO implements UserDetails{
     
     public int getMember_id() {
 		return member_id;
+	}
+	public GrantVO getGrantVO() {
+		return grantVO;
+	}
+	public void setGrantVO(GrantVO grantVO) {
+		this.grantVO = grantVO;
 	}
 	public void setMember_id(int member_id) {
 		this.member_id = member_id;
@@ -38,11 +47,11 @@ public class MemberVO implements UserDetails{
 	public void setMember_name(String member_name) {
 		this.member_name = member_name;
 	}
-	public String getMember_grant() {
-		return member_grant;
+	public String getMember_pass() {
+		return member_pass;
 	}
-	public void setMember_grant(String member_grant) {
-		this.member_grant = member_grant;
+	public void setMember_pass(String member_pass) {
+		this.member_pass = member_pass;
 	}
 	public Date getCreate_date() {
 		return create_date;
@@ -72,7 +81,7 @@ public class MemberVO implements UserDetails{
 	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         
-        String roleGrant = "ROLE_" + member_grant;
+        String roleGrant = "ROLE_" + grantVO.getGrant_name();
         
         GrantedAuthority myGrant = new SimpleGrantedAuthority(roleGrant);
         

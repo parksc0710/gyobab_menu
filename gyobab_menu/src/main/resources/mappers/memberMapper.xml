@@ -4,6 +4,23 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.park.gyobab.MemberMapper">
+  
+  	<resultMap type="com.park.gyobab.domain.GrantVO" id="GrantVO">
+		<result column="grant_id" property="grant_id" />
+		<result column="grant_name" property="grant_name" />
+	</resultMap>
+  
+  	<resultMap type="com.park.gyobab.domain.MemberVO" id="MemberVO">
+		<result column="member_id" property="member_id" />
+		<result column="member_email" property="member_email" />
+		<result column="member_name" property="member_name" />
+		<result column="member_pass" property="member_pass" />
+		<result column="create_date" property="create_date" />
+		<result column="update_date" property="update_date" />
+		<result column="act_flg" property="act_flg" />
+		<result column="del_flg" property="del_flg" />
+		<collection property="grantVO" resultMap="GrantVO" />
+	</resultMap>
   	
   	<select id="getTime" resultType="string">
   		select now();
@@ -11,25 +28,16 @@
   	
   	<insert id="insertMember">
   		INSERT INTO `member`
-			(member_email, member_name)
+			(member_email, member_name, member_grant)
 		VALUES
-			(#{member_email}, #{member_name});
+			(#{member_email}, #{member_name}, (SELECT grant_id FROM `grant` WHERE grant_name = 'USER'));
   	</insert>
   	
-  	<insert id="insertGrantUser">
-		INSERT INTO `member_grant`
-			(member_id, grant_id)
-		VALUES
-		    ((SELECT member_id FROM `member` WHERE member_email = #{member_email}), (SELECT grant_id FROM `grant` WHERE grant_name = 'USER'))
-  	</insert>
-  	
-  	<select id="selectMemberByEmail" resultType="com.park.gyobab.domain.MemberVO">
-  		select a.member_id, a.member_email, a.member_name, c.grant_name as 'member_grant', a.create_date, a.update_date, a.act_flg, a.del_flg 
-  		from `member` a
-		inner join `member_grant` b
-		on a.member_id = b.member_id
-		inner join `grant` c
-		on b.grant_id = c.grant_id
+  	<select id="selectMemberByEmail" resultMap="MemberVO">
+  		select a.member_id, a.member_email, a.member_name, b.grant_id, b.grant_name , a.create_date, a.update_date, a.act_flg, a.del_flg 
+  		from `member` a		
+		inner join `grant` b
+		on a.member_grant = b.grant_id
 		where a.member_email = #{member_email}
   	</select>
   	
@@ -39,20 +47,19 @@
 		where member_name = #{member_name} and act_flg = 1 and del_flg = 0
   	</select>
   	
-  	<select id="selectMembers" resultType="com.park.gyobab.domain.MemberVO">
+  	<select id="selectMembers" resultMap="MemberVO">
   		SELECT `member`.`member_id`,
 		    `member`.`member_email`,
 		    `member`.`member_name`,
 		    `member`.`create_date`,
 		    `member`.`update_date`,
+		    `grant`.`grant_name`,
 		    `member`.`act_flg`,
 		    `member`.`del_flg`,
 		    `grant`.`grant_name` as 'member_grant'
 		FROM `gyobab`.`member`  
-		INNER JOIN `gyobab`.`member_grant` 
-		ON `member`.`member_id` = `member_grant`.`member_id`
 		INNER JOIN `gyobab`.`grant`
-		ON `member_grant`.`grant_id` = `grant`.`grant_id`
+		ON `member`.`member_grant` = `grant`.`grant_id`
   	</select>
   	
   	<update id="updateMember" parameterType="com.park.gyobab.domain.MemberVO">
@@ -61,53 +68,6 @@
 		WHERE
 			member_id = #{member_id}
   	</update>
-  	
-  	
-  	<!-- <insert id="insertMember">
-  		INSERT INTO member
-			(user_id, user_pw, user_email, act_flg, del_flg)
-		VALUES
-			(#{user_id}, #{user_pw}, #{user_email}, 1, 0);
-  	</insert>
-  
-  	일반 USER 권한 맴버 등록
-  	<insert id="insertGrantUser">
-		INSERT INTO member_member_grant
-			(member_id, grant_id)
-		VALUES
-		    ((SELECT member_id FROM member WHERE user_id = #{user_id}), 2)
-  	</insert>
-  	
-  	소셜회원가입 USER 권한 맴버 등록
-  	<insert id="insertGrantOauth2">
-		INSERT INTO member_member_grant
-			(member_id, grant_id)
-		VALUES
-		    ((SELECT member_id FROM member WHERE user_id = #{user_id}), 3)
-  	</insert>
-  	
-  	<select id="selectMember" resultType="com.park.gyobab.domain.MemberVO">
-  		select a.member_id, a.user_id, a.user_pw, a.user_email, a.act_flg, a.del_flg, c.grant_name from member a
-		inner join member_member_grant b
-		on a.member_id = b.member_id
-		inner join member_grant c
-		on b.grant_id = c.grant_id
-		where a.member_id = #{member_id}
-  	</select>
-  	
-  	user_id로 member_id 불러오기
-  	<select id="selectMemberID" resultType="com.park.gyobab.domain.MemberVO">
-  		SELECT member_id FROM member WHERE user_id = #{user_id}
-  	</select>
-  	
-  	user_email로 member_id 불러오기
-  	<select id="selectMemberEmail" resultType="com.park.gyobab.domain.MemberVO">
-  		SELECT member_id FROM member WHERE user_email = #{user_email}
-  	</select>
-  	
-  	<select id="selectMemberWithPw" resultType="com.park.gyobab.domain.MemberVO">
-  		SELECT * FROM member WHERE user_id = #{user_id} and user_pw = #{user_pw}
-  	</select> -->
   	
   </mapper>
  

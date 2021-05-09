@@ -271,7 +271,6 @@ public class SignController {
 		tmp.setMember_email(email);
 		tmp.setMember_name(nickname);
 		service.insertMember(tmp);
-		service.insertMemberGrantUser(tmp);
 		
 		//socialLoginDo(request, "", email);
 		
@@ -293,7 +292,7 @@ public class SignController {
 	private void loginSuccessDo() {
 		MemberVO nowUser = (MemberVO) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		if(nowUser != null) {
-			System.out.println(nowUser.getMember_email() + " // " + nowUser.getMember_grant());
+			System.out.println(nowUser.getMember_email() + " // " + nowUser.getGrantVO().getGrant_name());
 		} else {
 			System.out.println("nowUser is null");
 		}

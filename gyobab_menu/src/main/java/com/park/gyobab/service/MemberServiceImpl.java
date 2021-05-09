@@ -21,11 +21,6 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void insertMemberGrantUser(MemberVO vo) {
-		dao.insertMemberGrantUser(vo);
-	}
-	
-	@Override
 	public MemberVO selectMemberById(int member_id) throws Exception {
 		MemberVO tmpVo = dao.selectMemberById(member_id); 
 		return tmpVo;
