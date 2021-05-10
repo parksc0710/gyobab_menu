@@ -1,7 +1,5 @@
 package com.park.gyobab.controller.user;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;

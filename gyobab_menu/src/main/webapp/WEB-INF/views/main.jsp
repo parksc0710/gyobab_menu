@@ -6,16 +6,24 @@
 
 
 <div class="content">
-	<img src="https://www.gyobab.shop:8883/images/hello.jpg" style="width:100%;max-width:639px;"/><br>
-	<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
-	<security:authentication property="principal.member_name" var="memberName"/>
-		<h4><b>${memberName}</b>님 안녕하세요!</h4><br>
-	</security:authorize>
-	이미지가 보이지 않으면 아래 버튼을 눌러서 인증서 허용을 해주세요.<br>
-	<a href="https://www.gyobab.shop:8883/images/hello.jpg" target="_blank" class="btn btn-primary btn-sm btn-block" style="width:150px;">
-		<i class="fas fa-search"></i> 인증서 허용하기
-	</a>
-	<br><br>
+	<div class="row">
+	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+		    <div class="card mb-3">
+		    	<div class="card-body">
+			        <img src="https://www.gyobab.shop:8883/images/hello.jpg" style="width:100%;max-width:639px;"/><br>
+					<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
+					<security:authentication property="principal.member_name" var="memberName"/>
+						<h4><b>${memberName}</b>님 안녕하세요!</h4><br>
+					</security:authorize>
+					이미지가 보이지 않으면 아래 버튼을 눌러서 인증서 허용을 해주세요.<br>
+					<a href="https://www.gyobab.shop:8883/images/hello.jpg" target="_blank" class="btn btn-primary btn-sm btn-block" style="width:150px;">
+						<i class="fas fa-search"></i> 인증서 허용하기
+					</a>
+				</div>
+			</div>
+	    </div>
+	</div>
+	<br>
 	<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
 	<security:authentication property="principal.member_pass" var="memberPass"/>
 	<c:choose>
@@ -54,4 +62,56 @@
 		</c:otherwise>
 	</c:choose>
 	</security:authorize>
+	<br>
+	<div class="row">
+	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+	            <div class="card mb-3">
+	                <div class="card-header">
+	                    <span class="pull-right">
+		                    <a href="${pageContext.request.contextPath}/menu/main.do" class="btn btn-primary btn-sm btn-block" style="width:180px;">
+								<i class="fas fa-search"></i> 다른 메뉴 보러가기
+							</a>
+                    	</span>
+	                    <h3><b>오늘의 점심 메뉴</b></h3>
+	                </div>
+	                <!-- end card-header -->
+	
+	                <div class="card-body">
+	
+	                    <div class="table-responsive">
+	                        <table class="table table-bordered">
+	                            <thead>
+	                                <tr>
+	                                    <th style="min-width: 300px">메뉴</th>
+	                                    <th style="width:110px">글쓴이</th>
+	                                </tr>
+	                            </thead>
+	                            <tbody>
+	
+	                                <tr>
+	                                    <td>
+	                                        <div class="blog_list"></div>
+	                                        <h4> 2021년 5월 10일</h4>
+	                                        <p>2021-05-10 10:22:43</p>
+	                                        <p>
+	                                        	흰밥<br>
+	                                        	제육볶음<br>
+	                                        	셀러드<br>
+	                                        	배추김치<br>
+	                                        	미역국<br>
+	                                        </p>
+	                                    </td>
+	
+	                                    <td>박성철</td>
+	                                </tr>
+	                            </tbody>
+	                        </table>
+	                    </div>
+	                </div>
+	                <!-- end card-body -->
+	            </div>
+	            <!-- end card -->
+	        </div>
+	        <!-- end col -->
+	    </div>
 </div>

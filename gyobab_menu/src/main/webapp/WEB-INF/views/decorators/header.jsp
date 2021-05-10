@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
+<%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<c:set var = "nowUrl" value="${pageContext.request.requestURL}" />
 
  <!-- top bar navigation -->
 <div class="headerbar">
@@ -121,26 +127,20 @@
 <div class="left main-sidebar">
     <div class="sidebar-inner leftscroll">
         <div id="sidebar-menu">
-
+		
             <ul>
                 <li class="submenu">
-                    <a class="active" href="index.html">
-                        <i class="fas fa-bars"></i>
-                        <span> Dashboard </span>
+	
+                    <a class='<c:if test="${fn:contains(nowUrl , 'menu/')}">active</c:if>' href="${pageContext.request.contextPath}/menu/main.do">
+                        <i class="fas fa-star"></i>
+                        <span> 오늘의 점심 메뉴 </span>
                     </a>
                 </li>
 
                 <li class="submenu">
-                    <a href="users.html">
+                    <a class='<c:if test="${fn:contains(nowUrl , 'user/')}">active</c:if>' href="${pageContext.request.contextPath}/user/main.do">
                         <i class="fas fa-user"></i>
-                        <span> Users </span>
-                    </a>
-                </li>
-
-                <li class="submenu">
-                    <a href="blog.html">
-                        <i class="fas fa-file-alt"></i>
-                        <span> Blog </span>
+                        <span> 내 정보 </span>
                     </a>
                 </li>
 
