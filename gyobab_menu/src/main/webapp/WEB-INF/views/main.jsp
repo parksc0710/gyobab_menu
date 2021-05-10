@@ -82,7 +82,7 @@
 	                        <table class="table table-bordered">
 	                            <thead>
 	                                <tr>
-	                                    <th style="min-width: 300px">메뉴</th>
+	                                    <th style="">메뉴</th>
 	                                    <th style="width:110px">글쓴이</th>
 	                                </tr>
 	                            </thead>
