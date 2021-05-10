@@ -30,7 +30,6 @@
 		                   		<c:set var="memberGrant" value="${list.grantVO.grant_name }"/>
 								<tr>
 									<td>
-										<div class="user_avatar_list d-none d-none d-lg-block"><img alt="image" src="assets/images/avatars/avatar_small.png"></div>
 										<h4>${list.member_name}</h4>
 										<p>${list.member_email}</p>
 										<p>가입일 : <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${list.create_date}" /></p>
