@@ -1,8 +1,6 @@
 package com.park.gyobab.persistence;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -71,6 +69,11 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void updateMember(MemberVO vo) {
 		sqlSession.update(namespace + ".updateMember", vo); 
+	}
+
+	@Override
+	public void updateMemberGrant(MemberVO vo) {
+		sqlSession.update(namespace + ".updateMemberGrant", vo); 
 	}
 
 }

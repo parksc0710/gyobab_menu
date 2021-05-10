@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.park.gyobab.GrantMapper">
+  
+  	<select id="selectGrantIdByName" resultType="Integer">
+  		select grant_id 
+  		from `grant` 		
+		where grant_name = #{grant_name} and act_flg = 1 and del_flg = 0
+  	</select>
+  	
+  </mapper>
+ 
+ 

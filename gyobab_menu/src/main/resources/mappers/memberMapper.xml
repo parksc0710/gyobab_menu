@@ -82,6 +82,13 @@
 			member_id = #{member_id}
   	</update>
   	
+  	<update id="updateMemberGrant" parameterType="com.park.gyobab.domain.MemberVO">
+  		UPDATE `member`
+			set member_grant = #{grantVO.grant_id}
+		WHERE
+			member_id = #{member_id}
+  	</update>
+  	
   </mapper>
  
  

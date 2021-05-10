@@ -13,80 +13,99 @@
            <div class="card-header">
                <h3><i class="fas fa-user-friends"></i>회원 정보</h3>
            </div>
-
+           
            <div class="card-body">
-
-				<div class="table-responsive">
-					<div id="dataTable_wrapper"
-						class="dataTables_wrapper dt-bootstrap4 no-footer">
-						<div class="row">
-							<div class="col-sm-12">
-								<table id="dataTable"
-									class="table table-bordered table-hover display dataTable no-footer"
-									style="width: 100%;" role="grid"
-									aria-describedby="dataTable_info">
-									<thead>
-										<tr role="row">
-											<th class="sorting_asc" style="width: 30px;">권한</th>
-											<th class="sorting_asc" style="width: 60px;">이메일</th>
-											<th class="sorting_asc" style="width: 60px;">닉네임</th>
-											<th class="sorting_asc" style="width: 60px;">회원가입일</th>
-											<th class="sorting_asc" style="width: 30px;">수정</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:forEach var="list" items="${list}">
-											<tr role="row" class="odd">
-												<td class="sorting_1">${list.grantVO.grant_name}</td>
-												<td class="sorting_1">${list.member_email}</td>
-												<td class="sorting_1">${list.member_name}</td>
-												<td class="sorting_1"><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${list.create_date}" /></td>
-												<td class="sorting_1">${list.member_id}</td>
-											</tr>
-										</c:forEach>
-									</tbody>
-								</table>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-sm-12 col-md-5">
-								<div class="dataTables_info" id="dataTable_info" role="status"
-									aria-live="polite"></div>
-							</div>
-							<div class="col-sm-12 col-md-7">
-								<!-- <div class="dataTables_paginate paging_simple_numbers"
-									id="dataTable_paginate">
-									<ul class="pagination">
-										<li class="paginate_button page-item previous disabled"
-											id="dataTable_previous"><a href="#"
-											aria-controls="dataTable" data-dt-idx="0" tabindex="0"
-											class="page-link">Previous</a></li>
-										<li class="paginate_button page-item active"><a href="#"
-											aria-controls="dataTable" data-dt-idx="1" tabindex="0"
-											class="page-link">1</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="2" tabindex="0"
-											class="page-link">2</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="3" tabindex="0"
-											class="page-link">3</a></li>
-										<li class="paginate_button page-item "><a href="#"
-											aria-controls="dataTable" data-dt-idx="4" tabindex="0"
-											class="page-link">4</a></li>
-										<li class="paginate_button page-item next" id="dataTable_next"><a
-											href="#" aria-controls="dataTable" data-dt-idx="5"
-											tabindex="0" class="page-link">Next</a></li>
-									</ul>
-								</div> -->
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- end table-responsive-->
-
-			</div>
+	           <div class="table-responsive">
+	               <table class="table table-bordered">
+	                   <thead>
+	                       <tr>
+	                           <th style="min-width:300px">회원 정보</th>
+	                           <th style="width:120px">권한</th>
+	                           <th style="min-width:110px;">Actions</th>
+	                       </tr>
+	                   </thead>
+	                   <tbody>
+	                   
+		                   <c:forEach var="list" items="${list}">
+		                   		<c:set var="memberGrant" value="${list.grantVO.grant_name }"/>
+								<tr>
+									<td>
+										<div class="user_avatar_list d-none d-none d-lg-block"><img alt="image" src="assets/images/avatars/avatar_small.png"></div>
+										<h4>${list.member_name}</h4>
+										<p>${list.member_email}</p>
+										<p>가입일 : <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${list.create_date}" /></p>
+									</td>
+									<td>
+									<c:choose>
+			                            <c:when test="${memberGrant == 'OPERATOR'}">
+			                            	OPERATOR
+			                            </c:when>
+			                            <c:otherwise>
+				                            <select id="grantSelectBox${list.member_id}">
+												<option <c:if test="${memberGrant eq 'ADMIN' }">selected="selected"</c:if> value="ADMIN">ADMIN</option>
+												<option <c:if test="${memberGrant eq 'USER' }">selected="selected"</c:if> value="USER">USER</option>
+											</select>
+			                            </c:otherwise>
+		                            </c:choose>
+									</td>
+		                            <td>
+		                            <c:choose>
+			                            <c:when test="${memberGrant == 'OPERATOR'}">
+			                            </c:when>
+			                            <c:otherwise>
+			                            	<a href="javascript:updateUser(${list.member_id});" class="btn btn-primary btn-sm btn-block"><i class="far fa-edit"></i> 수정</a>
+			                                <a href="javascript:deleteUser(${list.member_id}, '${list.member_name}');" class="btn btn-danger btn-sm btn-block mt-2"><i class="fas fa-trash"></i> 탈퇴</a>
+			                            </c:otherwise>
+		                            </c:choose>
+		                            </td>
+								</tr>
+							</c:forEach>
+	                   </tbody>
+	               </table>
+	           </div>
+	       </div>
            <!-- end card-body-->
        </div>
        <!-- end card-->
    </div>
 </div>
+<script>
+	function updateUser(inId) {
+		var newGrantName = $("#grantSelectBox"+inId + " option:selected").val();
+		alert(inId + " // " + newGrantName);
+		$.ajax({
+	       type: "post", 
+	       dataType: "text", 
+	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	       url: "${pageContext.request.contextPath}/ou/updateMember.do",
+	       data : {memberId : inId, newGrantName : newGrantName},
+	       success: function(rtn) {
+	    	  alert("정보 수정이 완료되었습니다.");
+        	  window.location.href = '${pageContext.request.contextPath}/ou/main.do';
+	       },
+	       error:function(request,status,error){
+	           alert("에러발생. 관리자에게 문의하세요.");
+	       }
+	    });
+	}
+	function deleteUser(inId, inName) {
+		var inText = inName+" 님을 탈퇴시키겠습니까? \n탈퇴하면 회원의 모든 데이터가 삭제됩니다.";
+		var checkWithdraw = confirm(inText);
+		if(checkWithdraw) {
+			$.ajax({
+		       type: "post", 
+		       dataType: "text", 
+		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		       url: "${pageContext.request.contextPath}/ou/deleteMember.do",
+		       data : {memberId : inId},
+		       success: function(rtn) {
+		    	  alert("탈퇴가 완료되었습니다.");
+	        	  window.location.href = '${pageContext.request.contextPath}/ou/main.do';
+		       },
+		       error:function(request,status,error){
+		           alert("에러발생. 관리자에게 문의하세요.");
+		       }
+		    });
+		}
+	}
+</script>

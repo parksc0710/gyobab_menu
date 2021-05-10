@@ -21,4 +21,6 @@ public interface MemberService {
 	public List<MemberVO> selectMembers() throws Exception;
 	
 	public void updateMember(MemberVO vo);
+	
+	public void updateMemberGrant(MemberVO vo);
 }

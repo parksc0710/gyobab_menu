@@ -24,4 +24,6 @@ public interface MemberDAO {
 
 	public void updateMember(MemberVO vo);
 	
+	public void updateMemberGrant(MemberVO vo);
+	
 }
