@@ -48,6 +48,7 @@
           </div>
           <br><br><br><br>
           <button type="submit" class="btn btn-primary" id="submitBtn">수정하기</button>
+          <a href="javascript:withdraw();" style="float:right;">탈퇴</a>
 
    </div>
    
@@ -213,6 +214,26 @@
 			tmpHtml += '<i class="far fa-edit"></i> 등록</a></form>';
 			
 			$("#uploadForm").append(tmpHtml);
+		}
+		
+		function withdraw() {
+			var checkWithdraw = confirm("탈퇴하시겠습니까? \n탈퇴하면 회원님의 모든 데이터가 삭제됩니다.");
+			if(checkWithdraw) {
+				$.ajax({
+			       type: "post", 
+			       dataType: "text", 
+			       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+			       url: "${pageContext.request.contextPath}/user/withdraw.do",
+			       data : {memberId : memberId},
+			       success: function(rtn) {
+			    	  alert("탈퇴가 완료되었습니다.");
+		        	  window.location.href = '${pageContext.request.contextPath}/main.do';
+			       },
+			       error:function(request,status,error){
+			           alert("탈퇴에 실패했습니다. 관리자에게 문의하세요.");
+			       }
+			    });
+			}
 		}
 	</script>
    

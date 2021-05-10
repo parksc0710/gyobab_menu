@@ -71,6 +71,11 @@
 	                        <i class="fas fa-user"></i>
 	                        <span>회원 관리</span>
 	                    </a>
+	                    
+	                    <a href="${pageContext.request.contextPath}/user/main.do" class="dropdown-item notify-item">
+	                        <i class="fas fa-user"></i>
+	                        <span>내 정보</span>
+	                    </a>
 	
 	                    <a href="${pageContext.request.contextPath}/logout" class="dropdown-item notify-item">
 	                        <i class="fas fa-power-off"></i>
@@ -98,7 +103,7 @@
 	
 	                    <a href="${pageContext.request.contextPath}/user/main.do" class="dropdown-item notify-item">
 	                        <i class="fas fa-user"></i>
-	                        <span>Profile</span>
+	                        <span>내 정보</span>
 	                    </a>
 	
 	                    <a href="${pageContext.request.contextPath}/logout" class="dropdown-item notify-item">
@@ -136,13 +141,15 @@
                         <span> 오늘의 점심 메뉴 </span>
                     </a>
                 </li>
-
+				
+				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
                 <li class="submenu">
                     <a class='<c:if test="${fn:contains(nowUrl , 'user/')}">active</c:if>' href="${pageContext.request.contextPath}/user/main.do">
                         <i class="fas fa-user"></i>
                         <span> 내 정보 </span>
                     </a>
                 </li>
+                </security:authorize>
 
             </ul>
 

@@ -19,6 +19,11 @@ public class MemberServiceImpl implements MemberService {
 	public void insertMember(MemberVO vo) {
 		dao.insertMember(vo);
 	}
+	
+	@Override
+	public void deleteMember(MemberVO vo) {
+		dao.deleteMember(vo);
+	}
 
 	@Override
 	public MemberVO selectMemberById(int member_id) throws Exception {
@@ -56,5 +61,4 @@ public class MemberServiceImpl implements MemberService {
 	public void updateMember(MemberVO vo) {
 		dao.updateMember(vo);
 	}
-
 }

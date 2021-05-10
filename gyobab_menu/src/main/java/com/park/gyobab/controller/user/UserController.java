@@ -61,4 +61,26 @@ public class UserController {
 		return rtn;
 	}
 	
+	@RequestMapping(value = "withdraw", produces = "application/json;charset=utf-8", method = RequestMethod.POST)
+	@ResponseBody
+	public String withdraw( 
+			@RequestParam(value = "memberId", required = true) int memberId) throws Exception {
+		
+		String rtn = "";
+		
+		MemberVO nowUser = (MemberVO) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		
+		if(nowUser.getMember_id() != memberId) {
+			return "false";
+		}
+		
+		//System.out.println("email : " + email + " // nickname : " + nickname);
+		MemberVO tmp = nowUser;
+		SecurityContextHolder.clearContext();
+		service.deleteMember(tmp);
+		
+		rtn = "success";
+		return rtn;
+	}
+	
 }

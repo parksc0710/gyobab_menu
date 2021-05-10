@@ -33,6 +33,11 @@
 			(#{member_email}, #{member_name}, (SELECT grant_id FROM `grant` WHERE grant_name = 'USER'), #{member_pass});
   	</insert>
   	
+  	
+  	<delete id="deleteMember" parameterType="com.park.gyobab.domain.MemberVO">
+  		DELETE FROM `member` WHERE member_id = #{member_id};
+  	</delete>
+  	
   	<select id="selectMemberByEmail" resultMap="MemberVO">
   		select a.member_id, a.member_email, a.member_name, b.grant_id, b.grant_name , a.member_pass, a.create_date, a.update_date, a.act_flg, a.del_flg 
   		from `member` a		
