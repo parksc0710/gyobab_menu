@@ -49,7 +49,7 @@ public class HomeController{
 		long fileSize = file.getSize();
 		String ext = oriName.substring(oriName.lastIndexOf("."));
 		String stoName = UUID.randomUUID()+ext;
-		String filePath = "/home/parksc0710/serv/image/webapps/ROOT/images/";
+		String filePath = "/home/parksc0710/images/";
 		
 		file.transferTo(new File(filePath,stoName));
 		
