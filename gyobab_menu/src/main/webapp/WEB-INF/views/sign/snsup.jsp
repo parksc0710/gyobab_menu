@@ -174,7 +174,7 @@
 	}
 	
 	function afterUpload(filename) {
-		var filePath = "https://www.gyobab.shop:8883/images/" + filename;
+		var filePath = "https://www.gyobab.shop/images/" + filename;
 		$("#memberPassVal").val(filePath);
 		$("#preView").html("<img src='"+filePath+"' />");
 		$("#uploadForm").empty();
