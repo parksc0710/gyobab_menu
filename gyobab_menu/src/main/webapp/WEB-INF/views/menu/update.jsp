@@ -21,7 +21,7 @@
               
               <input type="hidden" value="${inBoard.board_thumb }" id="boardThumb"/>
               <c:if test="${inBoard.board_thumb eq null }">
-              	 <div id=preView style="width:400px;"></div>
+              	 <div id=preView style="width:80%;"></div>
               	 <div id=uploadForm>
 	             	 <form id="passForm" name="frm" method="post">
 						<input type="file" id="imageUploadFile" name="file" />
@@ -32,7 +32,7 @@
 				 </div>
               </c:if>
               <c:if test="${inBoard.board_thumb != null }">
-             	 <div id=preView style="width:400px"><img src="${inBoard.board_thumb }" style="width:100%"></div>
+             	 <div id=preView style="width:80%"><img src="${inBoard.board_thumb }" style="width:100%"></div>
              	 <div id=uploadForm>
 				 	<a href="javascript:void(0);" class="button" onclick="fileUpdate();" style="width:80px;display:inline;float: left;">
 				 		<span class="new"> 변경</span>
