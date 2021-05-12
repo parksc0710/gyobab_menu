@@ -55,6 +55,22 @@ CREATE TABLE `grant` (
   PRIMARY KEY (`grant_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='권한 테이블';
 
+- 게시판 테이블<br>
+CREATE TABLE `board` (
+  `board_id` int(11) NOT NULL AUTO_INCREMENT,
+  `board_type` varchar(45) DEFAULT NULL,
+  `board_tit` varchar(100) NOT NULL,
+  `board_txt` varchar(2000) NULL,
+  `board_member` int(11) NOT NULL,
+  `board_view` int(11),
+  `create_date` datetime DEFAULT current_timestamp(),
+  `update_date` datetime DEFAULT current_timestamp(),
+  `act_flg` bit(1) DEFAULT b'1',
+  `del_flg` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`board_id`),
+  FOREIGN KEY (`board_member`) REFERENCES `member` (`member_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='게시판 테이블';
+
 <br><br>
 
 # To Do List <br>
