@@ -39,47 +39,37 @@
 	
 	                    <div class="table-responsive">
 	                        <table class="table table-bordered">
-	                            <thead>
-	                                <tr>
-	                                    <th style="">메뉴</th>
-	                                    <th style="width:110px">글쓴이</th>
-	                                    <security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN">
-	                                    	<th style="min-width:110px">Actions</th>
-	                                    </security:authorize>
-	                                </tr>
-	                            </thead>
 	                            <tbody>
 		                            <c:forEach var="list" items="${list}">
 		                            
 			                            <tr>
 		                                    <td>
 		                                        <div class="blog_list"></div>
-		                                        <h4> ${list.board_tit }</h4>
-		                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${list.update_date}" /></p>
+		                                        <h4> ${list.board_tit }
+		                                        </h4>
+		                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${list.update_date}" />
+		                                        	<span style="float:right;"><b>${list.memberVO.member_name  }</b></span>
+		                                        </p>
 		                                        <p>
 		                                        	<c:if test="${!empty list.board_thumb}">
 		                                        		<img src="${list.board_thumb }" style="width:100%"/> <br><br>
 		                                        	</c:if>
 		                                        	${list.board_txt}
 		                                        </p>
+		                                        <p>
+		                                        	<security:authorize ifAnyGranted="ROLE_OPERATOR">
+				                                        <span style="width:100px;float:right;"><a href="${pageContext.request.contextPath}/menu/updateOperator.do?boardid=${list.board_id }" class="btn btn-primary btn-sm btn-block"><i class="far fa-edit"></i> Edit</a>                                                        
+				                                        <a href="javascript:deleteBoard(${list.board_id }, '${list.board_tit }')" class="btn btn-danger btn-sm btn-block mt-2"><i class="fas fa-trash"></i> Delete</a></span>                                                        
+				                                    </security:authorize>
+				                                    <security:authorize ifAnyGranted="ROLE_ADMIN">
+				                                   		<security:authentication property="principal.member_id" var="memberId"/>
+														<c:if test="${list.memberVO.member_id == memberId}">
+						                                        <span style="width:100px;float:right;"><a href="${pageContext.request.contextPath}/menu/update.do?boardid=${list.board_id }" class="btn btn-primary btn-sm btn-block"><i class="far fa-edit"></i> Edit</a>                                                        
+						                                        <a href="javascript:deleteBoard(${list.board_id }, '${list.board_tit }')" class="btn btn-danger btn-sm btn-block mt-2"><i class="fas fa-trash"></i> Delete</a></span>                                                        
+					                                    </c:if>
+				                                    </security:authorize>
+		                                        </p>
 		                                    </td>
-		
-		                                    <td>${list.memberVO.member_name }</td>
-											<security:authorize ifAnyGranted="ROLE_OPERATOR">
-			                                    <td>
-			                                        <a href="${pageContext.request.contextPath}/menu/updateOperator.do?boardid=${list.board_id }" class="btn btn-primary btn-sm btn-block"><i class="far fa-edit"></i> Edit</a>                                                        
-			                                        <a href="javascript:deleteBoard(${list.board_id }, '${list.board_tit }')" class="btn btn-danger btn-sm btn-block mt-2"><i class="fas fa-trash"></i> Delete</a>                                                        
-			                                    </td>
-		                                    </security:authorize>
-		                                    <security:authorize ifAnyGranted="ROLE_ADMIN">
-		                                   		<security:authentication property="principal.member_id" var="memberId"/>
-												<c:if test="${list.memberVO.member_id == memberId}">
-				                                    <td>
-				                                        <a href="${pageContext.request.contextPath}/menu/update.do?boardid=${list.board_id }" class="btn btn-primary btn-sm btn-block"><i class="far fa-edit"></i> Edit</a>                                                        
-				                                        <a href="javascript:deleteBoard(${list.board_id }, '${list.board_tit }')" class="btn btn-danger btn-sm btn-block mt-2"><i class="fas fa-trash"></i> Delete</a>                                                        
-				                                    </td>
-			                                    </c:if>
-		                                    </security:authorize>
 		                                </tr>
 									</c:forEach>
 	                            </tbody>

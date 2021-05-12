@@ -86,18 +86,14 @@
 	
 	                    <div class="table-responsive">
 	                        <table class="table table-bordered">
-	                            <thead>
-	                                <tr>
-	                                    <th style="">메뉴</th>
-	                                    <th style="width:110px">글쓴이</th>
-	                                </tr>
-	                            </thead>
 	                            <tbody>
 		                            <tr>
 	                                    <td>
 	                                        <div class="blog_list"></div>
 	                                        <h4> ${topMenu.board_tit }</h4>
-	                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${topMenu.update_date}" /></p>
+	                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${topMenu.update_date}" />
+	                                        	<span style="float:right;"><b>${topMenu.memberVO.member_name }</b></span>
+	                                        </p>
 	                                        <p>
 	                                        	<c:if test="${!empty topMenu.board_thumb}">
 	                                        		<img src="${topMenu.board_thumb }" style="width:100%"/> <br><br>
@@ -105,7 +101,6 @@
 	                                        	${topMenu.board_txt}
 	                                        </p>
 	                                    </td>
-	                                    <td>${topMenu.memberVO.member_name }</td>
 	                                </tr>
 	                            </tbody>
 	                        </table>
