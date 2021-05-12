@@ -8,7 +8,7 @@
 	<div class="container-fluid">
 	
 	    <div class="row">
-	        <div class="col-xl-12">
+	        <div class="col-xl-12" style="max-width:650px;">
 	            <div class="breadcrumb-holder">
 	                <h1 class="main-title float-left">오늘의 점심 메뉴</h1>
 	                <ol class="breadcrumb float-right">
@@ -21,7 +21,7 @@
 
 	    <div class="row">
 	
-	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width:650px;">
 	
 	            <div class="card mb-3">
 	

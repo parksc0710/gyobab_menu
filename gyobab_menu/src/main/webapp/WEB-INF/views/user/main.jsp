@@ -9,7 +9,7 @@
         <h3><b>내 정보</b></h3>
    </div>
    
-   <div class="card-body">
+   <div class="card-body" style="max-width:650px;">
 
           <div class="form-group">
               <label for="exampleInputEmail1">E-mail</label>

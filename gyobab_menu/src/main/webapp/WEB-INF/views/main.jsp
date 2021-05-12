@@ -7,7 +7,7 @@
 
 <div class="content">
 	<div class="row">
-	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:650px;">
 		    <div class="card mb-3">
 		    	<div class="card-body">
 			        <img src="https://www.gyobab.shop/images/hello.jpg" style="width:100%;max-width:639px;"/><br>
@@ -35,7 +35,7 @@
 	<c:choose>
 		<c:when test="${memberPass == '' || memberPass == null}">
 			<div class="row">
-			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:650px;">
 			        <div class="card mb-3">
 			            <div class="card-header">
 			                <h3 style="display:inline"><b>내 온누리교회 바코드</b></h3><a href="${pageContext.request.contextPath}/user/main.do" class="btn btn-primary btn-sm btn-block" style="width:80px;display:inline;float: right;">
@@ -50,7 +50,7 @@
 		</c:when>
 		<c:otherwise>
 			<div class="row">
-			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6">
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6" style="max-width:650px;">
 			        <div class="card mb-3">
 			            <div class="card-header">
 			                <h3 style="display:inline"><b>내 온누리교회 바코드</b></h3>
@@ -59,7 +59,7 @@
 								</a>
 			            </div>
 			            <div class="card-body">
-			            	<img src="${memberPass }" style="display: block; margin: 0px auto; width: 100%"/>
+			            	<img src="${memberPass }" style="display: block; margin: 0px auto; width: 100%; max-width:639px;"/>
 			            </div>
 			        </div>
 			    </div>
@@ -69,8 +69,8 @@
 	</c:choose>
 	</security:authorize>
 	<br>
-	<div class="row">
-	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+		<div class="row">
+	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width:650px;">
 	            <div class="card mb-3">
 	                <div class="card-header">
 	                    <span class="pull-right">
@@ -85,7 +85,7 @@
 	                <div class="card-body">
 	
 	                    <div class="table-responsive">
-	                        <table class="table table-bordered">
+	                        <table class="table table-bordered" >
 	                            <tbody>
 		                            <tr>
 	                                    <td>
@@ -96,7 +96,7 @@
 	                                        </p>
 	                                        <p>
 	                                        	<c:if test="${!empty topMenu.board_thumb}">
-	                                        		<img src="${topMenu.board_thumb }" style="width:100%"/> <br><br>
+	                                        		<img src="${topMenu.board_thumb }" style="width:100%; max-width:639px;"/> <br><br>
 	                                        	</c:if>
 	                                        	${topMenu.board_txt}
 	                                        </p>

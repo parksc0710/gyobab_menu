@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>     
 <security:authentication property="principal.member_id" var="memberId"/>
 <div class="content">
-	<div class="card mb-3">
+	<div class="card mb-3" style="max-width:650px;">
 	    <div class="card-header">
 	        <h3><b>메뉴 수정</b></h3>
 	    </div>
@@ -43,7 +43,7 @@
             <br>
 		    <div class="form-group beforeSpan">
                 <label for="exampleInputEmail1"><b>본문</b></label>
-                <textarea class="form-control" id="boardTxt"  style="margin-top: 0px; margin-bottom: 0px; height: 144px;"><c:out escapeXml = "false" value = "${inBoard.board_txt}"></c:out>
+                <textarea class="form-control" id="boardTxt"  style="margin-top: 0px; margin-bottom: 0px; height: 300px;"><c:out escapeXml = "false" value = "${inBoard.board_txt}"></c:out>
                 </textarea>
             </div>
             <br>

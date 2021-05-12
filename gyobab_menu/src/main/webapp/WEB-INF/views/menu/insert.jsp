@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <security:authentication property="principal.member_id" var="memberId"/>
 <div class="content">
-	<div class="card mb-3">
+	<div class="card mb-3" style="max-width:650px;">
 	    <div class="card-header">
 	        <h3><b>메뉴 등록</b></h3>
 	    </div>
@@ -27,7 +27,7 @@
             </div>
 		    <div class="form-group beforeSpan">
                 <label for="exampleInputEmail1"><b>본문</b></label>
-                <textarea class="form-control" id="boardTxt"  style="margin-top: 0px; margin-bottom: 0px; height: 144px;"></textarea>
+                <textarea class="form-control" id="boardTxt"  style="margin-top: 0px; margin-bottom: 0px; height: 300px;"></textarea>
             </div>
             <br>
             <button type="submit" class="btn btn-primary" id="insertBtn">등록하기</button>
