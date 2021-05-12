@@ -34,7 +34,7 @@
             <div class="form-group beforeSpan">
               <label for="exampleInputEmail1"><b>교회 출입 바코드 (선택)</b></label>
               <input type="hidden" value="" id="memberPassVal"/>
-              <div id=preView style="width:200px;"></div>
+              <div id=preView style="width:80%;"></div>
               <div id=uploadForm>
              	 <form id="passForm" name="frm" method="post">
 					<input type="file" id="imageUploadFile" name="file" />
