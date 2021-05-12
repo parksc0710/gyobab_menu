@@ -176,7 +176,7 @@
 	function afterUpload(filename) {
 		var filePath = "https://www.gyobab.shop/images/" + filename;
 		$("#memberPassVal").val(filePath);
-		$("#preView").html("<img src='"+filePath+"' />");
+		$("#preView").html("<img src='"+filePath+"' style='width:80%;' />");
 		$("#uploadForm").empty();
 		$("#uploadForm").html('<a href="javascript:void(0);" class="button" onclick="fileUpdate();"><span class="new">변경</span></a>');
 	}
