@@ -14,16 +14,16 @@
 					<security:authorize ifAnyGranted="ROLE_OPERATOR">
 					<security:authentication property="principal.member_name" var="memberName"/>
 						<h5><b>최고관리자</b></h5>
-						<h4><b>${memberName}</b>님 안녕하세요!</h4><br>
+						<h4><b>${memberName}</b>님 안녕하세요!</h4>
 					</security:authorize>
 					<security:authorize ifAnyGranted="ROLE_ADMIN">
 					<security:authentication property="principal.member_name" var="memberName"/>
 						<h5><b>관리자</b></h5>
-						<h4><b> ${memberName}</b>님 안녕하세요!</h4><br>
+						<h4><b> ${memberName}</b>님 안녕하세요!</h4>
 					</security:authorize>
 					<security:authorize ifAnyGranted="ROLE_USER">
 					<security:authentication property="principal.member_name" var="memberName"/>
-						<h4><b>${memberName}</b>님 안녕하세요!</h4><br>
+						<h4><b>${memberName}</b>님 안녕하세요!</h4>
 					</security:authorize>
 				</div>
 			</div>
