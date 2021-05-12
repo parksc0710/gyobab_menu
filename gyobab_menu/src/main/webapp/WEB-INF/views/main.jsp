@@ -93,22 +93,19 @@
 	                                </tr>
 	                            </thead>
 	                            <tbody>
-	
-	                                <tr>
+		                            <tr>
 	                                    <td>
 	                                        <div class="blog_list"></div>
-	                                        <h4> 2021년 5월 10일</h4>
-	                                        <p>2021-05-10 10:22:43</p>
+	                                        <h4> ${topMenu.board_tit }</h4>
+	                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${topMenu.update_date}" /></p>
 	                                        <p>
-	                                        	흰밥<br>
-	                                        	제육볶음<br>
-	                                        	셀러드<br>
-	                                        	배추김치<br>
-	                                        	미역국<br>
+	                                        	<c:if test="${!empty topMenu.board_thumb}">
+	                                        		<img src="${topMenu.board_thumb }"/> <br><br>
+	                                        	</c:if>
+	                                        	${topMenu.board_txt}
 	                                        </p>
 	                                    </td>
-	
-	                                    <td>박성철</td>
+	                                    <td>${topMenu.memberVO.member_name }</td>
 	                                </tr>
 	                            </tbody>
 	                        </table>

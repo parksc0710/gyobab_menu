@@ -33,14 +33,12 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberVO selectMemberByEmail(String member_email) throws Exception {
-		// TODO Auto-generated method stub
 		MemberVO tmpVo = dao.selectMemberByEmail(member_email); 
 		return tmpVo;
 	}
 
 	@Override
 	public Integer selectMemberIdByEmail(String member_email) throws Exception {
-		// TODO Auto-generated method stub
 		int tmpId = dao.selectMemberIdByEmail(member_email); 
 		return tmpId;
 	}
