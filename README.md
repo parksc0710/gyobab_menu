@@ -1,6 +1,11 @@
 # 오늘의 교밥
 
-LINK : https://www.gyobab.shop
+https://www.gyobab.shop
+
+# 사이트
+- 소셜로그인 가능
+- 유저 이미지 업로드 및 출력 가능
+- 게시판
 
 <br><br>
 # 개발 환경
