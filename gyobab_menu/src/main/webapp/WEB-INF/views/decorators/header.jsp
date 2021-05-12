@@ -38,10 +38,10 @@
 	                        <span>Google</span>
 	                    </a>
 	                    
-	                    <%-- <a href="${naverUrl }" class="dropdown-item notify-item">
+	                    <a href="${naverUrl }" class="dropdown-item notify-item">
 	                         <img src="${pageContext.request.contextPath}/assets/images/login_icon/naver.png">
 	                        <span>Naver</span>
-	                    </a> --%>
+	                    </a>
 	                    
 	                    <a href="${kakaoUrl }" class="dropdown-item notify-item">
 	                         <img src="${pageContext.request.contextPath}/assets/images/login_icon/kakao.png">

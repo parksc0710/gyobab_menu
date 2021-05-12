@@ -20,26 +20,27 @@
               <label for="exampleInputEmail1"><b>썸네일 (선택)</b></label>
               
               <input type="hidden" value="${inBoard.board_thumb }" id="boardThumb"/>
-              <c:if test="${empty inBoard.board_thumb  }">
+              <c:if test="${inBoard.board_thumb eq null }">
               	 <div id=preView style="width:100px;"></div>
               	 <div id=uploadForm>
 	             	 <form id="passForm" name="frm" method="post">
 						<input type="file" id="imageUploadFile" name="file" />
-						<a href="javascript:void(0);" class="btn btn-primary btn-sm btn-block" onclick="fileUpload();" style="width:80px;display:inline;float: right;">
-							<i class="far fa-edit"></i> 등록
+						<a href="javascript:void(0);" class="button" onclick="fileUpload();" style="width:80px;display:inline;float: right;">
+							<span class="new"> 등록</span>
 						</a>	
 					 </form>
 				 </div>
               </c:if>
-              <c:if test="${!empty inBoard.board_thumb}">
+              <c:if test="${inBoard.board_thumb != null }">
              	 <div id=preView style="width:100px"><img src="${inBoard.board_thumb }" style="width:100%"></div>
              	 <div id=uploadForm>
-				 	<a href="javascript:void(0);" class="btn btn-primary btn-sm btn-block" onclick="fileUpdate();" style="width:80px;display:inline;float: left;">
-				 		<i class="far fa-edit"></i> 변경
+				 	<a href="javascript:void(0);" class="button" onclick="fileUpdate();" style="width:80px;display:inline;float: left;">
+				 		<span class="new"> 변경</span>
 				 	</a>
 				 </div>	
               </c:if>
             </div>
+            <br>
 		    <div class="form-group beforeSpan">
                 <label for="exampleInputEmail1"><b>본문</b></label>
                 <textarea class="form-control" id="boardTxt"  style="margin-top: 0px; margin-bottom: 0px; height: 144px;"><c:out escapeXml = "false" value = "${inBoard.board_txt}"></c:out>

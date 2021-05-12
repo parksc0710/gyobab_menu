@@ -100,7 +100,7 @@
 	                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${topMenu.update_date}" /></p>
 	                                        <p>
 	                                        	<c:if test="${!empty topMenu.board_thumb}">
-	                                        		<img src="${topMenu.board_thumb }"/> <br><br>
+	                                        		<img src="${topMenu.board_thumb }" style="width:100%"/> <br><br>
 	                                        	</c:if>
 	                                        	${topMenu.board_txt}
 	                                        </p>

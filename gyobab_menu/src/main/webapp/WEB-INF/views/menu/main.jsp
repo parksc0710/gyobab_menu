@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<security:authentication property="principal.member_id" var="memberId"/>
 
 <div class="content">
 	<div class="container-fluid">
@@ -59,7 +58,7 @@
 		                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${list.update_date}" /></p>
 		                                        <p>
 		                                        	<c:if test="${!empty list.board_thumb}">
-		                                        		<img src="${list.board_thumb }"/> <br><br>
+		                                        		<img src="${list.board_thumb }" style="width:100%"/> <br><br>
 		                                        	</c:if>
 		                                        	${list.board_txt}
 		                                        </p>
@@ -73,6 +72,7 @@
 			                                    </td>
 		                                    </security:authorize>
 		                                    <security:authorize ifAnyGranted="ROLE_ADMIN">
+		                                   		<security:authentication property="principal.member_id" var="memberId"/>
 												<c:if test="${list.memberVO.member_id == memberId}">
 				                                    <td>
 				                                        <a href="${pageContext.request.contextPath}/menu/update.do?boardid=${list.board_id }" class="btn btn-primary btn-sm btn-block"><i class="far fa-edit"></i> Edit</a>                                                        
