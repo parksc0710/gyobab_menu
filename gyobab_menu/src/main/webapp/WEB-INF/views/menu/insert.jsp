@@ -17,7 +17,7 @@
             <div class="form-group beforeSpan">
               <label for="exampleInputEmail1"><b>썸네일 (선택)</b></label>
               <input type="hidden" value="" id="boardThumb"/>
-              <div id=preView style="width:100px;"></div>
+              <div id=preView style="width:400px;"></div>
               <div id=uploadForm>
              	 <form id="passForm" name="frm" method="post">
 					<input type="file" id="imageUploadFile" name="file" />
@@ -91,7 +91,7 @@
 	function afterUpload(filename) {
 		var filePath = "https://www.gyobab.shop/images/board/" + filename;
 		$("#boardThumb").val(filePath);
-		$("#preView").html("<img src='"+filePath+"' />");
+		$("#preView").html("<img src='"+filePath+"' style='width:100px;'/>");
 		$("#uploadForm").empty();
 		$("#uploadForm").html('<a href="javascript:void(0);" class="button" onclick="fileUpdate();"><span class="new">변경</span></a>');
 	}
