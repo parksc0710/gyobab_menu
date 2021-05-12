@@ -22,6 +22,8 @@
 	<meta property="og:title" content="오늘의 교밥" />
 	<%-- <meta property="og:image" content="${pageContext.request.contextPath}/assets/images/common/img_meta_972x511.jpg" /> --%>
 	<meta property="og:description"	content="오늘의 교밥은?" />
+	<meta property="og:url" content="https://www.gyobab.shop/">
+	<meta property="og:image" content="https://www.gyobab.shop/images/hello.jpg">
 
 	
 	<decorator:head />
