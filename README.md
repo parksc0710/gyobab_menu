@@ -62,7 +62,7 @@ CREATE TABLE `board` (
   `board_tit` varchar(100) NOT NULL,
   `board_txt` varchar(2000) NULL,
   `board_member` int(11) NOT NULL,
-  `board_view` int(11),
+  `board_view` int(11) DEFAULT 0,
   `create_date` datetime DEFAULT current_timestamp(),
   `update_date` datetime DEFAULT current_timestamp(),
   `act_flg` bit(1) DEFAULT b'1',
