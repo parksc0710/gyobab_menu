@@ -7,15 +7,8 @@
 <div class="content">
 	<div class="container-fluid">
 	
-	    <div class="row">
-	        <div class="col-xl-12" style="max-width:650px;">
-	            <div class="breadcrumb-holder">
-	                <h1 class="main-title float-left">오늘의 점심 메뉴</h1>
-	                <ol class="breadcrumb float-right">
-	                </ol>
-	                <div class="clearfix"></div>
-	            </div>
-	        </div>
+	    <div class="card-header">
+	        <h3><b>오늘의 점심 메뉴</b></h3>
 	    </div>
 	    <!-- end row -->
 
