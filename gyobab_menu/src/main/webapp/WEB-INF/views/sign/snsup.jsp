@@ -29,7 +29,7 @@
             <div class="form-group beforeSpan">
                 <label for="exampleInputEmail1"><b>닉네임 (필수)</b></label>
                 <input type="text" class="form-control" id="memberName" placeholder="" maxlength=10>
-                <small id="numberlHelp" class="form-text text-muted">다른 사람에게 보여질 닉네임입니다. 중복 되지 않는 닉네임을 사용하여주세요.</small>
+                <small id="numberlHelp" class="form-text text-muted">다른 사람에게 보여질 닉네임입니다. 중복 되지 않는 닉네임을 사용하여주세요. 최대 10자까지만 가능합니다.</small>
             </div>
             <div class="form-group beforeSpan">
               <label for="exampleInputEmail1"><b>교회 출입 바코드 (선택)</b></label>
