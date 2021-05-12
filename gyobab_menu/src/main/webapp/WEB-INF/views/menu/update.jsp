@@ -110,7 +110,7 @@
 	
 	function afterUpload(filename) {
 		var filePath = "https://www.gyobab.shop/images/board/" + filename;
-		$("#memberPassVal").val(filePath);
+		$("#boardThumb").val(filePath);
 		$("#preView").html("<img src='"+filePath+"' />");
 		$("#uploadForm").empty();
 		$("#uploadForm").html('<a href="javascript:void(0);" class="button" onclick="fileUpdate();"><span class="new">변경</span></a>');
