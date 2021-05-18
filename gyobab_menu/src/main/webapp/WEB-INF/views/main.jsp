@@ -99,7 +99,7 @@
                                         </p>
                                         <p>
                                         	<img src="https://www.gyobab.shop/images/board/3ec7e4a2-a78e-4f9f-8a53-74b804b899b2.jpg" style="width:100%"> <br><br>
-                                        	오늘의 교밥 사이트에 오신결 환영합니다!<br><br>
+                                        	오늘의 교밥 사이트에 오신걸 환영합니다!<br><br>
 											오늘도 좋은 하루 보내세요!<br><br><br>
 											
 											<b>공지 닫기를 누르시면 공지가 열리지 않습니다. 새로운 공지가 올라오면 다시 열려요!</b>
