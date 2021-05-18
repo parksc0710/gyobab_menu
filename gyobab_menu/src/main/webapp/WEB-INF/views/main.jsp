@@ -15,18 +15,17 @@
  					<security:authorize ifAnyGranted="ROLE_OPERATOR">
 					<security:authentication property="principal.member_name" var="memberName"/>
 						<h6><b>최고관리자</b></h6>
-						<h5><b>${memberName}</b>님 안녕하세요!</h5>
+						<h5><b>${memberName}</b>님 안녕하세요!</h5><br>
 					</security:authorize>
 					<security:authorize ifAnyGranted="ROLE_ADMIN">
 					<security:authentication property="principal.member_name" var="memberName"/>
 						<h6><b>관리자</b></h6>
-						<h5><b> ${memberName}</b>님 안녕하세요!</h5>
+						<h5><b> ${memberName}</b>님 안녕하세요!</h5><br>
 					</security:authorize>
 					<security:authorize ifAnyGranted="ROLE_USER">
 					<security:authentication property="principal.member_name" var="memberName"/>
-						<h5><b>${memberName}</b>님 안녕하세요!</h5>
+						<h5><b>${memberName}</b>님 안녕하세요!</h5><br>
 					</security:authorize>
-		    		<br>
 		    		<h5><b>오늘도 맛점하세요!</b></h5>
 		    		<c:choose>
 		    			<c:when test="${rand eq 0}">
