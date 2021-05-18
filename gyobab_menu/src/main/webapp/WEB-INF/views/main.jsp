@@ -4,8 +4,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 9) %></c:set>
-
 
 <div class="content">
 	<div class="row">
@@ -27,41 +25,7 @@
 						<h5><b>${memberName}</b>님 안녕하세요!</h5><br>
 					</security:authorize>
 		    		<h5><b>오늘도 맛점하세요!</b></h5>
-		    		<c:choose>
-		    			<c:when test="${rand eq 0}">
-		    				<img src="https://www.gyobab.shop/images/main/r1.png" style="width:100%;max-width:639px;"/><br>
-		    			</c:when>
-		    			<c:when test="${rand eq 1}">
-		    				<img src="https://www.gyobab.shop/images/main/r2.gif" style="width:100%;max-width:639px;"/><br>
-		    			</c:when>
-		    			<c:when test="${rand eq 2}">
-		    				<img src="https://www.gyobab.shop/images/main/r3.png" style="width:100%;max-width:639px;"/><br>
-		    			</c:when>
-		    			<c:when test="${rand eq 3}">
-		    				<img src="https://www.gyobab.shop/images/main/r4.gif" style="width:100%;max-width:639px;"/><br>
-		    			</c:when>
-		    			<c:when test="${rand eq 4}">
-		    				<img src="https://www.gyobab.shop/images/main/r5.jpg" style="width:100%;max-width:639px;"/><br>
-		    			</c:when>
-		    			<c:when test="${rand eq 5}">
-		    				<img src="https://www.gyobab.shop/images/main/r6.png" style="width:100%;max-width:639px;"/><br>
-		    			</c:when>
-		    			<c:when test="${rand eq 6}">
-		    				<img src="https://www.gyobab.shop/images/main/r7.png" style="width:100%;max-width:639px;"/><br>
-		    			</c:when>
-		    			<c:when test="${rand eq 7}">
-		    				<img src="https://www.gyobab.shop/images/main/r8.png" style="width:100%;max-width:639px;"/><br>
-		    			</c:when>
-		    			<c:when test="${rand eq 8}">
-		    				<img src="https://www.gyobab.shop/images/main/r9.png" style="width:100%;max-width:639px;"/><br>
-		    			</c:when>
-		    			<c:when test="${rand eq 9}">
-		    				<img src="https://www.gyobab.shop/images/main/r10.png" style="width:100%;max-width:639px;"/><br>
-		    			</c:when>
-		    			<c:otherwise>
-		    				<img src="https://www.gyobab.shop/images/main/r1.png" style="width:100%;max-width:639px;"/><br>
-		    			</c:otherwise>
-		    		</c:choose>
+		    		<%@ include file="/WEB-INF/views/main_img.jsp" %>
 				</div>
 			</div>
 	    </div>
