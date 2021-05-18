@@ -12,7 +12,22 @@
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:650px;">
 		    <div class="card mb-3">
 		    	<div class="card-body">
-		    		<h3><b>오늘도 맛점하세요!</b></h3>
+ 					<security:authorize ifAnyGranted="ROLE_OPERATOR">
+					<security:authentication property="principal.member_name" var="memberName"/>
+						<h6><b>최고관리자</b></h6>
+						<h5><b>${memberName}</b>님 안녕하세요!</h5>
+					</security:authorize>
+					<security:authorize ifAnyGranted="ROLE_ADMIN">
+					<security:authentication property="principal.member_name" var="memberName"/>
+						<h6><b>관리자</b></h6>
+						<h5><b> ${memberName}</b>님 안녕하세요!</h5>
+					</security:authorize>
+					<security:authorize ifAnyGranted="ROLE_USER">
+					<security:authentication property="principal.member_name" var="memberName"/>
+						<h5><b>${memberName}</b>님 안녕하세요!</h5>
+					</security:authorize>
+		    		<br>
+		    		<h5><b>오늘도 맛점하세요!</b></h5>
 		    		<c:choose>
 		    			<c:when test="${rand eq 0}">
 		    				<img src="https://www.gyobab.shop/images/main/r1.png" style="width:100%;max-width:639px;"/><br>
@@ -88,7 +103,7 @@
                                         	오늘의 교밥 사이트에 오신결 환영합니다!<br><br>
 											오늘도 좋은 하루 보내세요!<br><br><br>
 											
-											<b>공지 닫기를 누르시면 24시간동안 공지가 열리지 않습니다.</b>
+											<b>공지 닫기를 누르시면 공지가 열리지 않습니다. 새로운 공지가 올라오면 다시 열려요!</b>
                                         </p>
                                         <p>
                                         </p>
@@ -217,7 +232,7 @@
 			$("#noticeToggleBtn1").hide();
 			$("#noticeToggleBtn2").show();
 			
-			setCookie("notice_close", "true", 1);
+			setCookie("notice_close", "true", 100);
 
 		} else {
 			$("#noticeTable").slideDown(500);
