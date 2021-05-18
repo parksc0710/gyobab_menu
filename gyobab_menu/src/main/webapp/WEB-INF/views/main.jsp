@@ -4,7 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 5) %></c:set>
+<c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 9) %></c:set>
 
 
 <div class="content">
@@ -12,6 +12,7 @@
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:650px;">
 		    <div class="card mb-3">
 		    	<div class="card-body">
+		    		<h3><b>오늘도 맛점하세요!</b></h3>
 		    		<c:choose>
 		    			<c:when test="${rand eq 0}">
 		    				<img src="https://www.gyobab.shop/images/main/r1.png" style="width:100%;max-width:639px;"/><br>
@@ -31,24 +32,22 @@
 		    			<c:when test="${rand eq 5}">
 		    				<img src="https://www.gyobab.shop/images/main/r6.png" style="width:100%;max-width:639px;"/><br>
 		    			</c:when>
+		    			<c:when test="${rand eq 6}">
+		    				<img src="https://www.gyobab.shop/images/main/r7.png" style="width:100%;max-width:639px;"/><br>
+		    			</c:when>
+		    			<c:when test="${rand eq 7}">
+		    				<img src="https://www.gyobab.shop/images/main/r8.png" style="width:100%;max-width:639px;"/><br>
+		    			</c:when>
+		    			<c:when test="${rand eq 8}">
+		    				<img src="https://www.gyobab.shop/images/main/r9.png" style="width:100%;max-width:639px;"/><br>
+		    			</c:when>
+		    			<c:when test="${rand eq 9}">
+		    				<img src="https://www.gyobab.shop/images/main/r10.png" style="width:100%;max-width:639px;"/><br>
+		    			</c:when>
 		    			<c:otherwise>
 		    				<img src="https://www.gyobab.shop/images/main/r1.png" style="width:100%;max-width:639px;"/><br>
 		    			</c:otherwise>
 		    		</c:choose>
-					<security:authorize ifAnyGranted="ROLE_OPERATOR">
-					<security:authentication property="principal.member_name" var="memberName"/>
-						<h5><b>최고관리자</b></h5>
-						<h4><b>${memberName}</b>님 안녕하세요!</h4>
-					</security:authorize>
-					<security:authorize ifAnyGranted="ROLE_ADMIN">
-					<security:authentication property="principal.member_name" var="memberName"/>
-						<h5><b>관리자</b></h5>
-						<h4><b> ${memberName}</b>님 안녕하세요!</h4>
-					</security:authorize>
-					<security:authorize ifAnyGranted="ROLE_USER">
-					<security:authentication property="principal.member_name" var="memberName"/>
-						<h4><b>${memberName}</b>님 안녕하세요!</h4>
-					</security:authorize>
 				</div>
 			</div>
 	    </div>
