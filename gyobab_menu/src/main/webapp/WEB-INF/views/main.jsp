@@ -4,13 +4,37 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
+<c:set var="rand"><%= java.lang.Math.round(java.lang.Math.random() * 5) %></c:set>
+
 
 <div class="content">
 	<div class="row">
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:650px;">
 		    <div class="card mb-3">
 		    	<div class="card-body">
-			        <img src="https://www.gyobab.shop/images/hello.jpg" style="width:100%;max-width:639px;"/><br>
+		    		<c:choose>
+		    			<c:when test="${rand eq 0}">
+		    				<img src="https://www.gyobab.shop/images/main/r1.png" style="width:100%;max-width:639px;"/><br>
+		    			</c:when>
+		    			<c:when test="${rand eq 1}">
+		    				<img src="https://www.gyobab.shop/images/main/r2.gif" style="width:100%;max-width:639px;"/><br>
+		    			</c:when>
+		    			<c:when test="${rand eq 2}">
+		    				<img src="https://www.gyobab.shop/images/main/r3.png" style="width:100%;max-width:639px;"/><br>
+		    			</c:when>
+		    			<c:when test="${rand eq 3}">
+		    				<img src="https://www.gyobab.shop/images/main/r4.gif" style="width:100%;max-width:639px;"/><br>
+		    			</c:when>
+		    			<c:when test="${rand eq 4}">
+		    				<img src="https://www.gyobab.shop/images/main/r5.jpg" style="width:100%;max-width:639px;"/><br>
+		    			</c:when>
+		    			<c:when test="${rand eq 5}">
+		    				<img src="https://www.gyobab.shop/images/main/r6.png" style="width:100%;max-width:639px;"/><br>
+		    			</c:when>
+		    			<c:otherwise>
+		    				<img src="https://www.gyobab.shop/images/main/r1.png" style="width:100%;max-width:639px;"/><br>
+		    			</c:otherwise>
+		    		</c:choose>
 					<security:authorize ifAnyGranted="ROLE_OPERATOR">
 					<security:authentication property="principal.member_name" var="memberName"/>
 						<h5><b>최고관리자</b></h5>
@@ -33,21 +57,39 @@
 	<div class="row">
        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width:650px;">
            <div class="card mb-3">
-               <div class="card-body">
+          		<div class="card-header">
+                    <span class="pull-right">
+                    	<a role="button" href="javascript:noticeToggle()" class="btn btn-danger" id="noticeToggleBtn1" style="display:none;" >
+	                        <span class="btn-label">
+	                            <i class="fas fa-times"></i>
+	                        </span>공지 닫기
+                        </a>
+                        <a role="button" href="javascript:noticeToggle()" class="btn btn-primary" id="noticeToggleBtn2">
+	                        <span class="btn-label">
+	                            <i class="fas fa-check"></i>
+	                        </span>공지 열기
+                        </a>
+                   	</span>
+                    <h3><b>공지사항</b></h3>
+                </div>
+               <div class="card-body" id="noticeTable" style="display:none;">
                    <div class="table-responsive">
                        <table class="table table-bordered">
                            <tbody>
 	                            <tr>
                                     <td>
-                                        <div class="blog_list"></div>
-                                        <h4> 공지사항입니다.
+                                	    <div class="blog_list"></div>
+                                        <h4> 안녕하세요!
                                         </h4>
-                                        <p> 2021-05-13 00:00:00
+                                        <p> 2021-05-18
                                         	<span style="float:right;"><b>개발팀박성철</b></span>
                                         </p>
                                         <p>
-                                        		<img src="https://www.gyobab.shop/images/board/3ec7e4a2-a78e-4f9f-8a53-74b804b899b2.jpg" style="width:100%"> <br><br>
-                                        	메뉴 게시판 기능이 추가되었습니다.<br><br>관리자 권한을 가진 계정만 게시판에 글을 쓸 수 있습니다. (조회는 모든 사용자 및 비로그인 상태에도 가능합니다.)<br><br>내용에는 세부 메뉴와 필요하다면 메뉴 사진 하나를 첨부할 수 있습니다.(사진 업로드 시 파일 선택 후 등록을 꼭 눌러주어야합니다!)<br><br><b>개인정보가 포함된 사진은 업로드하지 않도록 주의해주세요!!</b><br><br>문의사항은 언제든 환영합니다!!      
+                                        	<img src="https://www.gyobab.shop/images/board/3ec7e4a2-a78e-4f9f-8a53-74b804b899b2.jpg" style="width:100%"> <br><br>
+                                        	오늘의 교밥 사이트에 오신결 환영합니다!<br><br>
+											오늘도 좋은 하루 보내세요!<br><br><br>
+											
+											<b>공지 닫기를 누르시면 24시간동안 공지가 열리지 않습니다.</b>
                                         </p>
                                         <p>
                                         </p>
@@ -160,3 +202,46 @@
         <!-- end col -->
     </div>
 </div>
+<script>
+
+	var noticeCloseFlag = getCookie("notice_close");
+	
+	if(noticeCloseFlag == false || noticeCloseFlag == null) {
+		$("#noticeTable").slideDown(500);
+		$("#noticeToggleBtn1").show();
+		$("#noticeToggleBtn2").hide();
+	}
+
+	function noticeToggle() {
+		if($("#noticeTable").is(':visible')) {
+			$("#noticeTable").slideUp(500);
+			$("#noticeToggleBtn1").hide();
+			$("#noticeToggleBtn2").show();
+			
+			setCookie("notice_close", "true", 1);
+
+		} else {
+			$("#noticeTable").slideDown(500);
+			$("#noticeToggleBtn1").show();
+			$("#noticeToggleBtn2").hide();
+			
+			deleteCookie("notice_close");
+		}
+	}
+	
+	function getCookie(name) {
+		var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+		return value? value[2] : null;
+	};
+	
+	function setCookie(name, value, exp) {
+		var date = new Date();
+		date.setTime(date.getTime() + exp*24*60*60*1000);
+		document.cookie = name + '=' + value + ';expires=' + date.toUTCString() + ';path=/';
+	};
+	
+	function deleteCookie(name) {
+		document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
+	};
+
+</script>
