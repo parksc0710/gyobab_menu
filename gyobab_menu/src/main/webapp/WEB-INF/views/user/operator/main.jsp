@@ -15,13 +15,12 @@
            </div>
            
            <div class="card-body">
-	           <div class="table-responsive">
+	           <div>
 	               <table class="table table-bordered">
 	                   <thead>
 	                       <tr>
-	                           <th style="min-width:300px">회원 정보</th>
-	                           <th style="width:120px">권한</th>
-	                           <th style="min-width:110px;">Actions</th>
+	                           <th style="min-width:200px">회원 정보</th>
+	                           <th style="min-width:100px;">Actions</th>
 	                       </tr>
 	                   </thead>
 	                   <tbody>
@@ -32,20 +31,20 @@
 									<td>
 										<h4>${list.member_name}</h4>
 										<p>${list.member_email}</p>
-										<p>가입일 : <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${list.create_date}" /></p>
-									</td>
-									<td>
-									<c:choose>
-			                            <c:when test="${memberGrant == 'OPERATOR'}">
-			                            	OPERATOR
-			                            </c:when>
-			                            <c:otherwise>
-				                            <select id="grantSelectBox${list.member_id}">
-												<option <c:if test="${memberGrant eq 'ADMIN' }">selected="selected"</c:if> value="ADMIN">ADMIN</option>
-												<option <c:if test="${memberGrant eq 'USER' }">selected="selected"</c:if> value="USER">USER</option>
-											</select>
-			                            </c:otherwise>
-		                            </c:choose>
+										<p>가입일 : <fmt:formatDate pattern="yyyy-MM-dd" value="${list.create_date}" /></p>
+										<p>권한 : 
+											<c:choose>
+					                            <c:when test="${memberGrant == 'OPERATOR'}">
+					                            	OPERATOR
+					                            </c:when>
+					                            <c:otherwise>
+						                            <select id="grantSelectBox${list.member_id}">
+														<option <c:if test="${memberGrant eq 'ADMIN' }">selected="selected"</c:if> value="ADMIN">ADMIN</option>
+														<option <c:if test="${memberGrant eq 'USER' }">selected="selected"</c:if> value="USER">USER</option>
+													</select>
+					                            </c:otherwise>
+				                            </c:choose>
+										</p>
 									</td>
 		                            <td>
 		                            <c:choose>
@@ -61,6 +60,17 @@
 							</c:forEach>
 	                   </tbody>
 	               </table>
+	               <div class="row">
+		               	<div class="col-sm-12 col-md-5">
+		               		<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite"></div>
+		               	</div>
+		                <div class="col-sm-12 col-md-7">
+			               	<div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+			               		<ul class="pagination">
+		               			</ul>
+		               		</div>
+		               	</div>
+	               	</div>
 	           </div>
 	       </div>
            <!-- end card-body-->
@@ -109,5 +119,80 @@
 		       }
 		    });
 		}
+	}
+	
+	var curPage = ${pageNum};
+	var totCount = ${totalCnt};
+	var maxSize = ${pageSize};
+	
+	//console.log("curPage : " + curPage + " // totCount : " + totCount + " // maxSize : " + maxSize)
+	
+	var tmpHtml = jsMakePage(curPage, totCount, maxSize);
+	console.log(tmpHtml);
+	$(".pagination").html(tmpHtml);
+	
+	function jsMakePage(pCurPage, totCount, maxSize) {
+		var nPageRange = 4; //페이지 범위
+
+		var retVal = "";
+		var nPageCount;
+
+		if (pCurPage == 0)
+			pCurPage = 1;
+
+		if ((totCount % maxSize) > 0) {
+			nPageCount = parseInt(totCount / maxSize) + 1;
+		} else {
+			nPageCount = parseInt(totCount / maxSize);
+		}
+
+		var nPrev = (parseInt((pCurPage - 1) / nPageRange) - 1)
+				* nPageRange + 1;
+		var nCur = parseInt((pCurPage - 1) / nPageRange) * nPageRange + 1;
+		var nNext = (parseInt((pCurPage - 1) / nPageRange) + 1)
+				* nPageRange + 1;
+
+		if (nPageCount > nPageRange) {
+			retVal += '<li class="paginate_button page-item previous" id="dataTable_previous">';
+			retVal += '<a href="${pageContext.request.contextPath}/ou/main.do" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link"><<</a></li>';
+		}
+		
+		if (nPrev > 0) {
+			retVal += '<li class="paginate_button page-item previous" id="dataTable_previous">';
+			retVal += '<a href="${pageContext.request.contextPath}/ou/main.do?pageNum='+(nPrev+3)+'" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link"><</a></li>';
+		} else {
+			retVal = "&nbsp;";
+		}
+
+		var i = 1;
+
+		do {
+			if (pCurPage == nCur) {
+				retVal += '<li class="paginate_button page-item active">';
+				retVal += 	'<a href="${pageContext.request.contextPath}/ou/main.do?pageNum='+nCur+'" aria-controls="dataTable" data-dt-idx="'+nCur+'" tabindex="0" class="page-link">'+nCur+'</a>';
+				retVal += '</li>';
+			} else {
+				retVal += '<li class="paginate_button page-item">';
+				retVal += 	'<a href="${pageContext.request.contextPath}/ou/main.do?pageNum='+nCur+'" aria-controls="dataTable" data-dt-idx="'+nCur+'" tabindex="0" class="page-link">'+nCur+'</a>';
+				retVal += '</li>';
+			}
+
+			nCur += 1;
+			i += 1;
+		} while (i < nPageRange + 1 && nCur <= nPageCount);
+
+		if (nNext <= nPageCount) {
+			retVal += '<li class="paginate_button page-item previous" id="dataTable_previous">';
+			retVal += '<a href="${pageContext.request.contextPath}/ou/main.do?pageNum='+nNext+'" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">></a></li>';
+			
+			retVal += '<li class="paginate_button page-item previous" id="dataTable_previous">';
+			retVal += '<a href="${pageContext.request.contextPath}/ou/main.do?pageNum='+nPageCount+'" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">>></a></li>';
+
+		} else {
+			
+			retVal += "&nbsp;";
+		}
+		
+		return retVal;
 	}
 </script>

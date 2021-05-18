@@ -20,7 +20,7 @@
 					<security:authorize ifAnyGranted="ROLE_ADMIN">
 					<security:authentication property="principal.member_name" var="memberName"/>
 						<h6><b>관리자</b></h6>
-						<h5><b> ${memberName}</b>님 안녕하세요!</h5><br>
+						<h5><b>${memberName}</b>님 안녕하세요!</h5><br>
 					</security:authorize>
 					<security:authorize ifAnyGranted="ROLE_USER">
 					<security:authentication property="principal.member_name" var="memberName"/>

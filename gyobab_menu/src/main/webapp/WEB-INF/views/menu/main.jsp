@@ -30,7 +30,7 @@
 	
 	                <div class="card-body">
 	
-	                    <div class="table-responsive">
+	                    <div class="table-responsive" style="overflow-x:hidden;">
 	                        <table class="table table-bordered">
 	                            <tbody>
 		                            <c:forEach var="list" items="${list}">
@@ -67,6 +67,17 @@
 									</c:forEach>
 	                            </tbody>
 	                        </table>
+	                        <div class="row">
+				               	<div class="col-sm-12 col-md-5">
+				               		<div class="dataTables_info" id="dataTable_info" role="status" aria-live="polite"></div>
+				               	</div>
+				                <div class="col-sm-12 col-md-7">
+					               	<div class="dataTables_paginate paging_simple_numbers" id="dataTable_paginate">
+					               		<ul class="pagination">
+				               			</ul>
+				               		</div>
+				               	</div>
+			               	</div>
 	                    </div>
 	                </div>
 	                <!-- end card-body -->
@@ -98,5 +109,80 @@
 		       }
 		    });
 		}
+	}
+	
+	var curPage = ${pageNum};
+	var totCount = ${totalCnt};
+	var maxSize = ${pageSize};
+	
+	//console.log("curPage : " + curPage + " // totCount : " + totCount + " // maxSize : " + maxSize)
+	
+	var tmpHtml = jsMakePage(curPage, totCount, maxSize);
+	console.log(tmpHtml);
+	$(".pagination").html(tmpHtml);
+	
+	function jsMakePage(pCurPage, totCount, maxSize) {
+		var nPageRange = 4; //페이지 범위
+
+		var retVal = "";
+		var nPageCount;
+
+		if (pCurPage == 0)
+			pCurPage = 1;
+
+		if ((totCount % maxSize) > 0) {
+			nPageCount = parseInt(totCount / maxSize) + 1;
+		} else {
+			nPageCount = parseInt(totCount / maxSize);
+		}
+
+		var nPrev = (parseInt((pCurPage - 1) / nPageRange) - 1)
+				* nPageRange + 1;
+		var nCur = parseInt((pCurPage - 1) / nPageRange) * nPageRange + 1;
+		var nNext = (parseInt((pCurPage - 1) / nPageRange) + 1)
+				* nPageRange + 1;
+
+		if (nPageCount > nPageRange) {
+			retVal += '<li class="paginate_button page-item previous" id="dataTable_previous">';
+			retVal += '<a href="${pageContext.request.contextPath}/menu/main.do" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link"><<</a></li>';
+		}
+		
+		if (nPrev > 0) {
+			retVal += '<li class="paginate_button page-item previous" id="dataTable_previous">';
+			retVal += '<a href="${pageContext.request.contextPath}/menu/main.do?pageNum='+(nPrev+3)+'" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link"><</a></li>';
+		} else {
+			retVal = "&nbsp;";
+		}
+
+		var i = 1;
+
+		do {
+			if (pCurPage == nCur) {
+				retVal += '<li class="paginate_button page-item active">';
+				retVal += 	'<a href="${pageContext.request.contextPath}/menu/main.do?pageNum='+nCur+'" aria-controls="dataTable" data-dt-idx="'+nCur+'" tabindex="0" class="page-link">'+nCur+'</a>';
+				retVal += '</li>';
+			} else {
+				retVal += '<li class="paginate_button page-item">';
+				retVal += 	'<a href="${pageContext.request.contextPath}/menu/main.do?pageNum='+nCur+'" aria-controls="dataTable" data-dt-idx="'+nCur+'" tabindex="0" class="page-link">'+nCur+'</a>';
+				retVal += '</li>';
+			}
+
+			nCur += 1;
+			i += 1;
+		} while (i < nPageRange + 1 && nCur <= nPageCount);
+
+		if (nNext <= nPageCount) {
+			retVal += '<li class="paginate_button page-item previous" id="dataTable_previous">';
+			retVal += '<a href="${pageContext.request.contextPath}/menu/main.do?pageNum='+nNext+'" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">></a></li>';
+			
+			retVal += '<li class="paginate_button page-item previous" id="dataTable_previous">';
+			retVal += '<a href="${pageContext.request.contextPath}/menu/main.do?pageNum='+nPageCount+'" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">>></a></li>';
+
+		} else {
+			
+			retVal += "&nbsp;";
+		}
+		
+		return retVal;
 	}
 </script>

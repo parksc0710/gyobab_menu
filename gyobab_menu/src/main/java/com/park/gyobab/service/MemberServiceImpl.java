@@ -6,6 +6,7 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+import com.park.gyobab.domain.Criteria;
 import com.park.gyobab.domain.MemberVO;
 import com.park.gyobab.persistence.MemberDAO;
 
@@ -50,8 +51,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<MemberVO> selectMembers() throws Exception {
-		List<MemberVO> list = dao.selectMembers();
+	public List<MemberVO> selectMembers(Criteria cri) throws Exception {
+		List<MemberVO> list = dao.selectMembers(cri);
 		return list;
 	}
 
@@ -63,5 +64,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void updateMemberGrant(MemberVO vo) {
 		dao.updateMemberGrant(vo);
+	}
+
+	@Override
+	public Integer selectMemberCnt() throws Exception {
+		int cnt = dao.selectMemberCnt(); 
+		return cnt;
 	}
 }

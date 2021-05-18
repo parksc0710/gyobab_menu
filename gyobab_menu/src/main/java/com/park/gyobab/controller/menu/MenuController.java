@@ -1,5 +1,6 @@
 package com.park.gyobab.controller.menu;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.park.gyobab.domain.BoardVO;
+import com.park.gyobab.domain.Criteria;
 import com.park.gyobab.domain.MemberVO;
 import com.park.gyobab.service.BoardService;
 import com.park.gyobab.service.MemberService;
@@ -30,9 +32,24 @@ public class MenuController {
 	String boardType = "1";
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String main(Model model) throws Exception {
+	public String main(Model model,
+			@RequestParam(value = "pageSize", required = true, defaultValue = "3") int pageSize,
+			@RequestParam(value = "pageNum", required = true, defaultValue = "1") int pageNum
+		) throws Exception {
 		
-		List<BoardVO> list = boardService.selectBoards(boardType);
+		Criteria cri = new Criteria(pageNum, pageSize);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("board_type", boardType);
+		map.put("cri", cri);
+		
+		int totalCnt = boardService.selectBoardCnt(boardType);
+		
+		List<BoardVO> list = boardService.selectBoards(map);
+		
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("totalCnt", totalCnt);
 		
 		model.addAttribute("list", list);
 		

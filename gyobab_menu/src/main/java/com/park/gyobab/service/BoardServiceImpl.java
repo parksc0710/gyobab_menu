@@ -1,5 +1,6 @@
 package com.park.gyobab.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -39,14 +40,20 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<BoardVO> selectBoards(String board_type) throws Exception {
-		List<BoardVO> list = dao.selectBoards(board_type);
+	public List<BoardVO> selectBoards(HashMap<String, Object> map) throws Exception {
+		List<BoardVO> list = dao.selectBoards(map);
 		return list;
 	}
 
 	@Override
 	public void updateBoard(BoardVO vo) {
 		dao.updateBoard(vo);
+	}
+
+	@Override
+	public Integer selectBoardCnt(String board_type) throws Exception {
+		int cnt = dao.selectBoardCnt(board_type); 
+		return cnt;
 	}
 	
 }

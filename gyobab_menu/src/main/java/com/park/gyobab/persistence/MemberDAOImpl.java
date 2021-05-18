@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import com.park.gyobab.domain.Criteria;
 import com.park.gyobab.domain.MemberVO;
 
 @Repository
@@ -61,8 +62,8 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public List<MemberVO> selectMembers() throws Exception {
-		List<MemberVO> list = sqlSession.selectList(namespace + ".selectMembers");
+	public List<MemberVO> selectMembers(Criteria cri) throws Exception {
+		List<MemberVO> list = sqlSession.selectList(namespace + ".selectMembers", cri);
 		return list;
 	}
 
@@ -74,6 +75,12 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void updateMemberGrant(MemberVO vo) {
 		sqlSession.update(namespace + ".updateMemberGrant", vo); 
+	}
+
+	@Override
+	public Integer selectMemberCnt() throws Exception {
+		int cnt = sqlSession.selectOne(namespace + ".selectMemberCnt");
+		return cnt;
 	}
 
 }

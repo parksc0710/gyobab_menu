@@ -61,18 +61,34 @@
   	</select>
   	
   	<select id="selectMembers" resultMap="MemberVO">
-  		SELECT `member`.`member_id`,
-		    `member`.`member_email`,
-		    `member`.`member_name`,
-		    `member`.`create_date`,
-		    `member`.`update_date`,
-		    `grant`.`grant_name`,
-		    `member`.`act_flg`,
-		    `member`.`del_flg`,
-		    `grant`.`grant_name` as 'member_grant'
-		FROM `gyobab`.`member`  
-		INNER JOIN `gyobab`.`grant`
-		ON `member`.`member_grant` = `grant`.`grant_id`
+		<![CDATA[
+		 select * from
+			 (select A.*,  @ROWNUM := @ROWNUM + 1 AS `ROWNUM` from
+				(select
+					`member`.`member_id`,
+					`member`.`member_email`,
+					`member`.`member_name`,
+					`member`.`create_date`,
+					`member`.`update_date`,
+					`grant`.`grant_name`,
+					`grant`.`grant_id`,
+					`member`.`act_flg`,
+					`member`.`del_flg`
+				   from
+					`gyobab`.`member` 
+					INNER JOIN `gyobab`.`grant`
+					ON `member`.`member_grant` = `grant`.`grant_id`
+					JOIN (SELECT @rownum:=0) TMP
+					where `member`.`act_flg` = 1 and `member`.`del_flg` = 0 
+					order by `grant_id` asc, `member_id` asc
+			    ) A
+			) tmp
+			where `ROWNUM` >= ((#{pageNum}-1) * #{amount} + 1) and `ROWNUM` <= (#{pageNum} * #{amount})
+	  	]]>
+  	</select>
+  	
+  	<select id="selectMemberCnt" resultType="Integer">
+  		select count(`member`.`member_id`) from `member` where `member`.`act_flg` = 1 and `member`.`del_flg` = 0
   	</select>
   	
   	<update id="updateMember" parameterType="com.park.gyobab.domain.MemberVO">

@@ -1,5 +1,6 @@
 package com.park.gyobab.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -8,7 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.park.gyobab.domain.BoardVO;
-import com.park.gyobab.domain.MemberVO;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -41,14 +41,20 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<BoardVO> selectBoards(String board_type) throws Exception {
-		List<BoardVO> list = sqlSession.selectList(namespace + ".selectBoards", board_type);
+	public List<BoardVO> selectBoards(HashMap<String, Object> map) throws Exception {
+		List<BoardVO> list = sqlSession.selectList(namespace + ".selectBoards", map);
 		return list;
 	}
 
 	@Override
 	public void updateBoard(BoardVO vo) {
 		sqlSession.update(namespace + ".updateBoard", vo); 
+	}
+
+	@Override
+	public Integer selectBoardCnt(String board_type) throws Exception {
+		int cnt = sqlSession.selectOne(namespace + ".selectBoardCnt", board_type);
+		return cnt;
 	}
 
 

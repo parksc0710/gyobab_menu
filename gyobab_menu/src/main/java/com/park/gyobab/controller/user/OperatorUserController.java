@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.park.gyobab.domain.Criteria;
 import com.park.gyobab.domain.MemberVO;
 import com.park.gyobab.service.GrantService;
 import com.park.gyobab.service.MemberService;
@@ -27,8 +28,20 @@ public class OperatorUserController {
     private GrantService grantService;
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String main(Model model) throws Exception {
-		List<MemberVO> list = memberService.selectMembers();
+	public String main(Model model, 
+			@RequestParam(value = "pageSize", required = true, defaultValue = "10") int pageSize,
+			@RequestParam(value = "pageNum", required = true, defaultValue = "1") int pageNum
+		) throws Exception {
+		
+		Criteria cri = new Criteria(pageNum, pageSize);
+		
+		List<MemberVO> list = memberService.selectMembers(cri);
+		
+		int totalCnt = memberService.selectMemberCnt();
+		
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("totalCnt", totalCnt);
 		
 		model.addAttribute("list", list);
 		

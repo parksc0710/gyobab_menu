@@ -34,23 +34,35 @@
 			(#{board_type}, #{board_tit}, #{board_txt}, #{memberVO.member_id}, #{board_thumb});
   	</insert>
   	
-  	<select id="selectBoards" parameterType="string" resultMap="BoardVO">
-  		SELECT `board`.`board_id`,
-		    `board`.`board_type`,
-		    `board`.`board_tit`,
-		    `board`.`board_txt`,
-		    `member`.`member_id`,
-		    `board`.`board_thumb`,
-		    `board`.`board_view`,
-		    `board`.`create_date`,
-		    `board`.`update_date`,
-		    `member`.`member_name`
-		FROM `gyobab`.`board`  
-		INNER JOIN `gyobab`.`member`
-		ON `board`.`board_member` = `member`.`member_id`
-		WHERE `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = #{board_type}
-		ORDER BY `board_id` desc
-		LIMIT 10
+  	<select id="selectBoards" parameterType="hashmap" resultMap="BoardVO">
+  		<![CDATA[
+	  		select * from
+			(select A.*, @ROWNUM := @ROWNUM + 1 AS `ROWNUM` from
+			 (select 
+					`board`.`board_id`,
+					`board`.`board_type`,
+					`board`.`board_tit`,
+					`board`.`board_txt`,
+					`member`.`member_id`,
+					`board`.`board_thumb`,
+					`board`.`board_view`,
+					`board`.`create_date`,
+					`board`.`update_date`,
+					`member`.`member_name`
+				FROM `gyobab`.`board`  
+				INNER JOIN `gyobab`.`member`
+				ON `board`.`board_member` = `member`.`member_id`
+			    JOIN (SELECT @rownum:=0) TMP
+			    WHERE `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = '1'
+				ORDER BY `board_id` desc
+			    ) A
+			) tmp
+			where `ROWNUM` >= ((#{cri.pageNum}-1) * #{cri.amount} + 1) and `ROWNUM` <= (#{cri.pageNum} * #{cri.amount})
+		]]>
+  	</select>
+  	
+  	<select id="selectBoardCnt" resultType="Integer">
+  		select count(`board`.`board_id`) from `board` where `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = #{board_type};
   	</select>
   	
   	<select id="selectTop1Board" parameterType="string" resultMap="BoardVO">
