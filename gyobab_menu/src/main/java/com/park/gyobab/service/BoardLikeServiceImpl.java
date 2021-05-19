@@ -22,8 +22,8 @@ public class BoardLikeServiceImpl implements BoardLikeService {
 	}
 
 	@Override
-	public void deleteBoardLike(int board_like_id) {
-		dao.deleteBoardLike(board_like_id);
+	public void deleteBoardLike(HashMap<String, Integer> map) {
+		dao.deleteBoardLike(map);
 	}
 
 	@Override

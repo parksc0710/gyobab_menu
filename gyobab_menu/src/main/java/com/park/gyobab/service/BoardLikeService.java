@@ -10,7 +10,7 @@ public interface BoardLikeService {
 	
 	public void insertBoardLike(HashMap<String, Integer> map);
 	
-	public void deleteBoardLike(int board_like_id);
+	public void deleteBoardLike(HashMap<String, Integer> map);
 	
 	public List<BoardLikeVO> selectBoardLikes(int board_id) throws Exception;
 

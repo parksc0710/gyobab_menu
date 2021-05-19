@@ -52,11 +52,11 @@
 		                                    <td>
 		                                        <div class="blog_list" style="width:100%; height:100%;">
 		                                        	<span style="width:80%;float:left;padding-right:10px;"><h4>${list.board_tit }</h4></span> 
-		                                        	<span style="width:20%;float:right;">
+		                                        	<span style="width:50px;float:right;">
 			                                        	<span style="line-height:2;">
 			                                        	<c:choose>
 				                                        	<c:when test="${contains}">
-				                                        		<a href="javascript:void(0);)" style="color:red;" id="like${list.board_id }">
+				                                        		<a href="javascript:deleteLike('${list.board_id }', 'like${list.board_id }')" style="color:red;" id="like${list.board_id }">
 				                                        			<em class="fa-2x mr-2 fas fa-heart" style="font-size:20px;"></em>
 				                                        		</a>
 				                                        	</c:when>
@@ -234,7 +234,7 @@
 	        	  $("#"+aId).closest("span").siblings("span.like_cnt").text(Number(likeCnt)+1);
 	        	  $("#"+aId).children("em").removeClass("far");
 	        	  $("#"+aId).children("em").addClass("fas");
-	        	  $("#"+aId).attr("href","javascript:void(0);");
+	        	  $("#"+aId).attr("href","javascript:deleteLike('"+boardId+"', 'like"+boardId+"')");
 	    	  }
 	       },
 	       error:function(request,status,error){
@@ -243,14 +243,14 @@
 	    });
 	}
 	
-	function deleteLike(boardLikeId, aId) {
+	function deleteLike(boardId, aId) {
 		var likeCnt = $("#"+aId).closest("span").siblings("span.like_cnt").text();
 		$.ajax({
 	       type: "post", 
 	       dataType: "text", 
 	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
 	       url: "${pageContext.request.contextPath}/menu/deleteLike.do",
-	       data : {boardLikeId : boardLikeId},
+	       data : {boardId : boardId},
 	       success: function(rtn) {
 	    	  //alert("좋아요!.");
 	    	  if(rtn=="fail") {
@@ -259,6 +259,7 @@
         	  	$("#"+aId).closest("span").siblings("span.like_cnt").text(Number(likeCnt)-1);
         	  	$("#"+aId).children("em").removeClass("fas");
 	        	$("#"+aId).children("em").addClass("far");
+	        	$("#"+aId).attr("href","javascript:insertLike('"+boardId+"', 'like"+boardId+"')");
 	    	  }
 	       },
 	       error:function(request,status,error){

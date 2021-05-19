@@ -47,7 +47,7 @@
   	</select> 
   	
   	<delete id="deleteBoardLike" >
-  		DELETE FROM `board_like` WHERE `board_like_id` = #{board_like_id};
+  		DELETE FROM `board_like` WHERE `board_id` = #{board_id} and `member_id` = #{member_id};
   	</delete>
 	
 	<!-- <insert id="insertBoard">

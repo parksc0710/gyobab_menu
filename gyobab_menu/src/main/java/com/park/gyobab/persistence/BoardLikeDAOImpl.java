@@ -25,8 +25,8 @@ public class BoardLikeDAOImpl implements BoardLikeDAO {
 	}
 
 	@Override
-	public void deleteBoardLike(int board_like_id) {
-		sqlSession.delete(namespace + ".deleteBoardLike", board_like_id); 
+	public void deleteBoardLike(HashMap<String, Integer> map) {
+		sqlSession.delete(namespace + ".deleteBoardLike", map); 
 	}
 
 	@Override

@@ -208,28 +208,36 @@ public class MenuController {
 		return rtn;
 	}
 	
-	/*
-	 * @RequestMapping(value = "/deleteLike", method = RequestMethod.POST)
-	 * 
-	 * @ResponseBody public String deleteLike(Model model,
-	 * 
-	 * @RequestParam(value = "boardLikeId", required = true) int boardLikeId )
-	 * throws Exception {
-	 * 
-	 * String rtn = "";
-	 * 
-	 * MemberVO nowUser = null;
-	 * 
-	 * try { nowUser = (MemberVO)
-	 * (SecurityContextHolder.getContext().getAuthentication().getPrincipal()); }
-	 * catch (Exception e) { System.out.println("비로그인 사용자가 좋아요 삭제 클릭"); }
-	 * 
-	 * if(nowUser == null) { rtn = "fail"; } else {
-	 * 
-	 * boardLikeService.deleteBoardLike(boardLikeId);
-	 * 
-	 * rtn = "suc"; }
-	 * 
-	 * return rtn; }
-	 */
+	@RequestMapping(value = "/deleteLike", method = RequestMethod.POST)
+	@ResponseBody
+	public String deleteLike(Model model,
+			@RequestParam(value = "boardId", required = true) int boardId
+			) throws Exception {
+		
+		String rtn = "";
+		
+		MemberVO nowUser = null; 
+		
+		try {
+			nowUser = (MemberVO) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		} catch (Exception e) {
+			System.out.println("비로그인 사용자가 좋아요 삭제 클릭");
+		}
+		
+		if(nowUser == null) {
+			rtn = "fail";
+		} else {
+			int member_id = nowUser.getMember_id();
+			
+			HashMap<String, Integer> map = new HashMap<String, Integer>();
+			map.put("member_id", member_id);
+			map.put("board_id", boardId);
+			
+			boardLikeService.deleteBoardLike(map);
+			
+			rtn = "suc";
+		}
+		
+		return rtn;
+	}
 }
