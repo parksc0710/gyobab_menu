@@ -182,7 +182,7 @@
 <script>
 	
 	// 신규 공지 등록 후 보이게 하려면 newNoticeTime을 수정 시간으로 설정
-	var newNoticeTime = new Date("2021-05-20 00:05:00");
+	var newNoticeTime = new Date("2021-05-20 00:10:00");
 	
 	var noticeCloseTime = new Date(getCookie("notice_close"));
 	
