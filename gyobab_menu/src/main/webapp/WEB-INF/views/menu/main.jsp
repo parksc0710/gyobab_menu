@@ -35,11 +35,42 @@
 	                            <tbody>
 		                            <c:forEach var="list" items="${list}">
 		                            
+		                            <c:set var="contains" value="false" />
+		                            <c:set var="boardLikeId" value="0" />
+		                            
+			                            <security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_OPERATOR, ROLE_ADMIN">
+			                            	<security:authentication property="principal.member_id" var="memberId"/>
+											<c:forEach var="item" items="${likes[list]}">
+											  <c:if test="${item.memberVO.member_id eq memberId}">
+											    <c:set var="contains" value="true" />
+											    <c:set var="boardLikeId" value="${item.board_like_id }" />
+											  </c:if>
+											</c:forEach>
+			                            </security:authorize>
+			                    	
 			                            <tr>
 		                                    <td>
-		                                        <div class="blog_list"></div>
-		                                        <h4> ${list.board_tit }
-		                                        </h4>
+		                                        <div class="blog_list" style="width:100%; height:100%;">
+		                                        	<span style="width:80%;float:left;padding-right:10px;"><h4>${list.board_tit }</h4></span> 
+		                                        	<span style="width:20%;float:right;">
+			                                        	<span style="line-height:2;">
+			                                        	<c:choose>
+				                                        	<c:when test="${contains}">
+				                                        		<a href="javascript:void(0);)" style="color:red;" id="like${list.board_id }">
+				                                        			<em class="fa-2x mr-2 fas fa-heart" style="font-size:20px;"></em>
+				                                        		</a>
+				                                        	</c:when>
+				                                        	<c:otherwise>
+				                                        		<a href="javascript:insertLike('${list.board_id }', 'like${list.board_id }')" style="color:red;" id="like${list.board_id }">
+				                                        			<em class="fa-2x mr-2 far fa-heart" style="font-size:20px;"></em>
+				                                        		</a>
+				                                        	</c:otherwise>
+			                                        	</c:choose>
+			                                        	</span>
+			                                        	<span style="float:right;" class="like_cnt"><c:out value="${fn:length(likes[list])}"/></span>
+		                                        	</span>
+		                                        </div>
+		                                        <br>
 		                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${list.update_date}" />
 		                                        	<span style="float:right;"><b>${list.memberVO.member_name  }</b></span>
 		                                        </p>
@@ -48,6 +79,7 @@
 		                                        		<img src="${list.board_thumb }" style="width:100%"/> <br><br>
 		                                        	</c:if>
 		                                        	${list.board_txt}
+		                                        	<br><br>
 		                                        </p>
 		                                        <p>
 		                                        	<security:authorize ifAnyGranted="ROLE_OPERATOR">
@@ -118,7 +150,7 @@
 	//console.log("curPage : " + curPage + " // totCount : " + totCount + " // maxSize : " + maxSize)
 	
 	var tmpHtml = jsMakePage(curPage, totCount, maxSize);
-	console.log(tmpHtml);
+	//console.log(tmpHtml);
 	$(".pagination").html(tmpHtml);
 	
 	function jsMakePage(pCurPage, totCount, maxSize) {
@@ -185,4 +217,54 @@
 		
 		return retVal;
 	}
+	
+	function insertLike(boardId, aId) {
+		var likeCnt = $("#"+aId).closest("span").siblings("span.like_cnt").text();
+		$.ajax({
+	       type: "post", 
+	       dataType: "text", 
+	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	       url: "${pageContext.request.contextPath}/menu/insertLike.do",
+	       data : {boardId : boardId},
+	       success: function(rtn) {
+	    	  //alert("좋아요!.");
+	    	  if(rtn=="fail") {
+				  alert("좋아요를 누르시려면 로그인을 해 주세요.")		    		  
+	    	  } else {
+	        	  $("#"+aId).closest("span").siblings("span.like_cnt").text(Number(likeCnt)+1);
+	        	  $("#"+aId).children("em").removeClass("far");
+	        	  $("#"+aId).children("em").addClass("fas");
+	        	  $("#"+aId).attr("href","javascript:void(0);");
+	    	  }
+	       },
+	       error:function(request,status,error){
+	           alert("에러발생. 관리자에게 문의하세요.");
+	       }
+	    });
+	}
+	
+	function deleteLike(boardLikeId, aId) {
+		var likeCnt = $("#"+aId).closest("span").siblings("span.like_cnt").text();
+		$.ajax({
+	       type: "post", 
+	       dataType: "text", 
+	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	       url: "${pageContext.request.contextPath}/menu/deleteLike.do",
+	       data : {boardLikeId : boardLikeId},
+	       success: function(rtn) {
+	    	  //alert("좋아요!.");
+	    	  if(rtn=="fail") {
+			  	alert("나의 좋아요만 취소할 수 있습니다!")		    		  
+	    	  } else {
+        	  	$("#"+aId).closest("span").siblings("span.like_cnt").text(Number(likeCnt)-1);
+        	  	$("#"+aId).children("em").removeClass("fas");
+	        	$("#"+aId).children("em").addClass("far");
+	    	  }
+	       },
+	       error:function(request,status,error){
+	           alert("에러발생. 관리자에게 문의하세요.");
+	       }
+	    });
+	}
+	
 </script>

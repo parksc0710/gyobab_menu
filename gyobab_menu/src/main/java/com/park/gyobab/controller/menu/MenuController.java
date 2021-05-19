@@ -2,6 +2,7 @@ package com.park.gyobab.controller.menu;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.park.gyobab.domain.BoardLikeVO;
 import com.park.gyobab.domain.BoardVO;
 import com.park.gyobab.domain.Criteria;
 import com.park.gyobab.domain.MemberVO;
+import com.park.gyobab.service.BoardLikeService;
 import com.park.gyobab.service.BoardService;
 import com.park.gyobab.service.MemberService;
 
@@ -25,6 +28,9 @@ public class MenuController {
 	
 	@Autowired
     private BoardService boardService;
+	
+	@Autowired
+    private BoardLikeService boardLikeService;
 	
 	@Autowired
     private MemberService memberService;
@@ -47,11 +53,19 @@ public class MenuController {
 		
 		List<BoardVO> list = boardService.selectBoards(map);
 		
+		Map<BoardVO, List<BoardLikeVO>> likes = new HashMap<BoardVO, List<BoardLikeVO>>();
+		
+		for(int i = 0; i < list.size(); i++) {
+			List<BoardLikeVO> likelist = boardLikeService.selectBoardLikes(list.get(i).getBoard_id());
+			likes.put(list.get(i), likelist);
+		}
+		
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("totalCnt", totalCnt);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("likes", likes);
 		
 		return "menu/main";
 	}
@@ -161,4 +175,61 @@ public class MenuController {
 		return rtn;
 	}
 
+	@RequestMapping(value = "/insertLike", method = RequestMethod.POST)
+	@ResponseBody
+	public String insertLike(Model model,
+			@RequestParam(value = "boardId", required = true) int boardId
+			) throws Exception {
+		
+		String rtn = "";
+		
+		MemberVO nowUser = null; 
+		
+		try {
+			nowUser = (MemberVO) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		} catch (Exception e) {
+			System.out.println("비로그인 사용자가 좋아요 클릭");
+		}
+		
+		if(nowUser == null) {
+			rtn = "fail";
+		} else {
+			int member_id = nowUser.getMember_id();
+			
+			HashMap<String, Integer> map = new HashMap<String, Integer>();
+			map.put("member_id", member_id);
+			map.put("board_id", boardId);
+			
+			boardLikeService.insertBoardLike(map);
+			
+			rtn = "suc";
+		}
+		
+		return rtn;
+	}
+	
+	/*
+	 * @RequestMapping(value = "/deleteLike", method = RequestMethod.POST)
+	 * 
+	 * @ResponseBody public String deleteLike(Model model,
+	 * 
+	 * @RequestParam(value = "boardLikeId", required = true) int boardLikeId )
+	 * throws Exception {
+	 * 
+	 * String rtn = "";
+	 * 
+	 * MemberVO nowUser = null;
+	 * 
+	 * try { nowUser = (MemberVO)
+	 * (SecurityContextHolder.getContext().getAuthentication().getPrincipal()); }
+	 * catch (Exception e) { System.out.println("비로그인 사용자가 좋아요 삭제 클릭"); }
+	 * 
+	 * if(nowUser == null) { rtn = "fail"; } else {
+	 * 
+	 * boardLikeService.deleteBoardLike(boardLikeId);
+	 * 
+	 * rtn = "suc"; }
+	 * 
+	 * return rtn; }
+	 */
 }
