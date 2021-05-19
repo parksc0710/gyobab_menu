@@ -38,7 +38,7 @@
 		                            <c:set var="contains" value="false" />
 		                            <c:set var="boardLikeId" value="0" />
 		                            
-			                            <security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_OPERATOR, ROLE_ADMIN">
+			                            <security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
 			                            	<security:authentication property="principal.member_id" var="memberId"/>
 											<c:forEach var="item" items="${likes[list]}">
 											  <c:if test="${item.memberVO.member_id eq memberId}">
