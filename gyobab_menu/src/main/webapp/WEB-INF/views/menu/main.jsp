@@ -229,8 +229,9 @@
 	       success: function(rtn) {
 	    	  //alert("좋아요!.");
 	    	  if(rtn=="fail") {
-				  alert("좋아요를 누르시려면 로그인을 해 주세요.")		    		  
+	    		  swal({title:"로그인이 필요합니다!", text:"좋아요를 누르시려면 로그인을 해 주세요.", icon:"error", timer:"2000"});
 	    	  } else {
+	    		  swal({title:"좋아요를 클릭하셨습니다!", text:"좋아요를 다시 눌러서 취소할 수 있어요.", icon:"success", timer:"2000"});
 	        	  $("#"+aId).closest("span").siblings("span.like_cnt").text(Number(likeCnt)+1);
 	        	  $("#"+aId).children("em").removeClass("far");
 	        	  $("#"+aId).children("em").addClass("fas");
@@ -256,6 +257,7 @@
 	    	  if(rtn=="fail") {
 			  	alert("나의 좋아요만 취소할 수 있습니다!")		    		  
 	    	  } else {
+	    		swal({title:"좋아요를 취소하셨습니다!", text:"좋아요를 다시 누를 수 있어요.", icon:"success", timer:"2000"});
         	  	$("#"+aId).closest("span").siblings("span.like_cnt").text(Number(likeCnt)-1);
         	  	$("#"+aId).children("em").removeClass("fas");
 	        	$("#"+aId).children("em").addClass("far");

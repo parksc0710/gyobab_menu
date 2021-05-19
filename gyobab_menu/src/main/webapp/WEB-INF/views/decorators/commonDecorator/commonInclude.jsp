@@ -10,6 +10,8 @@
 <link href="${pageContext.request.contextPath}/assets/font-awesome/css/all.css" rel="stylesheet" type="text/css" />
 <link href="${pageContext.request.contextPath}/assets/css/style.css" rel="stylesheet" type="text/css" />
 
+<link href="${pageContext.request.contextPath}/assets/css/sweetalert.css" rel="stylesheet" type="text/css" />
+
 <script src="${pageContext.request.contextPath}/assets/js/modernizr.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/moment.min.js"></script>
 
@@ -20,4 +22,7 @@
 <script src="${pageContext.request.contextPath}/assets/js/fastclick.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/jquery.blockUI.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/jquery.nicescroll.js"></script>
+
+<script src="${pageContext.request.contextPath}/assets/js/sweetalert.min.js"></script>
+
 
