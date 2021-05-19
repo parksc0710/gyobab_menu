@@ -24,7 +24,7 @@
 					<security:authentication property="principal.member_name" var="memberName"/>
 						<h5><b>${memberName}</b>님 안녕하세요!</h5><br>
 					</security:authorize>
-		    		<h5><b>오늘도 맛점하세요!</b></h5>
+		    		<h5><b>오늘의 교밥에 오신걸 환영합니다! 오늘도 맛점하세요!</b></h5>
 		    		<%@ include file="/WEB-INF/views/main_img.jsp" %>
 				</div>
 			</div>
@@ -56,19 +56,19 @@
 	                            <tr>
                                     <td>
                                 	    <div class="blog_list"></div>
-                                        <h4> 안녕하세요!
+                                        <h4> 공지사항입니다!
                                         </h4>
                                         <p> 2021-05-18
                                         	<span style="float:right;"><b>개발팀박성철</b></span>
                                         </p>
                                         <p>
                                         	<img src="https://www.gyobab.shop/images/board/3ec7e4a2-a78e-4f9f-8a53-74b804b899b2.jpg" style="width:100%"> <br><br>
-                                        	오늘의 교밥 사이트에 오신걸 환영합니다!<br><br>
-											오늘도 좋은 하루 보내세요!<br><br><br>
+											<h4><b>&lt;업데이트 내역&gt;</b></h4><br>
+											<b>- 2021. 05. 19 : 메뉴 게시판에 좋아요 기능이 추가되었습니다. 내가 좋아하는 메뉴가 나오면 좋아요를 눌러주세요! (단, 좋아요는 로그인을 해야 사용할 수 있습니다)</b><br><br>
 											
-											<b>공지 닫기를 누르시면 공지가 열리지 않습니다. 새로운 공지가 올라오면 다시 열려요!</b>
-                                        </p>
-                                        <p>
+											<hr/>
+											<h4><b>&lt;중요 공지&gt;</b></h4><br>
+											<b>공지 닫기를 누르시면 새로운 공지가 등록되기 전까지는 공지가 열리지 않습니다. <br><br>그러다가 새로운 공지가 올라오면 다시 열려요! <br><br>만약, 공지가 열리면 내용을 꼭 확인해주세요.</b>
                                         </p>
                                     </td>
                                 </tr>
@@ -181,9 +181,11 @@
 </div>
 <script>
 
-	var noticeCloseFlag = getCookie("notice_close");
+	var newNoticeTime = new Date("2021-05-20 00:00:00");
 	
-	if(noticeCloseFlag == false || noticeCloseFlag == null) {
+	var noticeCloseTime = new Date(getCookie("notice_close"));
+	
+	if(noticeCloseTime < newNoticeTime || noticeCloseTime == '' || noticeCloseTime == null) {
 		$("#noticeTable").slideDown(500);
 		$("#noticeToggleBtn1").show();
 		$("#noticeToggleBtn2").hide();
@@ -195,7 +197,9 @@
 			$("#noticeToggleBtn1").hide();
 			$("#noticeToggleBtn2").show();
 			
-			setCookie("notice_close", "true", 100);
+			var closeTime = getKoreaTime();
+			
+			setCookie("notice_close", closeTime, 100);
 
 		} else {
 			$("#noticeTable").slideDown(500);
@@ -220,5 +224,17 @@
 	function deleteCookie(name) {
 		document.cookie = name + '=; expires=Thu, 01 Jan 1999 00:00:10 GMT;';
 	};
+	
+	function getKoreaTime() {
+		var curr = new Date();
+
+		var utc = curr.getTime() + (curr.getTimezoneOffset() * 60 * 1000);
+
+		var KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+		var kr_curr = new Date(utc + (KR_TIME_DIFF));
+	
+		return kr_curr;
+
+	}
 
 </script>
