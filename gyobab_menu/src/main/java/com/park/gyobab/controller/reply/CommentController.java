@@ -84,6 +84,12 @@ public class CommentController {
 			// update
 			if(nowUser.getGrantVO().getGrant_name().equals("OPERATOR") || nowUser.getMember_id() == inBoardComment.getMemberVO().getMember_id()) {
 				boardCommentService.deleteBoardCommentWithParent(commentId);
+				
+				int commentCntAfter = boardCommentService.selectBoardCommentCntWithCommentParentAfter(inBoardComment.getBoard_comment_parent());
+				if(commentCntAfter == 0) {
+					boardCommentService.deleteBoardCommentWithParentAfter(inBoardComment.getBoard_comment_parent());
+				} 
+				
 				rtn = "suc";
 			} else {
 				rtn = "fail";

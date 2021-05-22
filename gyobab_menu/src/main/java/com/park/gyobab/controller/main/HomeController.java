@@ -2,19 +2,13 @@ package com.park.gyobab.controller.main;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.park.gyobab.domain.BoardCommentVO;
+import com.park.gyobab.domain.BoardLikeVO;
 import com.park.gyobab.domain.BoardVO;
-import com.park.gyobab.domain.MemberVO;
 import com.park.gyobab.service.BoardCommentService;
+import com.park.gyobab.service.BoardLikeService;
 import com.park.gyobab.service.BoardService;
 
 @Controller
@@ -34,6 +29,9 @@ public class HomeController{
 	
 	@Autowired
     private BoardService boardService;
+	
+	@Autowired
+    private BoardLikeService boardLikeService;
 	
 	@Autowired
     private BoardCommentService boardCommentService;
@@ -50,9 +48,11 @@ public class HomeController{
 		
 		String board_type = "1";
 		BoardVO topMenu = boardService.selectTop1Board(board_type);
+		List<BoardLikeVO> likelist = boardLikeService.selectBoardLikes(topMenu.getBoard_id());
 		List<BoardCommentVO> commentlist = boardCommentService.selectBoardComments(topMenu.getBoard_id());
 		
 		model.addAttribute("topMenu", topMenu);
+		model.addAttribute("likelist", likelist);
 		model.addAttribute("commentlist", commentlist);
 		
 		return "main";

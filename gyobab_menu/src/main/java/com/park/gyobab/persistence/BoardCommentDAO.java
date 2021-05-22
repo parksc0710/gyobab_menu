@@ -18,10 +18,13 @@ public interface BoardCommentDAO {
 	
 	public void deleteBoardCommentWithParent(int board_comment_id);
 	
+	public void deleteBoardCommentWithParentAfter(int board_comment_parent);
+	
 	public BoardCommentVO selectBoardCommentById(int board_comment_id) throws Exception;
 	
 	public void updateBoardComment(HashMap<String, Object> map);
 	
 	public Integer selectBoardCommentCntWithCommentParent(int board_comment_parent) throws Exception;
 
+	public Integer selectBoardCommentCntWithCommentParentAfter(int board_comment_parent) throws Exception;
 }

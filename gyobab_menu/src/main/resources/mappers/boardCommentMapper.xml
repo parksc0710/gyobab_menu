@@ -134,7 +134,7 @@
   	</update>
   	
   	<update id="updateBoardComment" parameterType="hashmap">
-  	update `board_comment` set `board_comment_txt` = #{board_comment_txt}, `update_date` = NOW() where `board_comment`.`board_comment_id` = #{board_comment_id}
+  		update `board_comment` set `board_comment_txt` = #{board_comment_txt}, `update_date` = NOW() where `board_comment`.`board_comment_id` = #{board_comment_id}
   	</update>
   	
   	<select id="selectBoardCommentById" parameterType="int" resultMap="BoardCommentVO">
@@ -166,6 +166,17 @@
   		from `board_comment` 
   		where `board_comment`.`board_comment_parent` = #{board_comment_parent};
   	</select>
+  	
+  	<select id="selectBoardCommentCntWithCommentParentAfter" resultType="Integer" parameterType="int" >
+  		select count(`board_comment`.`board_comment_id`) 
+  		from `board_comment` 
+  		where `board_comment`.`board_comment_parent` = #{board_comment_parent} and `board_comment`.`view_flg` = 0;
+  	</select>
+  	
+  	<select id="deleteBoardCommentWithParentAfter" resultType="Integer" parameterType="int" >
+  		update `board_comment` set `act_flg` = 0, `del_flg` = 1, `update_date` = NOW() where `board_comment`.`board_comment_parent` = #{board_comment_parent}
+  	</select>
+  	
   	
   </mapper>
  

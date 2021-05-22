@@ -157,12 +157,41 @@
                 <div class="card-body">
 
                     <div class="table-responsive">
+                    
+                    <security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
+                       	<security:authentication property="principal.member_id" var="memberId"/>
+						<c:forEach var="item" items="${likelist}">
+						  <c:if test="${item.memberVO.member_id eq memberId}">
+						    <c:set var="contains" value="true" />
+						    <c:set var="boardLikeId" value="${item.board_like_id }" />
+						  </c:if>
+						</c:forEach>
+                    </security:authorize>
+                            
                         <table class="table table-bordered" >
                             <tbody>
 	                            <tr>
                                     <td>
-                                        <div class="blog_list"></div>
-                                        <h4 <c:if test="${topMenu.memberVO.member_id == 1}">style="color:red;"</c:if>> ${topMenu.board_tit }</h4>
+                                        <div class="blog_list">
+	                                        <span style="width:80%;float:left;padding-right:10px;<c:if test="${topMenu.memberVO.member_id == 1}">color:red;</c:if>"><h4>${topMenu.board_tit }</h4></span> 
+	                                       	<span style="width:50px;float:right;">
+	                                        	<span style="line-height:2;">
+	                                        	<c:choose>
+		                                        	<c:when test="${contains}">
+		                                        		<a href="javascript:deleteLike('${topMenu.board_id }', 'like${topMenu.board_id }')" style="color:red;" id="like${topMenu.board_id }">
+		                                        			<em class="fa-2x mr-2 fas fa-heart" style="font-size:20px;"></em>
+		                                        		</a>
+		                                        	</c:when>
+		                                        	<c:otherwise>
+		                                        		<a href="javascript:insertLike('${topMenu.board_id }', 'like${topMenu.board_id }')" style="color:red;" id="like${topMenu.board_id }">
+		                                        			<em class="fa-2x mr-2 far fa-heart" style="font-size:20px;"></em>
+		                                        		</a>
+		                                        	</c:otherwise>
+	                                        	</c:choose>
+	                                        	</span>
+	                                        	<span style="float:right;" class="like_cnt"><c:out value="${fn:length(likelist)}"/></span>
+	                                       	</span>
+                                       	</div>
                                         <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${topMenu.update_date}" />
                                         	<span style="float:right;"><b>${topMenu.memberVO.member_name }</b></span>
                                         </p>
@@ -294,6 +323,58 @@
 	
 		return kr_curr;
 
+	}
+	
+	function insertLike(boardId, aId) {
+		var likeCnt = $("#"+aId).closest("span").siblings("span.like_cnt").text();
+		$.ajax({
+	       type: "post", 
+	       dataType: "text", 
+	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	       url: "${pageContext.request.contextPath}/menu/insertLike.do",
+	       data : {boardId : boardId},
+	       success: function(rtn) {
+	    	  //alert("좋아요!.");
+	    	  if(rtn=="fail") {
+	    		  swal({title:"로그인이 필요합니다!", text:"좋아요를 누르시려면 로그인을 해 주세요.", icon:"error", timer:"2000"});
+	    	  } else {
+	    		  swal({title:"좋아요를 클릭하셨습니다!", text:"좋아요를 다시 눌러서 취소할 수 있어요.", icon:"success", timer:"2000"});
+	        	  $("#"+aId).closest("span").siblings("span.like_cnt").text(Number(likeCnt)+1);
+	        	  $("#"+aId).children("em").removeClass("far");
+	        	  $("#"+aId).children("em").addClass("fas");
+	        	  $("#"+aId).attr("href","javascript:deleteLike('"+boardId+"', 'like"+boardId+"')");
+	    	  }
+	       },
+	       error:function(request,status,error){
+	           alert("에러발생. 관리자에게 문의하세요.");
+	       }
+	    });
+	}
+	
+	function deleteLike(boardId, aId) {
+		var likeCnt = $("#"+aId).closest("span").siblings("span.like_cnt").text();
+		$.ajax({
+	       type: "post", 
+	       dataType: "text", 
+	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	       url: "${pageContext.request.contextPath}/menu/deleteLike.do",
+	       data : {boardId : boardId},
+	       success: function(rtn) {
+	    	  //alert("좋아요!.");
+	    	  if(rtn=="fail") {
+			  	alert("나의 좋아요만 취소할 수 있습니다!")		    		  
+	    	  } else {
+	    		swal({title:"좋아요를 취소하셨습니다!", text:"좋아요를 다시 누를 수 있어요.", icon:"success", timer:"2000"});
+        	  	$("#"+aId).closest("span").siblings("span.like_cnt").text(Number(likeCnt)-1);
+        	  	$("#"+aId).children("em").removeClass("fas");
+	        	$("#"+aId).children("em").addClass("far");
+	        	$("#"+aId).attr("href","javascript:insertLike('"+boardId+"', 'like"+boardId+"')");
+	    	  }
+	       },
+	       error:function(request,status,error){
+	           alert("에러발생. 관리자에게 문의하세요.");
+	       }
+	    });
 	}
 
 </script>
