@@ -3,8 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-
-
+<link href="${pageContext.request.contextPath}/assets/css/board.css" rel="stylesheet" type="text/css" />
 <div class="content">
 	<div class="row">
 	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:650px;">
@@ -56,7 +55,7 @@
 	                            <tr>
                                     <td>
                                 	    <div class="blog_list"></div>
-                                        <h4> 공지사항입니다!
+                                        <h4 style="color:red;"> 공지사항입니다!
                                         </h4>
                                         <p> 2021-05-22
                                         	<span style="float:right;"><b>개발팀박성철</b></span>
@@ -157,7 +156,7 @@
 	                            <tr>
                                     <td>
                                         <div class="blog_list"></div>
-                                        <h4> ${topMenu.board_tit }</h4>
+                                        <h4 <c:if test="${topMenu.memberVO.member_id == 1}">style="color:red;"</c:if>> ${topMenu.board_tit }</h4>
                                         <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${topMenu.update_date}" />
                                         	<span style="float:right;"><b>${topMenu.memberVO.member_name }</b></span>
                                         </p>
@@ -166,6 +165,31 @@
                                         		<img src="${topMenu.board_thumb }" style="width:100%; max-width:639px;"/> <br><br>
                                         	</c:if>
                                         	${topMenu.board_txt}
+                                        </p>
+                                        <hr/>
+                                        <p>
+                                        	<em class="fa-2x mr-2 fas fa-comments" style="font-size:20px;"> ${fn:length(commentlist)}개의 댓글</em>
+                                        	<c:forEach var="item" items="${commentlist}">
+                                        	
+                                        	<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
+				                            	<security:authentication property="principal.member_id" var="memberId"/>
+				                            	<security:authentication property="principal.grantVO.grant_name" var="memberGrant"/>
+				                            </security:authorize>
+                                        		
+                                        		<div class="form-group beforeSpan comment_list <c:if test="${item.board_comment_depth == 1}">reply</c:if>">
+		                                        	<div class="form-group beforeSpan comment_tit <c:if test="${item.memberVO.member_id == memberId}">my_comment</c:if> <c:if test="${item.memberVO.member_id == topMenu.memberVO.member_id}">writer_comment</c:if>" style="<c:if test="${item.memberVO.member_id == 1}">color:red;</c:if>"> 
+		                                        		<span style="float:left"><b>${item.memberVO.member_name}</b></span><span style="float:right"><fmt:formatDate pattern="yyyy-MM-dd" value="${item.create_date}" /></span>
+		                                        	</div>
+		                                        	<div class="form-group beforeSpan comment_txt">
+		                                        		<span>
+			                                        		<c:if test="${item.board_comment_depth == 1}">
+			                                        			<span class="parent_name">@ ${item.parent_member_name }</span>
+			                                        		</c:if>
+			                                        		${fn:replace(item.board_comment_txt, newLineChar, "<br/>")}
+		                                        		</span>
+		                                        	</div>
+	                                        	</div>
+                                        	</c:forEach>
                                         </p>
                                     </td>
                                 </tr>

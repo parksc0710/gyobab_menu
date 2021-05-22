@@ -4,65 +4,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <% pageContext.setAttribute("newLineChar", "\n"); %>
-<style>
-.table-bordered td, .table-bordered th {
-	border : 5px solid #dee2e6;
-}
-.myCustomCommentBtn {
-	float: right;
-    background: black;
-    border-color: black;
-    height: 30px;
-    font-size: 13px;
-}
-.comment_list {
-	magring-bottom : 10px;
-}
-.comment_tit {
-	height:30px; 
-	background: #dee2e6;
-	padding : 5px;
-}
-.comment_txt {
-	margin-bottom: 10px;
-	padding-left : 10px;
-}
-.comment_txt_edit {
-	margin-bottom: 10px;
-	padding-left : 10px;
-	height:200px;
-}
-.comment_txt_reply {
-	margin-bottom: 10px;
-	padding-left : 10px;
-	height:150px;
-}
-.comment_insert_div {
-	margin-top : 10px;
-}
-.comment_utils {
-	height: 20px;
-}
-.reply {
-    width: 93%;
-    margin-left: 7%;
-}
-.parent_name {
-    font-size: 12px;
-    background: #d6d8db;
-    padding: 5px;
-    border-radius: 30px;
-}
-.my_comment {
-	background: #b8daff;
-}
-.writer_comment {
-	background: #c3e6cb;
-}
-.operator_comment{
-	color : red;
-}
-</style>
+<link href="${pageContext.request.contextPath}/assets/css/board.css" rel="stylesheet" type="text/css" />
 <div class="content">
 	<div class="container-fluid">
 	

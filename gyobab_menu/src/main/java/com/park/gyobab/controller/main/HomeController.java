@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.park.gyobab.domain.BoardCommentVO;
 import com.park.gyobab.domain.BoardVO;
 import com.park.gyobab.domain.MemberVO;
+import com.park.gyobab.service.BoardCommentService;
 import com.park.gyobab.service.BoardService;
 
 @Controller
@@ -32,6 +34,9 @@ public class HomeController{
 	
 	@Autowired
     private BoardService boardService;
+	
+	@Autowired
+    private BoardCommentService boardCommentService;
 	
 	@RequestMapping(value = "/")
 	public String gnb() throws Exception{
@@ -45,8 +50,10 @@ public class HomeController{
 		
 		String board_type = "1";
 		BoardVO topMenu = boardService.selectTop1Board(board_type);
+		List<BoardCommentVO> commentlist = boardCommentService.selectBoardComments(topMenu.getBoard_id());
 		
 		model.addAttribute("topMenu", topMenu);
+		model.addAttribute("commentlist", commentlist);
 		
 		return "main";
 	}
