@@ -172,7 +172,7 @@
                             <tbody>
 	                            <tr>
                                     <td>
-                                        <div class="blog_list">
+                                        <div class="blog_list" style="width:100%; height:100%;">
 	                                        <span style="width:80%;float:left;padding-right:10px;<c:if test="${topMenu.memberVO.member_id == 1}">color:red;</c:if>"><h4>${topMenu.board_tit }</h4></span> 
 	                                       	<span style="width:50px;float:right;">
 	                                        	<span style="line-height:2;">
