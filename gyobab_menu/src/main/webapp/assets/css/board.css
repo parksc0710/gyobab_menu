@@ -17,6 +17,7 @@
 	height:30px; 
 	background: #dee2e6;
 	padding : 5px;
+	border-radius: 5px;
 }
 .comment_txt {
 	margin-bottom: 10px;
