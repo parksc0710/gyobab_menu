@@ -64,6 +64,7 @@
                                         <p>
                                         	<img src="https://www.gyobab.shop/images/board/3ec7e4a2-a78e-4f9f-8a53-74b804b899b2.jpg" style="width:100%"> <br><br>
 											<h4><b>&lt;업데이트 내역&gt;</b></h4><br>
+											<b>- 2021. 05. 22 : 메뉴 게시판에 댓글 기능이 추가되었습니다. 다양한 의견을 나눠주세요! (댓글 기능은 로그인을 해야 사용할 수 있습니다.)</b><br><br>
 											<b>- 2021. 05. 19 : 메뉴 게시판에 좋아요 기능이 추가되었습니다. 내가 좋아하는 메뉴가 나오면 좋아요를 눌러주세요! (좋아요는 로그인을 해야 사용할 수 있습니다. 내가 누른 좋아요 내역은 공개되지 않습니다.)</b><br><br>
 											
 											<hr/>
@@ -182,7 +183,7 @@
 <script>
 	
 	// 신규 공지 등록 후 보이게 하려면 newNoticeTime을 수정 시간으로 설정
-	var newNoticeTime = new Date("2021-05-20 00:15:00");
+	var newNoticeTime = new Date("2021-05-22 17:30:00");
 	
 	var noticeCloseTime = new Date(getCookie("notice_close"));
 	
