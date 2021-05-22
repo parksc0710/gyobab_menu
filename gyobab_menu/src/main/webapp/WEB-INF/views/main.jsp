@@ -179,15 +179,39 @@
                                         		
                                         		<div class="form-group beforeSpan comment_list <c:if test="${item.board_comment_depth == 1}">reply</c:if>">
 		                                        	<div class="form-group beforeSpan comment_tit <c:if test="${item.memberVO.member_id == memberId}">my_comment</c:if> <c:if test="${item.memberVO.member_id == topMenu.memberVO.member_id}">writer_comment</c:if>" style="<c:if test="${item.memberVO.member_id == 1}">color:red;</c:if>"> 
-		                                        		<span style="float:left"><b>${item.memberVO.member_name}</b></span><span style="float:right"><fmt:formatDate pattern="yyyy-MM-dd" value="${item.create_date}" /></span>
+		                                        		<c:choose>
+		                                        			<c:when test="${item.memberVO.member_name eq null }">
+		                                        				<span style="float:left;color:#b1afaf;"><b>[탈퇴한사용자]</b></span>
+		                                        			</c:when>
+		                                        			<c:otherwise>
+		                                        				<span style="float:left"><b>${item.memberVO.member_name}</b></span>
+		                                        			</c:otherwise>
+		                                        		</c:choose>
+		                                        		<span style="float:right"><fmt:formatDate pattern="yyyy-MM-dd" value="${item.create_date}" /></span>
 		                                        	</div>
 		                                        	<div class="form-group beforeSpan comment_txt">
-		                                        		<span>
+		                                        		<span <c:if test="${item.memberVO.member_name eq null }">style="color:#b1afaf;"</c:if>>
 			                                        		<c:if test="${item.board_comment_depth == 1}">
-			                                        			<span class="parent_name">@ ${item.parent_member_name }</span>
+				                                        		<c:choose>
+				                                        			<c:when test="${item.parent_member_name eq null }">
+				                                        				<span class="parent_name" style="color:#b1afaf;">@ [탈퇴한사용자]</span>
+				                                        			</c:when>
+				                                        			<c:otherwise>
+				                                        				<span class="parent_name">@ ${item.parent_member_name }</span>
+				                                        			</c:otherwise>
+				                                        		</c:choose>
+			                                        			
 			                                        		</c:if>
-			                                        		${fn:replace(item.board_comment_txt, newLineChar, "<br/>")}
+			                                        		<c:choose>
+			                                        			<c:when test="${item.memberVO.member_name eq null }">
+			                                        				[삭제된  댓글입니다]
+			                                        			</c:when>
+			                                        			<c:otherwise>
+			                                        				${fn:replace(item.board_comment_txt, newLineChar, "<br/>")}
+			                                        			</c:otherwise>
+			                                        		</c:choose>
 		                                        		</span>
+		                                        		
 		                                        	</div>
 	                                        	</div>
                                         	</c:forEach>
