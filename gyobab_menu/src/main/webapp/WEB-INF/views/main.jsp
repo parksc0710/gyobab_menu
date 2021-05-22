@@ -58,7 +58,7 @@
                                 	    <div class="blog_list"></div>
                                         <h4> 공지사항입니다!
                                         </h4>
-                                        <p> 2021-05-18
+                                        <p> 2021-05-22
                                         	<span style="float:right;"><b>개발팀박성철</b></span>
                                         </p>
                                         <p>
@@ -183,7 +183,7 @@
 <script>
 	
 	// 신규 공지 등록 후 보이게 하려면 newNoticeTime을 수정 시간으로 설정
-	var newNoticeTime = new Date("2021-05-22 17:30:00");
+	var newNoticeTime = new Date("2021-05-22 17:40:00");
 	
 	var noticeCloseTime = new Date(getCookie("notice_close"));
 	
