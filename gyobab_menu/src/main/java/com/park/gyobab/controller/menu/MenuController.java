@@ -14,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.park.gyobab.domain.BoardCommentVO;
 import com.park.gyobab.domain.BoardLikeVO;
 import com.park.gyobab.domain.BoardVO;
 import com.park.gyobab.domain.Criteria;
 import com.park.gyobab.domain.MemberVO;
+import com.park.gyobab.service.BoardCommentService;
 import com.park.gyobab.service.BoardLikeService;
 import com.park.gyobab.service.BoardService;
 import com.park.gyobab.service.MemberService;
@@ -34,6 +36,9 @@ public class MenuController {
 	
 	@Autowired
     private MemberService memberService;
+	
+	@Autowired
+    private BoardCommentService boardCommentService;
 	
 	String boardType = "1";
 	
@@ -54,10 +59,16 @@ public class MenuController {
 		List<BoardVO> list = boardService.selectBoards(map);
 		
 		Map<BoardVO, List<BoardLikeVO>> likes = new HashMap<BoardVO, List<BoardLikeVO>>();
+		Map<BoardVO, List<BoardCommentVO>> comments = new HashMap<BoardVO, List<BoardCommentVO>>();
 		
 		for(int i = 0; i < list.size(); i++) {
 			List<BoardLikeVO> likelist = boardLikeService.selectBoardLikes(list.get(i).getBoard_id());
 			likes.put(list.get(i), likelist);
+		}
+		
+		for(int i = 0; i < list.size(); i++) {
+			List<BoardCommentVO> commentlist = boardCommentService.selectBoardComments(list.get(i).getBoard_id());
+			comments.put(list.get(i), commentlist);
 		}
 		
 		model.addAttribute("pageSize", pageSize);
@@ -66,6 +77,7 @@ public class MenuController {
 		
 		model.addAttribute("list", list);
 		model.addAttribute("likes", likes);
+		model.addAttribute("comments", comments);
 		
 		return "menu/main";
 	}

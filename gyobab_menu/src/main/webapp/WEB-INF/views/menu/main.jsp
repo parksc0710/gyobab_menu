@@ -3,7 +3,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<% pageContext.setAttribute("newLineChar", "\n"); %>
+<style>
+.table-bordered td, .table-bordered th {
+	border : 5px solid #dee2e6;
+}
+.myCustomCommentBtn {
+	float: right;
+    background: black;
+    border-color: black;
+    height: 30px;
+    font-size: 13px;
+}
+.comment_list {
+	magring-bottom : 10px;
+}
+.comment_tit {
+	height:30px; 
+	background: #dee2e6;
+	padding : 5px;
+}
+.comment_txt {
+	margin-bottom: 10px;
+	padding-left : 10px;
+}
+.comment_txt_edit {
+	margin-bottom: 10px;
+	padding-left : 10px;
+	height:200px;
+}
+.comment_insert_div {
+	margin-top : 10px;
+}
+.comment_utils {
+	height: 20px;
+}
 
+</style>
 <div class="content">
 	<div class="container-fluid">
 	
@@ -81,18 +117,63 @@
 		                                        	${list.board_txt}
 		                                        	<br><br>
 		                                        </p>
-		                                        <p>
+		                                        <p style="height:31px;">
 		                                        	<security:authorize ifAnyGranted="ROLE_OPERATOR">
-				                                        <span style="width:100px;float:right;"><a href="${pageContext.request.contextPath}/menu/updateOperator.do?boardid=${list.board_id }" class="btn btn-primary btn-sm btn-block"><i class="far fa-edit"></i> Edit</a>                                                        
-				                                        <a href="javascript:deleteBoard(${list.board_id }, '${list.board_tit }')" class="btn btn-danger btn-sm btn-block mt-2"><i class="fas fa-trash"></i> Delete</a></span>                                                        
+				                                        <span><a href="${pageContext.request.contextPath}/menu/updateOperator.do?boardid=${list.board_id }" style="float:right;width:100px;" class="btn btn-primary btn-sm btn-block"><i class="far fa-edit"></i> Edit</a>                                                        
+				                                        <a href="javascript:deleteBoard(${list.board_id }, '${list.board_tit }')" class="btn btn-danger btn-sm btn-block mt-2" style="width:100px;"><i class="fas fa-trash"></i> Delete</a></span>                                                        
 				                                    </security:authorize>
 				                                    <security:authorize ifAnyGranted="ROLE_ADMIN">
 				                                   		<security:authentication property="principal.member_id" var="memberId"/>
 														<c:if test="${list.memberVO.member_id == memberId}">
-						                                        <span style="width:100px;float:right;"><a href="${pageContext.request.contextPath}/menu/update.do?boardid=${list.board_id }" class="btn btn-primary btn-sm btn-block"><i class="far fa-edit"></i> Edit</a>                                                        
-						                                        <a href="javascript:deleteBoard(${list.board_id }, '${list.board_tit }')" class="btn btn-danger btn-sm btn-block mt-2"><i class="fas fa-trash"></i> Delete</a></span>                                                        
+						                                        <span><a href="${pageContext.request.contextPath}/menu/update.do?boardid=${list.board_id }" style="float:right;width:100px;" class="btn btn-primary btn-sm btn-block"><i class="far fa-edit"></i> Edit</a>                                                        
+						                                        <a href="javascript:deleteBoard(${list.board_id }, '${list.board_tit }')" class="btn btn-danger btn-sm btn-block mt-2" style="width:100px;"><i class="fas fa-trash"></i> Delete</a></span>                                                        
 					                                    </c:if>
 				                                    </security:authorize>
+		                                        </p>
+		                                        <hr/>
+		                                        <p id="comment${list.board_id }">
+		                                        	<em class="fa-2x mr-2 fas fa-comments" style="font-size:20px;"> ${fn:length(comments[list])}개의 댓글</em>
+		                                        	<c:forEach var="item" items="${comments[list]}">
+		                                        	
+		                                        	<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
+						                            	<security:authentication property="principal.member_id" var="memberId"/>
+						                            	<security:authentication property="principal.grantVO.grant_name" var="memberGrant"/>
+						                            </security:authorize>
+		                                        		
+		                                        		<div class="form-group beforeSpan comment_list">
+				                                        	<div class="form-group beforeSpan comment_tit">
+				                                        		<span style="float:left"><b>${item.memberVO.member_name}</b></span><span style="float:right"><fmt:formatDate pattern="yyyy-MM-dd" value="${item.create_date}" /></span>
+				                                        	</div>
+				                                        	<div class="form-group beforeSpan comment_txt">
+				                                        		<span>${fn:replace(item.board_comment_txt, newLineChar, "<br/>")}</span>
+				                                        	</div>
+				                                        	<div class="form-group beforeSpan comment_utils">
+				                                        		<span style="float: right">
+				                                        			<c:choose>
+				                                        				<c:when test="${memberGrant eq 'OPERATOR' }">
+				                                        					<em class="fa-2x mr-2 fas fa-edit" style="font-size:10px;cursor:pointer;" onclick="editComment(${item.board_comment_id}, this);"></em> <em class="fa-2x mr-2 fas fa-trash-alt" style="font-size:10px;cursor:pointer;" onclick="deleteComment(${item.board_comment_id});"></em>
+				                                        				</c:when>
+				                                        				<c:otherwise>
+				                                        					<c:if test="${item.memberVO.member_id eq memberId}">
+						                                        				<em class="fa-2x mr-2 fas fa-edit" style="font-size:10px;cursor:pointer;" onclick="editComment(${item.board_comment_id}, this);"></em> <em class="fa-2x mr-2 fas fa-trash-alt" style="font-size:10px;cursor:pointer;" onclick="deleteComment(${item.board_comment_id});"></em>
+																		 	</c:if>
+				                                        				</c:otherwise>
+				                                        			</c:choose>
+				                                        		</span> 
+				                                        	</div>
+				                                        	<div class="form-group beforeSpan comment_txt_edit" style="display:none;">
+				                                        		<textarea class="form-control"  maxlength="100"  style="margin-top: 0px; margin-bottom: 0px; height: 120px; font-size : 12px;">${item.board_comment_txt }</textarea>
+				                                        		<button type="submit" class="btn btn-primary myCustomCommentBtn" style="background:#ff5d48;border-color:#ff5d48;float:left;margin-top:5px;" onclick="commentUpdateCancle(this)">취소</button>
+				                                        		<button type="submit" class="btn btn-primary myCustomCommentBtn" onclick="commentUpdate(this, ${item.board_comment_id });" style="margin-top:5px;">수정</button>
+				                                        	</div>
+			                                        	</div>
+		                                        	</c:forEach>
+		                                        	<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
+			                                        	<div class="form-group beforeSpan comment_insert_div">
+											                <textarea class="form-control comment_txt"  maxlength="100"  style="margin-top: 0px; margin-bottom: 0px; height: 80px; font-size : 12px;"></textarea>
+											            </div>
+											            <button type="submit" class="btn btn-primary myCustomCommentBtn" onclick="commentApply(this, ${list.board_id });">등록</button>
+										            </security:authorize>
 		                                        </p>
 		                                    </td>
 		                                </tr>
@@ -270,4 +351,124 @@
 	    });
 	}
 	
+	function commentApply(obj, boardId) {
+		var commentTxt = $(obj).siblings("div.comment_insert_div").children("textarea.comment_txt").val();
+		$.ajax({
+	       type: "post", 
+	       dataType: "text", 
+	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	       url: "${pageContext.request.contextPath}/comment/insert.do",
+	       data : {boardId : boardId, commentTxt : commentTxt},
+	       success: function(rtn) {
+	    	  //alert("좋아요!.");
+	    	  if(rtn=="fail") {
+			  	alert("댓글 등록에 실패했습니다. 관리자에게 문의하세요")		    		  
+	    	  } else {
+	    		refreshComment(boardId);
+	    	  }
+	       },
+	       error:function(request,status,error){
+	           alert("에러발생. 관리자에게 문의하세요.");
+	       }
+	    });
+	}
+	
+	function refreshComment(boardId) {
+		location.reload();
+	}
+	
+	function deleteComment(commentId) {
+		swal({
+		  title: "댓글을 삭제하시겠습니까?",
+		  icon: "warning",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				deleteCommentDo(commentId);
+			}
+		});
+	}
+	
+	function deleteCommentDo(commentId) {
+		$.ajax({
+	       type: "post", 
+	       dataType: "text", 
+	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	       url: "${pageContext.request.contextPath}/comment/delete.do",
+	       data : {commentId : commentId},
+	       success: function(rtn) {
+	    	  if(rtn=="fail") {
+			  	alert("댓글 삭제에 실패했습니다. 관리자에게 문의하세요")		    		  
+	    	  } else {
+    			  swal("댓글이 삭제되었습니다.", {
+			     	icon: "success",
+			   	  }).then(() => {
+			   		refreshComment();
+			   	  });
+	    	  }
+	       },
+	       error:function(request,status,error){
+	           alert("에러발생. 관리자에게 문의하세요.");
+	       }
+	    });
+	}
+	
+	function editComment(commentId, obj) {
+		var commentListDiv = $(obj).parents("div.comment_list");
+		commentListDiv.children("div.comment_txt").hide();
+		commentListDiv.children("div.comment_utils").hide();
+		commentListDiv.children("div.comment_txt_edit").show();
+	}
+	
+	function commentUpdateCancle(obj) {
+		var commentListDiv = $(obj).parents("div.comment_list");
+		commentListDiv.children("div.comment_txt_edit").hide();
+		commentListDiv.children("div.comment_txt").show();
+		commentListDiv.children("div.comment_utils").show();
+		var originTxt = commentListDiv.children("div.comment_txt").children("span").html();
+		commentListDiv.children("div.comment_txt_edit").children("textarea").val(originTxt.replace(/<br>/g, '\n'));
+	}
+	
+	function commentUpdate(obj, commentId) { 
+		var commentTxt = $(obj).siblings("textarea").val();
+		//console.log("commentId : " + commentId + " // commentTxt : " + commentTxt);
+		swal({
+		  title: "댓글을 수정하시겠습니까?",
+		  icon: "warning",
+		  buttons: true,
+		  dangerMode: true,
+		})
+		.then((willDelete) => {
+			if (willDelete) {
+				updateCommentDo(commentId, commentTxt);
+			}
+		});
+	}
+	
+	function updateCommentDo(commentId, commentTxt) {
+		commentTxt = commentTxt.trim();
+		$.ajax({
+	       type: "post", 
+	       dataType: "text", 
+	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+	       url: "${pageContext.request.contextPath}/comment/update.do",
+	       data : {commentId : commentId, commentTxt : commentTxt},
+	       success: function(rtn) {
+	    	  if(rtn=="fail") {
+			  	alert("댓글 수정에 실패했습니다. 관리자에게 문의하세요")		    		  
+	    	  } else {
+    			  swal("댓글이 수정되었습니다.", {
+			     	icon: "success",
+			   	  }).then(() => {
+			   		refreshComment();
+			   	  });
+	    	  }
+	       },
+	       error:function(request,status,error){
+	           alert("에러발생. 관리자에게 문의하세요.");
+	       }
+	    });
+	}
 </script>

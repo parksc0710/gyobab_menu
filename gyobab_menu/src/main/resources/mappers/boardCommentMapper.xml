@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.park.gyobab.BoardCommentMapper">
+  
+  	<resultMap type="com.park.gyobab.domain.MemberVO" id="MemberVO">
+		<result column="member_id" property="member_id" />
+		<result column="member_name" property="member_name" />
+		<result column="act_flg" property="act_flg" />
+		<result column="del_flg" property="del_flg" />
+	</resultMap>
+  
+  	<resultMap type="com.park.gyobab.domain.BoardVO" id="BoardVO">
+		<result column="board_id" property="board_id" />
+		<result column="act_flg" property="act_flg" />
+		<result column="del_flg" property="del_flg" />
+	</resultMap>
+	
+	<resultMap type="com.park.gyobab.domain.BoardCommentVO" id="BoardCommentVO">
+		<result column="board_comment_id" property="board_comment_id" />
+		<result column="board_comment_parent" property="board_comment_parent" />
+		<result column="board_comment_txt" property="board_comment_txt" />
+		<result column="board_comment_depth" property="board_comment_depth" />
+		<result column="board_comment_order" property="board_comment_order" />
+		<result column="create_date" property="create_date" />
+		<result column="update_date" property="update_date" />
+		<result column="act_flg" property="act_flg" />
+		<result column="del_flg" property="del_flg" />
+		<collection property="memberVO" resultMap="MemberVO" />
+		<collection property="parentMemberVO" resultMap="MemberVO" />
+		<collection property="boardVO" resultMap="BoardVO" />
+	</resultMap>
+	
+	<insert id="insertBoardComment" parameterType="hashmap">
+		INSERT INTO `gyobab`.`board_comment`
+		(
+			`board_comment_parent`,
+			`board_comment_board`,
+			`board_comment_txt`,
+			`board_comment_member`,
+			`board_comment_parent_member`,
+			`board_comment_depth`,
+			`board_comment_order`
+		)
+		VALUES
+		(
+			NULL,
+			#{board_comment_board},
+			#{board_comment_txt},
+			#{board_comment_member},
+			NULL,
+			0,
+			0
+		);
+		
+		SET @last_id = last_insert_id();
+		
+		update `gyobab`.`board_comment` set `board_comment_parent` = @last_id where `board_comment_id` = @last_id;
+  	</insert>
+  	
+  	<select id="selectBoardComments" parameterType="int" resultMap="BoardCommentVO">
+  		<![CDATA[
+	  		SELECT 
+	  			`board_comment`.`board_comment_id`,
+			    `board_comment`.`board_comment_parent`,
+			    a.`board_id`,
+			    `board_comment`.`board_comment_txt`,
+			    b.`member_id`,
+			    b.`member_name`,
+			    c.`member_id`,
+			    c.`member_name`,
+			    `board_comment`.`board_comment_depth`,
+			    `board_comment`.`board_comment_order`,
+			    `board_comment`.`create_date`,
+			    `board_comment`.`update_date`,
+			    `board_comment`.`act_flg`,
+			    `board_comment`.`del_flg`
+			FROM `gyobab`.`board_comment`
+			inner join `gyobab`.`board` a on a.`board_id` = `board_comment`.`board_comment_board`
+			inner join `gyobab`.`member` b on b.`member_id` = `board_comment`.`board_comment_member`
+			left join `gyobab`.`member` c on c.`member_id` = `board_comment`.`board_comment_parent_member`
+			where `board_comment`.`board_comment_board` = #{board_comment_board} and `board_comment`.`act_flg` = 1 and `board_comment`.`del_flg` = 0
+			order by `board_comment`.`board_comment_parent` asc, `board_comment`.`board_comment_order` asc;
+
+		]]>
+  	</select>
+  	
+  	<update id="deleteBoardComment" parameterType="int">
+  		update `board_comment` set `act_flg` = 0, `del_flg` = 1, `update_date` = NOW() where `board_comment`.`board_comment_id` = #{board_comment_id}
+  	</update>
+  	
+  	<update id="updateBoardComment" parameterType="hashmap">
+  	update `board_comment` set `board_comment_txt` = #{board_comment_txt}, `update_date` = NOW() where `board_comment`.`board_comment_id` = #{board_comment_id}
+  	</update>
+  	
+  	<select id="selectBoardCommentById" parameterType="int" resultMap="BoardCommentVO">
+  		SELECT 
+	  			`board_comment`.`board_comment_id`,
+			    `board_comment`.`board_comment_parent`,
+			    a.`board_id`,
+			    `board_comment`.`board_comment_txt`,
+			    b.`member_id`,
+			    b.`member_name`,
+			    c.`member_id`,
+			    c.`member_name`,
+			    `board_comment`.`board_comment_depth`,
+			    `board_comment`.`board_comment_order`,
+			    `board_comment`.`create_date`,
+			    `board_comment`.`update_date`,
+			    `board_comment`.`act_flg`,
+			    `board_comment`.`del_flg`
+		FROM `gyobab`.`board_comment`
+		inner join `gyobab`.`board` a on a.`board_id` = `board_comment`.`board_comment_board`
+		inner join `gyobab`.`member` b on b.`member_id` = `board_comment`.`board_comment_member`
+		left join `gyobab`.`member` c on c.`member_id` = `board_comment`.`board_comment_parent_member`
+		where `board_comment`.`board_comment_id` = #{board_comment_id} and `board_comment`.`act_flg` = 1 and `board_comment`.`del_flg` = 0
+  	</select>
+  	
+  <!-- 	<select id="selectBoards" parameterType="hashmap" resultMap="BoardVO">
+  		<![CDATA[
+	  		select * from
+			(select A.*, @ROWNUM := @ROWNUM + 1 AS `ROWNUM` from
+			 (select 
+					`board`.`board_id`,
+					`board`.`board_type`,
+					`board`.`board_tit`,
+					`board`.`board_txt`,
+					`member`.`member_id`,
+					`board`.`board_thumb`,
+					`board`.`board_view`,
+					`board`.`create_date`,
+					`board`.`update_date`,
+					`member`.`member_name`
+				FROM `gyobab`.`board`  
+				INNER JOIN `gyobab`.`member`
+				ON `board`.`board_member` = `member`.`member_id`
+			    JOIN (SELECT @rownum:=0) TMP
+			    WHERE `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = '1'
+				ORDER BY `board_id` desc
+			    ) A
+			) tmp
+			where `ROWNUM` >= ((#{cri.pageNum}-1) * #{cri.amount} + 1) and `ROWNUM` <= (#{cri.pageNum} * #{cri.amount})
+		]]>
+  	</select>
+  	
+  	<select id="selectBoardCnt" resultType="Integer">
+  		select count(`board`.`board_id`) from `board` where `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = #{board_type};
+  	</select>
+  	
+  	<select id="selectTop1Board" parameterType="string" resultMap="BoardVO">
+  		SELECT `board`.`board_id`,
+		    `board`.`board_type`,
+		    `board`.`board_tit`,
+		    `board`.`board_txt`,
+		    `member`.`member_id`,
+		    `board`.`board_thumb`,
+		    `board`.`board_view`,
+		    `board`.`create_date`,
+		    `board`.`update_date`,
+		    `member`.`member_name`
+		FROM `gyobab`.`board`  
+		INNER JOIN `gyobab`.`member`
+		ON `board`.`board_member` = `member`.`member_id`
+		WHERE `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = #{board_type}
+		ORDER BY `board_id` desc
+		LIMIT 1
+  	</select>
+  	
+  	<select id="selectBoardById" parameterType="int" resultMap="BoardVO">
+  		SELECT `board`.`board_id`,
+		    `board`.`board_type`,
+		    `board`.`board_tit`,
+		    `board`.`board_txt`,
+		    `member`.`member_id`,
+		    `board`.`board_thumb`,
+		    `board`.`board_view`,
+		    `board`.`create_date`,
+		    `board`.`update_date`,
+		    `member`.`member_name`
+		FROM `gyobab`.`board`  
+		INNER JOIN `gyobab`.`member`
+		ON `board`.`board_member` = `member`.`member_id`
+		WHERE `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_id` = #{board_id}
+		ORDER BY `board_id` desc
+		LIMIT 1
+  	</select>
+  	
+  	<update id="deleteBoard" parameterType="int">
+  		UPDATE `board`
+			set act_flg = 0, del_flg = 1
+		WHERE
+			board_id = #{board_id}
+  	</update>
+  	
+  	<update id="updateBoard" parameterType="com.park.gyobab.domain.BoardVO" >
+  		UPDATE `board`
+			set board_tit = #{board_tit}, board_txt = #{board_txt}, board_thumb = #{board_thumb}, update_date = now()
+		WHERE
+			board_id = #{board_id}
+  	</update> -->
+  	
+  	
+  </mapper>
+ 
+ 
