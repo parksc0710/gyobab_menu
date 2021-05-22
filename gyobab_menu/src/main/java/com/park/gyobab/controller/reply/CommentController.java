@@ -79,7 +79,7 @@ public class CommentController {
 		
 		BoardCommentVO inBoardComment = boardCommentService.selectBoardCommentById(commentId);
 		
-		if(nowUser.getMember_id() == inBoardComment.getMemberVO().getMember_id() || nowUser.getGrantVO().getGrant_name().equals("OPERATOR")) {
+		if(nowUser.getGrantVO().getGrant_name().equals("OPERATOR") || nowUser.getMember_id() == inBoardComment.getMemberVO().getMember_id()) {
 			boardCommentService.deleteBoardComment(commentId);
 			rtn = "suc";
 		} else {
