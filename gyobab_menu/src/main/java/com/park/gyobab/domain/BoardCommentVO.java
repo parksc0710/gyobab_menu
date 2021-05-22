@@ -18,7 +18,7 @@ public class BoardCommentVO implements Serializable{
 	private String board_comment_txt;
 	private BoardVO boardVO;
 	private MemberVO memberVO;
-	private MemberVO parentMemberVO;
+	private String parent_member_name;
 	private int board_comment_depth;
 	private int board_comment_order;
     private Date create_date;
@@ -50,11 +50,11 @@ public class BoardCommentVO implements Serializable{
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
 	}
-	public MemberVO getParentMemberVO() {
-		return parentMemberVO;
+	public String getParent_member_name() {
+		return parent_member_name;
 	}
-	public void setParentMemberVO(MemberVO parentMemberVO) {
-		this.parentMemberVO = parentMemberVO;
+	public void setParent_member_name(String parent_member_name) {
+		this.parent_member_name = parent_member_name;
 	}
 	public int getBoard_comment_depth() {
 		return board_comment_depth;

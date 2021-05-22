@@ -23,6 +23,11 @@ public class BoardCommentDAOImpl implements BoardCommentDAO {
 	public void insertBoardComment(HashMap<String, Object> map) {
 		sqlSession.insert(namespace + ".insertBoardComment", map); 
 	}
+	
+	@Override
+	public void insertBoardCommentReply(HashMap<String, Object> map) {
+		sqlSession.insert(namespace + ".insertBoardCommentReply", map); 		
+	}
 
 	@Override
 	public List<BoardCommentVO> selectBoardComments(int board_comment_board) throws Exception {

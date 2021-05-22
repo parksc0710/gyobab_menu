@@ -21,6 +21,11 @@ public class BoardCommentServiceImpl implements BoardCommentService {
 	public void insertBoardComment(HashMap<String, Object> map) {
 		dao.insertBoardComment(map);		
 	}
+	
+	@Override
+	public void insertBoardCommentReply(HashMap<String, Object> map) {
+		dao.insertBoardCommentReply(map);			
+	}
 
 	@Override
 	public List<BoardCommentVO> selectBoardComments(int board_comment_board) throws Exception {
@@ -43,5 +48,5 @@ public class BoardCommentServiceImpl implements BoardCommentService {
 	public void updateBoardComment(HashMap<String, Object> map) {
 		dao.updateBoardComment(map);
 	}
-	
+
 }

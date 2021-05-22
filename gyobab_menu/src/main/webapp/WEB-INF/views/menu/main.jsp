@@ -32,13 +32,36 @@
 	padding-left : 10px;
 	height:200px;
 }
+.comment_txt_reply {
+	margin-bottom: 10px;
+	padding-left : 10px;
+	height:150px;
+}
 .comment_insert_div {
 	margin-top : 10px;
 }
 .comment_utils {
 	height: 20px;
 }
-
+.reply {
+    width: 93%;
+    margin-left: 7%;
+}
+.parent_name {
+    font-size: 12px;
+    background: #d6d8db;
+    padding: 5px;
+    border-radius: 30px;
+}
+.my_comment {
+	background: #b8daff;
+}
+.writer_comment {
+	background: #c3e6cb;
+}
+.operator_comment{
+	color : red;
+}
 </style>
 <div class="content">
 	<div class="container-fluid">
@@ -87,7 +110,7 @@
 			                            <tr>
 		                                    <td>
 		                                        <div class="blog_list" style="width:100%; height:100%;">
-		                                        	<span style="width:80%;float:left;padding-right:10px;"><h4>${list.board_tit }</h4></span> 
+		                                        	<span style="width:80%;float:left;padding-right:10px;<c:if test="${list.memberVO.member_id == 1}">color:red;</c:if>"><h4>${list.board_tit }</h4></span> 
 		                                        	<span style="width:50px;float:right;">
 			                                        	<span style="line-height:2;">
 			                                        	<c:choose>
@@ -140,15 +163,23 @@
 						                            	<security:authentication property="principal.grantVO.grant_name" var="memberGrant"/>
 						                            </security:authorize>
 		                                        		
-		                                        		<div class="form-group beforeSpan comment_list">
-				                                        	<div class="form-group beforeSpan comment_tit">
+		                                        		<div class="form-group beforeSpan comment_list <c:if test="${item.board_comment_depth == 1}">reply</c:if>">
+				                                        	<div class="form-group beforeSpan comment_tit <c:if test="${item.memberVO.member_id == memberId}">my_comment</c:if> <c:if test="${item.memberVO.member_id == list.memberVO.member_id}">writer_comment</c:if>" style="<c:if test="${item.memberVO.member_id == 1}">color:red;</c:if>"> 
 				                                        		<span style="float:left"><b>${item.memberVO.member_name}</b></span><span style="float:right"><fmt:formatDate pattern="yyyy-MM-dd" value="${item.create_date}" /></span>
 				                                        	</div>
 				                                        	<div class="form-group beforeSpan comment_txt">
-				                                        		<span>${fn:replace(item.board_comment_txt, newLineChar, "<br/>")}</span>
+				                                        		<span>
+					                                        		<c:if test="${item.board_comment_depth == 1}">
+					                                        			<span class="parent_name">@ ${item.parent_member_name }</span>
+					                                        		</c:if>
+					                                        		${fn:replace(item.board_comment_txt, newLineChar, "<br/>")}
+				                                        		</span>
 				                                        	</div>
 				                                        	<div class="form-group beforeSpan comment_utils">
 				                                        		<span style="float: right">
+				                                        			<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
+				                                        				<em class="fa-2x mr-2 fas fa-reply" style="font-size:10px;cursor:pointer;" onclick="replyComment(this);"></em> 
+				                                        			</security:authorize>
 				                                        			<c:choose>
 				                                        				<c:when test="${memberGrant eq 'OPERATOR' }">
 				                                        					<em class="fa-2x mr-2 fas fa-edit" style="font-size:10px;cursor:pointer;" onclick="editComment(${item.board_comment_id}, this);"></em> <em class="fa-2x mr-2 fas fa-trash-alt" style="font-size:10px;cursor:pointer;" onclick="deleteComment(${item.board_comment_id});"></em>
@@ -164,8 +195,13 @@
 				                                        	<div class="form-group beforeSpan comment_txt_edit" style="display:none;">
 				                                        		<textarea class="form-control"  maxlength="100"  style="margin-top: 0px; margin-bottom: 0px; height: 120px; font-size : 12px;">${item.board_comment_txt }</textarea>
 				                                        		<button type="submit" class="btn btn-primary myCustomCommentBtn" style="background:#ff5d48;border-color:#ff5d48;float:left;margin-top:5px;" onclick="commentUpdateCancle(this)">취소</button>
-				                                        		<button type="submit" class="btn btn-primary myCustomCommentBtn" onclick="commentUpdate(this, ${item.board_comment_id });" style="margin-top:5px;">수정</button>
+				                                        		<button type="submit" class="btn btn-primary myCustomCommentBtn" onclick="commentUpdate(this, ${item.board_comment_id });" style="margin-top:5px;">내용 수정</button>
 				                                        	</div>
+				                                        	<div class="form-group beforeSpan comment_txt_reply" style="display:none;">
+				                                        		<textarea class="form-control"  maxlength="100"  style="margin-top: 0px; margin-bottom: 0px; height: 80px; font-size : 12px;"></textarea>
+				                                        		<button type="submit" class="btn btn-primary myCustomCommentBtn" style="background:#ff5d48;border-color:#ff5d48;float:left;margin-top:5px;" onclick="commentReplyCancle(this)">취소</button>
+				                                        		<button type="submit" class="btn btn-primary myCustomCommentBtn" onclick="commentReply(this, '${item.board_comment_id}');" style="margin-top:5px;">답글 등록</button>
+			                                        		</div>
 			                                        	</div>
 		                                        	</c:forEach>
 		                                        	<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
@@ -353,24 +389,29 @@
 	
 	function commentApply(obj, boardId) {
 		var commentTxt = $(obj).siblings("div.comment_insert_div").children("textarea.comment_txt").val();
-		$.ajax({
-	       type: "post", 
-	       dataType: "text", 
-	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
-	       url: "${pageContext.request.contextPath}/comment/insert.do",
-	       data : {boardId : boardId, commentTxt : commentTxt},
-	       success: function(rtn) {
-	    	  //alert("좋아요!.");
-	    	  if(rtn=="fail") {
-			  	alert("댓글 등록에 실패했습니다. 관리자에게 문의하세요")		    		  
-	    	  } else {
-	    		refreshComment(boardId);
-	    	  }
-	       },
-	       error:function(request,status,error){
-	           alert("에러발생. 관리자에게 문의하세요.");
-	       }
-	    });
+		if(commentTxt == "" || commentTxt == null) {
+			swal("내용을 입력해주세요!", "내용이 없으면 등록할 수 없습니다.", "error");
+		} else {
+			$.ajax({
+			       type: "post", 
+			       dataType: "text", 
+			       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+			       url: "${pageContext.request.contextPath}/comment/insert.do",
+			       data : {boardId : boardId, commentTxt : commentTxt},
+			       success: function(rtn) {
+			    	  //alert("좋아요!.");
+			    	  if(rtn=="fail") {
+					  	alert("댓글 등록에 실패했습니다. 관리자에게 문의하세요")		    		  
+			    	  } else {
+			    		refreshComment(boardId);
+			    	  }
+			       },
+			       error:function(request,status,error){
+			           alert("에러발생. 관리자에게 문의하세요.");
+			       }
+			    });
+		}
+		
 	}
 	
 	function refreshComment(boardId) {
@@ -449,26 +490,65 @@
 	
 	function updateCommentDo(commentId, commentTxt) {
 		commentTxt = commentTxt.trim();
-		$.ajax({
-	       type: "post", 
-	       dataType: "text", 
-	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
-	       url: "${pageContext.request.contextPath}/comment/update.do",
-	       data : {commentId : commentId, commentTxt : commentTxt},
-	       success: function(rtn) {
-	    	  if(rtn=="fail") {
-			  	alert("댓글 수정에 실패했습니다. 관리자에게 문의하세요")		    		  
-	    	  } else {
-    			  swal("댓글이 수정되었습니다.", {
-			     	icon: "success",
-			   	  }).then(() => {
-			   		refreshComment();
-			   	  });
-	    	  }
-	       },
-	       error:function(request,status,error){
-	           alert("에러발생. 관리자에게 문의하세요.");
-	       }
-	    });
+		if(commentTxt == "" || commentTxt == null) {
+			swal("내용을 입력해주세요!", "내용이 없으면 수정할 수 없습니다.", "error");
+		} else {
+			$.ajax({
+		       type: "post", 
+		       dataType: "text", 
+		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		       url: "${pageContext.request.contextPath}/comment/update.do",
+		       data : {commentId : commentId, commentTxt : commentTxt},
+		       success: function(rtn) {
+		    	  if(rtn=="fail") {
+				  	alert("댓글 수정에 실패했습니다. 관리자에게 문의하세요")		    		  
+		    	  } else {
+	    			  swal("댓글이 수정되었습니다.", {
+				     	icon: "success",
+				   	  }).then(() => {
+				   		refreshComment();
+				   	  });
+		    	  }
+		       },
+		       error:function(request,status,error){
+		           alert("에러발생. 관리자에게 문의하세요.");
+		       }
+		    });	
+		}
+		
+	}
+	
+	function replyComment(obj) {
+		$(obj).parent("span").parent("div.comment_utils").siblings("div.comment_txt_reply").show();
+	}
+	
+	function commentReplyCancle(obj) {
+		$(obj).parent("div.comment_txt_reply").hide();
+		$(obj).siblings("textarea").val("");
+	}
+	
+	function commentReply(obj, board_comment_id) {
+		var replyText = $(obj).siblings("textarea").val();
+		if(replyText == "" || replyText == null) {
+			swal("내용을 입력해주세요!", "내용이 없으면 등록할 수 없습니다.", "error");
+		} else {
+			$.ajax({
+		       type: "post", 
+		       dataType: "text", 
+		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
+		       url: "${pageContext.request.contextPath}/comment/reply.do",
+		       data : {board_comment_id : board_comment_id, replyText : replyText},
+		       success: function(rtn) {
+		    	  if(rtn=="fail") {
+				  	alert("답글 등록에 실패했습니다. 관리자에게 문의하세요")		    		  
+		    	  } else {
+				   	refreshComment();
+		    	  }
+		       },
+		       error:function(request,status,error){
+		           alert("에러발생. 관리자에게 문의하세요.");
+		       }
+		    });	
+		}
 	}
 </script>

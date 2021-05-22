@@ -121,4 +121,40 @@ public class CommentController {
 		
 		return rtn;
 	}
+	
+	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN", "ROLE_USER"})
+	@RequestMapping(value = "/reply", method = RequestMethod.POST)
+	@ResponseBody
+	public String reply(Model model,
+			@RequestParam(value = "board_comment_id", required = true) int board_comment_id,
+			@RequestParam(value = "replyText", required = true) String replyText
+			) throws Exception {
+		
+		String rtn = "";
+		
+		MemberVO nowUser = null; 
+		
+		try {
+			nowUser = (MemberVO) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		} catch (Exception e) {
+			System.out.println("비로그인 사용자가 코멘트 입력 클릭");
+		}
+		
+		if(nowUser == null) {
+			rtn = "fail";
+		} else {
+			int member_id = nowUser.getMember_id();
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("board_comment_member", member_id);
+			map.put("board_comment_id", board_comment_id);
+			map.put("board_comment_txt", replyText);
+			
+			boardCommentService.insertBoardCommentReply(map);
+			
+			rtn = "suc";
+		}
+		
+		return rtn;
+	}
 }

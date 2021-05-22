@@ -9,6 +9,8 @@ import com.park.gyobab.domain.BoardVO;
 public interface BoardCommentService {
 	
 	public void insertBoardComment(HashMap<String, Object> map);
+
+	public void insertBoardCommentReply(HashMap<String, Object> map);
 	
 	public List<BoardCommentVO> selectBoardComments(int board_comment_board) throws Exception;
 	

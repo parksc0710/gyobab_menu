@@ -12,6 +12,13 @@
 		<result column="del_flg" property="del_flg" />
 	</resultMap>
   
+    <resultMap type="com.park.gyobab.domain.MemberVO" id="ParentMemberVO">
+		<result column="member_id" property="member_id" />
+		<result column="member_name" property="member_name" />
+		<result column="act_flg" property="act_flg" />
+		<result column="del_flg" property="del_flg" />
+	</resultMap>
+	
   	<resultMap type="com.park.gyobab.domain.BoardVO" id="BoardVO">
 		<result column="board_id" property="board_id" />
 		<result column="act_flg" property="act_flg" />
@@ -28,8 +35,8 @@
 		<result column="update_date" property="update_date" />
 		<result column="act_flg" property="act_flg" />
 		<result column="del_flg" property="del_flg" />
+		<result column="parent_member_name" property="parent_member_name" />
 		<collection property="memberVO" resultMap="MemberVO" />
-		<collection property="parentMemberVO" resultMap="MemberVO" />
 		<collection property="boardVO" resultMap="BoardVO" />
 	</resultMap>
 	
@@ -60,6 +67,35 @@
 		update `gyobab`.`board_comment` set `board_comment_parent` = @last_id where `board_comment_id` = @last_id;
   	</insert>
   	
+  	<insert id="insertBoardCommentReply" parameterType="hashmap">
+  	
+  		SET @comment_parent = (select `board_comment_parent` from `board_comment` where `board_comment_id` = #{board_comment_id});
+  		SET @comment_board = (select `board_comment_board` from `board_comment` where `board_comment_id` = #{board_comment_id});
+  		SET @comment_parent_member = (select `board_comment_member` from `board_comment` where `board_comment_id` = #{board_comment_id});
+  		SET @comment_order = (select `board_comment_order` from `board_comment` where `board_comment_parent` = @comment_parent and `act_flg` = 1 and `del_flg` = 0 order by `board_comment_id` desc LIMIT 1);
+  	
+		INSERT INTO `gyobab`.`board_comment`
+		(
+			`board_comment_parent`,
+			`board_comment_board`,
+			`board_comment_txt`,
+			`board_comment_member`,
+			`board_comment_parent_member`,
+			`board_comment_depth`,
+			`board_comment_order`
+		)
+		VALUES
+		(
+			@comment_parent,
+			@comment_board,
+			#{board_comment_txt},
+			#{board_comment_member},
+			@comment_parent_member,
+			1,
+			(@comment_order+1)
+		);
+  	</insert>
+  	
   	<select id="selectBoardComments" parameterType="int" resultMap="BoardCommentVO">
   		<![CDATA[
 	  		SELECT 
@@ -70,7 +106,7 @@
 			    b.`member_id`,
 			    b.`member_name`,
 			    c.`member_id`,
-			    c.`member_name`,
+			    c.`member_name` as 'parent_member_name',
 			    `board_comment`.`board_comment_depth`,
 			    `board_comment`.`board_comment_order`,
 			    `board_comment`.`create_date`,
