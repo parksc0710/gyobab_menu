@@ -5,6 +5,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <% pageContext.setAttribute("newLineChar", "\n"); %>
 <link href="${pageContext.request.contextPath}/assets/css/board.css" rel="stylesheet" type="text/css" />
+<style>
+.form-group {
+	margin-bottom : 0.7rem
+}
+</style>
 <div class="content">
 	<div class="container-fluid">
 	
