@@ -54,6 +54,7 @@
 				ON `board`.`board_member` = `member`.`member_id`
 			    JOIN (SELECT @rownum:=0) TMP
 			    WHERE `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = '1'
+			    and `member`.`act_flg` = 1 and `member`.`del_flg` = 0
 				ORDER BY `board_id` desc
 			    ) A
 			) tmp
@@ -62,7 +63,12 @@
   	</select>
   	
   	<select id="selectBoardCnt" resultType="Integer">
-  		select count(`board`.`board_id`) from `board` where `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = #{board_type};
+  		select count(`board`.`board_id`) 
+  		from `board` 
+  		INNER JOIN `gyobab`.`member`
+		ON `board`.`board_member` = `member`.`member_id`
+  		where `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = #{board_type} 
+  		and `member`.`act_flg` = 1 and `member`.`del_flg` = 0;
   	</select>
   	
   	<select id="selectTop1Board" parameterType="string" resultMap="BoardVO">
