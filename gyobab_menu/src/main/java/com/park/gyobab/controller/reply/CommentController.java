@@ -78,13 +78,27 @@ public class CommentController {
 		}
 		
 		BoardCommentVO inBoardComment = boardCommentService.selectBoardCommentById(commentId);
+		int commentCnt = boardCommentService.selectBoardCommentCntWithCommentParent(inBoardComment.getBoard_comment_parent());
 		
-		if(nowUser.getGrantVO().getGrant_name().equals("OPERATOR") || nowUser.getMember_id() == inBoardComment.getMemberVO().getMember_id()) {
-			boardCommentService.deleteBoardComment(commentId);
-			rtn = "suc";
+		if(commentCnt > 1) {
+			// update
+			if(nowUser.getGrantVO().getGrant_name().equals("OPERATOR") || nowUser.getMember_id() == inBoardComment.getMemberVO().getMember_id()) {
+				boardCommentService.deleteBoardCommentWithParent(commentId);
+				rtn = "suc";
+			} else {
+				rtn = "fail";
+			}
 		} else {
-			rtn = "fail";
+			// delete
+			if(nowUser.getGrantVO().getGrant_name().equals("OPERATOR") || nowUser.getMember_id() == inBoardComment.getMemberVO().getMember_id()) {
+				boardCommentService.deleteBoardComment(commentId);
+				rtn = "suc";
+			} else {
+				rtn = "fail";
+			}
 		}
+		
+		
 		
 		return rtn;
 	}

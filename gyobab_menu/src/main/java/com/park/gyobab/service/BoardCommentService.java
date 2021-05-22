@@ -16,7 +16,12 @@ public interface BoardCommentService {
 	
 	public void deleteBoardComment(int board_comment_id);
 	
+	public void deleteBoardCommentWithParent(int board_comment_id);
+	
 	public BoardCommentVO selectBoardCommentById(int board_comment_id) throws Exception;
 
 	public void updateBoardComment(HashMap<String, Object> map);
+	
+	public Integer selectBoardCommentCntWithCommentParent(int board_comment_parent) throws Exception;
+
 }

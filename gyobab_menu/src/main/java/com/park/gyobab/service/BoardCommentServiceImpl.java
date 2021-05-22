@@ -49,4 +49,15 @@ public class BoardCommentServiceImpl implements BoardCommentService {
 		dao.updateBoardComment(map);
 	}
 
+	@Override
+	public Integer selectBoardCommentCntWithCommentParent(int board_comment_parent) throws Exception {
+		int cnt = dao.selectBoardCommentCntWithCommentParent(board_comment_parent); 
+		return cnt;
+	}
+
+	@Override
+	public void deleteBoardCommentWithParent(int board_comment_id) {
+		dao.deleteBoardCommentWithParent(board_comment_id);		
+	}
+
 }

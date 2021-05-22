@@ -195,7 +195,7 @@
 		                                        		<span style="float:right"><fmt:formatDate pattern="yyyy-MM-dd" value="${item.create_date}" /></span>
 		                                        	</div>
 		                                        	<div class="form-group beforeSpan comment_txt">
-		                                        		<span <c:if test="${item.memberVO.member_name eq null }">style="color:#b1afaf;"</c:if>>
+		                                        		<span <c:if test="${item.memberVO.member_name eq null }">style="color:#b1afaf;"</c:if> <c:if test="${item.view_flg }">style="color:#b1afaf;"</c:if>>
 			                                        		<c:if test="${item.board_comment_depth == 1}">
 				                                        		<c:choose>
 				                                        			<c:when test="${item.parent_member_name eq null }">
@@ -210,6 +210,9 @@
 			                                        		<c:choose>
 			                                        			<c:when test="${item.memberVO.member_name eq null }">
 			                                        				[삭제된  댓글입니다]
+			                                        			</c:when>
+			                                        			<c:when test="${item.view_flg}">
+				                                        			[삭제된  댓글입니다]
 			                                        			</c:when>
 			                                        			<c:otherwise>
 			                                        				${fn:replace(item.board_comment_txt, newLineChar, "<br/>")}

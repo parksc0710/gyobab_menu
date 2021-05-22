@@ -25,6 +25,7 @@ public class BoardCommentVO implements Serializable{
     private Date update_date;
     private boolean act_flg;
     private boolean del_flg;
+    private boolean view_flg;
     
 	public int getBoard_comment_id() {
 		return board_comment_id;
@@ -98,6 +99,10 @@ public class BoardCommentVO implements Serializable{
 	public void setBoard_comment_txt(String board_comment_txt) {
 		this.board_comment_txt = board_comment_txt;
 	}
-	
-    
+	public boolean isView_flg() {
+		return view_flg;
+	}
+	public void setView_flg(boolean view_flg) {
+		this.view_flg = view_flg;
+	}
 }
