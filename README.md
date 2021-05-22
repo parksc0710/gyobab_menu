@@ -81,13 +81,46 @@ CREATE TABLE `board` (
   CONSTRAINT `board_ibfk_1` FOREIGN KEY (`board_member`) REFERENCES `member` (`member_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='게시판 테이블';
 
+- 게시판 좋아요 테이블<br>
+CREATE TABLE `board_like` (
+  `board_like_id` int(11) NOT NULL AUTO_INCREMENT,
+  `board_id` int(11) DEFAULT NULL,
+  `member_id` int(11) DEFAULT NULL,
+  `create_date` datetime DEFAULT current_timestamp(),
+  PRIMARY KEY (`board_like_id`),
+  KEY `board_id` (`board_id`),
+  KEY `member_id` (`member_id`),
+  CONSTRAINT `board_like_ibfk_1` FOREIGN KEY (`board_id`) REFERENCES `board` (`board_id`) ON DELETE CASCADE,
+  CONSTRAINT `board_like_ibfk_2` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=172 DEFAULT CHARSET=utf8 COMMENT='게시판 좋아요 테이블';
+
+- 게시판 댓글 테이블<br>
+CREATE TABLE `board_comment` (
+  `board_comment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `board_comment_parent` int(11) NULL,
+  `board_comment_board` int(11) NOT NULL,
+  `board_comment_txt` varchar(500) DEFAULT NULL,
+  `board_comment_member` int(11) NOT NULL,
+  `board_comment_parent_member` int(11) NULL,
+  `board_comment_depth` int(11) NOT NULL,
+  `board_comment_order` int(11) NOT NULL,
+  `create_date` datetime DEFAULT current_timestamp(),
+  `update_date` datetime DEFAULT current_timestamp(),
+  `act_flg` bit(1) DEFAULT b'1',
+  `del_flg` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`board_comment_id`),
+  CONSTRAINT FOREIGN KEY (`board_comment_parent`) REFERENCES `board_comment` (`board_comment_id`),
+  CONSTRAINT FOREIGN KEY (`board_comment_board`) REFERENCES `board` (`board_id`),
+  CONSTRAINT FOREIGN KEY (`board_comment_member`) REFERENCES `member` (`member_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='게시판 댓글 테이블';
+
 
 <br><br>
 
 # To Do List <br>
-- 게시판 댓글 기능 추가하기
-- 게시판 좋아요 기능 추가하기 
 - 공지사항 게시판 추가하기
+- ~~게시판 댓글 기능 추가하기~~ -> 2021. 05. 22 완료
+- ~~게시판 좋아요 기능 추가하기~~ -> 2021. 05. 19 완료
 - ~~게시판 페이징 기능 추가하기~~ -> 2021. 05. 18 완료
 - ~~메뉴 등록 게시판 기능 추가하기~~ -> 2021. 05. 12 완료
 - ~~회원 탈퇴 기능 및 권한 수정 기능 추가하기~~ -> 2021. 05. 10 완료
