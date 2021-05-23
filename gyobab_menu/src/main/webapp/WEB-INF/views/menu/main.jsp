@@ -12,11 +12,6 @@
 </style>
 <div class="content">
 	<div class="container-fluid">
-	
-	    <div class="card-header">
-	        <h3><b>오늘의 점심 메뉴</b></h3>
-	    </div>
-	    <!-- end row -->
 
 	    <div class="row">
 	
@@ -30,7 +25,7 @@
 	                    		<a href="${pageContext.request.contextPath}/menu/insert.do" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
 	                    	</security:authorize>
                     	</span>
-	                    <h3><i class="far fa-file-alt"></i> 서빙고 온누리교회</h3>
+	                    <h4><i class="fas fa-star"></i> <b>오늘의 점심 메뉴</b></h4>
 	                </div>
 	                <!-- end card-header -->
 	

@@ -134,18 +134,32 @@
         <div id="sidebar-menu">
 		
             <ul>
+              
                 <li class="submenu">
-	
+                    <a class='<c:if test="${fn:contains(nowUrl , 'board/notice')}">active</c:if>' href="${pageContext.request.contextPath}/board/notice.do">
+                        <i class="fa-2x mr-2 far fa-check-circle"></i>
+                        <span>  공지사항 </span>
+                    </a>
+                </li>
+                
+                <li class="submenu">
                     <a class='<c:if test="${fn:contains(nowUrl , 'menu/')}">active</c:if>' href="${pageContext.request.contextPath}/menu/main.do">
-                        <i class="fas fa-star"></i>
+                        <i class="fa-2x mr-2 fas fa-star"></i>
                         <span> 오늘의 점심 메뉴 </span>
+                    </a>
+                </li>
+                
+                <li class="submenu">
+                    <a class='<c:if test="${fn:contains(nowUrl , 'board/free')}">active</c:if>' href="${pageContext.request.contextPath}/board/free.do">
+                        <i class="fa-2x mr-2 far fa-smile"></i>
+                        <span>  자유게시판 </span>
                     </a>
                 </li>
 				
 				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
                 <li class="submenu">
                     <a class='<c:if test="${fn:contains(nowUrl , 'user/')}">active</c:if>' href="${pageContext.request.contextPath}/user/main.do">
-                        <i class="fas fa-user"></i>
+                        <i class="fa-2x mr-2 fas fa-user"></i>
                         <span> 내 정보 </span>
                     </a>
                 </li>

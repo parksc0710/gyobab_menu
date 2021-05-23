@@ -5,51 +5,64 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <div class="content">
-	<div class="card-header">
-        <h3><b>내 정보</b></h3>
-   </div>
-   
-   <div class="card-body" style="max-width:650px;">
+	<div class="container-fluid">
 
-          <div class="form-group">
-              <label for="exampleInputEmail1">E-mail</label>
-              <input type="text" class="form-control" id="memberEmail" placeholder="${nowUser.member_email }" readonly>
-              <small id="emailHelp" class="form-text text-muted">이메일 주소는 변경할 수 없습니다. </small>
-          </div><br>
-          <div class="form-group beforeSpan">
-              <label for="exampleInputEmail1"><b>닉네임</b></label>
-              <input type="text" class="form-control" id="memberName" maxlength=10 value="${nowUser.member_name }" readonly>
-              <small id="numberlHelp" class="form-text text-muted"></small>
-              <a href="javascript:setNameInput();" class="btn btn-primary btn-sm btn-block" style="width:150px" id="nickChangeBtn"><i class="far fa-edit"></i> 닉네임 변경</a>
-          </div><br>
-          <div class="form-group beforeSpan">
-              <label for="exampleInputEmail1"><b>교회 출입 바코드</b></label>
-              <input type="hidden" value="${nowUser.member_pass }" id="memberPassVal"/>
-              <c:if test="${nowUser.member_pass eq null }">
-              	 <div id=preView style="width:100%;max-width:700px"></div>
-              	 <div id=uploadForm>
-	             	 <form id="passForm" name="frm" method="post">
-						<input type="file" id="imageUploadFile" name="file" />
-						<a href="javascript:void(0);" class="btn btn-primary btn-sm btn-block" onclick="fileUpload();" style="width:80px;display:inline;float: right;">
-							<i class="far fa-edit"></i> 등록
-						</a>	
-					 </form>
-				 </div>
-              </c:if>
-              <c:if test="${nowUser.member_pass != null }">
-             	 <div id=preView style="width:100%;max-width:700px"><img src="${nowUser.member_pass }" style="width:100%"></div>
-             	 <div id=uploadForm>
-				 	<a href="javascript:void(0);" class="btn btn-primary btn-sm btn-block" onclick="fileUpdate();" style="width:80px;display:inline;float: left;">
-				 		<i class="far fa-edit"></i> 변경
-				 	</a>
-				 </div>	
-              </c:if>
-              <small id="numberlHelp" class="form-text text-muted"></small>
-          </div>
-          <br><br><br><br>
-          <button type="submit" class="btn btn-primary" id="submitBtn">수정하기</button>
-          <a href="javascript:withdraw();" style="float:right;">탈퇴</a>
-
+	    <div class="row">
+	
+	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width:650px;">
+	
+	            <div class="card mb-3">
+					<div class="card-header">
+				        <span class="pull-right">
+				       	</span>
+				        <h4><i class="fas fa-user"></i> <b>내 정보</b></h4>
+				    </div>
+				   
+				   <div class="card-body" style="max-width:650px;">
+				
+				          <div class="form-group">
+				              <label for="exampleInputEmail1">E-mail</label>
+				              <input type="text" class="form-control" id="memberEmail" placeholder="${nowUser.member_email }" readonly>
+				              <small id="emailHelp" class="form-text text-muted">이메일 주소는 변경할 수 없습니다. </small>
+				          </div><br>
+				          <div class="form-group beforeSpan">
+				              <label for="exampleInputEmail1"><b>닉네임</b></label>
+				              <input type="text" class="form-control" id="memberName" maxlength=10 value="${nowUser.member_name }" readonly>
+				              <small id="numberlHelp" class="form-text text-muted"></small>
+				              <a href="javascript:setNameInput();" class="btn btn-primary btn-sm btn-block" style="width:150px" id="nickChangeBtn"><i class="far fa-edit"></i> 닉네임 변경</a>
+				          </div><br>
+				          <div class="form-group beforeSpan">
+				              <label for="exampleInputEmail1"><b>교회 출입 바코드</b></label>
+				              <input type="hidden" value="${nowUser.member_pass }" id="memberPassVal"/>
+				              <c:if test="${nowUser.member_pass eq null }">
+				              	 <div id=preView style="width:100%;max-width:700px"></div>
+				              	 <div id=uploadForm>
+					             	 <form id="passForm" name="frm" method="post">
+										<input type="file" id="imageUploadFile" name="file" />
+										<a href="javascript:void(0);" class="btn btn-primary btn-sm btn-block" onclick="fileUpload();" style="width:80px;display:inline;float: right;">
+											<i class="far fa-edit"></i> 등록
+										</a>	
+									 </form>
+								 </div>
+				              </c:if>
+				              <c:if test="${nowUser.member_pass != null }">
+				             	 <div id=preView style="width:100%;max-width:700px"><img src="${nowUser.member_pass }" style="width:100%"></div>
+				             	 <div id=uploadForm>
+								 	<a href="javascript:void(0);" class="btn btn-primary btn-sm btn-block" onclick="fileUpdate();" style="width:80px;display:inline;float: left;">
+								 		<i class="far fa-edit"></i> 변경
+								 	</a>
+								 </div>	
+				              </c:if>
+				              <small id="numberlHelp" class="form-text text-muted"></small>
+				          </div>
+				          <br><br><br><br>
+				          <button type="submit" class="btn btn-primary" id="submitBtn">수정하기</button>
+				          <a href="javascript:withdraw();" style="float:right;">탈퇴</a>
+				
+				   </div>
+			   </div>
+		   </div>
+	   </div>
    </div>
    
    <script>
