@@ -64,7 +64,8 @@ img {
 	                <!-- end card-header -->
 		    			 <div class="card-body">
 		    			 	<c:if test="${board_id > 0 }"> 
-				    			<div class="row">
+			    			<div class="row">
+		    			 		<div class="table-responsive" style="overflow-x:hidden;">
 			    			 		<table class="table table-bordered">
 		                            <tbody>
 			                            <c:set var="contains" value="false" />
@@ -210,9 +211,11 @@ img {
 				                                </tr>
 			                            </tbody>
 			                        </table>
+		                        </div>
 	                        </div>
 		    			 	</c:if>
-				    			<div class="row">
+			    			<div class="row">
+		                    	<div class="table-responsive" style="overflow-x:hidden;">
 					               	<table class="table">
 									  <tbody>
 									  	<c:forEach var="list" items="${list}">
@@ -243,6 +246,7 @@ img {
 									  </tbody>
 									</table>
 				              	</div>
+			              	</div>
 	               		</div>
 	               		<div class="row">
 			               	<div class="col-sm-12 col-md-5">
