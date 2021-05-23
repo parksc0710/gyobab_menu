@@ -9,6 +9,10 @@
 .form-group {
 	margin-bottom : 0.7rem
 }
+img {
+	max-width: 100%;
+    max-height: 100%;
+}
 </style>
 <div class="content">
 	<div class="row">

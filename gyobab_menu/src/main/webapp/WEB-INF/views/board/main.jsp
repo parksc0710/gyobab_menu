@@ -18,6 +18,10 @@ a {
     border-bottom: 1px solid #dee2e6;
     border-top : 0px;
 }
+img {
+	max-width: 100%;
+    max-height: 100%;
+}
 </style>
 <div class="content">
 	<div class="container-fluid">
