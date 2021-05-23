@@ -73,4 +73,10 @@ public class BoardCommentDAOImpl implements BoardCommentDAO {
 		sqlSession.update(namespace + ".deleteBoardCommentWithParentAfter", board_comment_parent); 			
 	}
 
+	@Override
+	public Integer selectBoardCommentCntWithBoardId(int board_comment_board) throws Exception {
+		int cnt = sqlSession.selectOne(namespace + ".selectBoardCommentCntWithBoardId", board_comment_board);
+		return cnt;
+	}
+
 }

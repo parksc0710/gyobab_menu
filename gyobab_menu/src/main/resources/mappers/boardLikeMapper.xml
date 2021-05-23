@@ -37,12 +37,10 @@
 		WHERE `board_like`.`board_id` = #{board_id};
   	</select> 
   	
-  	<select id="selectBoardLikeCnt" resultMap="BoardLikeVO">
+  	<select id="selectBoardLikeCnt" resultType="Integer">
   		SELECT 
   			count(`board_like`.`board_like_id`)
 		FROM `gyobab`.`board_like`
-		INNER JOIN `member` on `member`.`member_id` = `board_like`.`member_id`
-		INNER JOIN `board` on `board`.`board_id` = `board_like`.`board_id`
 		WHERE `board_like`.`board_id` = #{board_id};
   	</select> 
   	

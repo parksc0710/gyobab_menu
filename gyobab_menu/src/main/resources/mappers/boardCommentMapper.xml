@@ -161,6 +161,12 @@
 		where `board_comment`.`board_comment_id` = #{board_comment_id} and `board_comment`.`act_flg` = 1 and `board_comment`.`del_flg` = 0
   	</select>
   	
+  	<select id="selectBoardCommentCntWithBoardId" resultType="Integer" parameterType="int" >
+  		select count(`board_comment`.`board_comment_id`) 
+  		from `board_comment` 
+  		where `board_comment`.`board_comment_board` = #{board_comment_board} and `board_comment`.`act_flg` = 1 and `board_comment`.`del_flg` = 0;
+  	</select>
+  	
   	<select id="selectBoardCommentCntWithCommentParent" resultType="Integer" parameterType="int" >
   		select count(`board_comment`.`board_comment_id`) 
   		from `board_comment` 

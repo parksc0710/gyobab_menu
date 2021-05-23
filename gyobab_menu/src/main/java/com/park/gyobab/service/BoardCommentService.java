@@ -24,6 +24,8 @@ public interface BoardCommentService {
 
 	public void updateBoardComment(HashMap<String, Object> map);
 	
+	public Integer selectBoardCommentCntWithBoardId(int board_comment_board) throws Exception;
+	
 	public Integer selectBoardCommentCntWithCommentParent(int board_comment_parent) throws Exception;
 	
 	public Integer selectBoardCommentCntWithCommentParentAfter(int board_comment_parent) throws Exception;

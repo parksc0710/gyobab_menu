@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 .table-bordered td, .table-bordered th {
-	border : 5px solid #dee2e6;
+	border : 1px solid #dee2e6;
 }
 .myCustomCommentBtn {
 	float: right;
@@ -61,4 +61,52 @@
 }
 .comment_txt > span {
 	font-size: 13px;
+}
+.img_div {
+	text-align: center;
+	max-width: 600px;
+	margin-bottom: 30px;
+	overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.img_div img {
+	max-width:100%;
+	max-height:100%;
+	display: block; 
+	margin: 0px auto; 
+}
+.tit {
+	width:100%;
+	height:100%;
+}
+.tit .tit_span {
+	width:80%;
+	float:left;
+	padding-right:10px;
+	font-size:17px;
+}
+.tit .view_span {
+	width:50px;
+	float:right;
+}
+.tit .view_span .like_icon{
+	line-height:2;
+}
+.tit .view_span .like_cnt{
+	float:right;
+}
+.tit .view_span .like_icon em{
+	font-size:20px;
+}
+.sub {
+	width:100%; 
+	height:100%;
+	font-size:12px;
+	margin-top: 10px;
+}
+.sub span{
+	float:right;
+	font-size:13px;
 }

@@ -143,7 +143,7 @@
                 </li>
                 
                 <li class="submenu">
-                    <a class='<c:if test="${fn:contains(nowUrl , 'menu/')}">active</c:if>' href="${pageContext.request.contextPath}/menu/main.do">
+                    <a class='<c:if test="${fn:contains(nowUrl , 'board/menu')}">active</c:if>' href="${pageContext.request.contextPath}/board/menu.do">
                         <i class="fa-2x mr-2 fas fa-star"></i>
                         <span> 오늘의 점심 메뉴 </span>
                     </a>

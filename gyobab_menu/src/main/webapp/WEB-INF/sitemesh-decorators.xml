@@ -2,6 +2,7 @@
 <decorators defaultdir="/WEB-INF/views/decorators">
 
 	<excludes>
+		<pattern>/assets/**</pattern>
 		<!-- <pattern>/index.jsp</pattern>
 		<pattern>/giveRedirect.cgn</pattern>
 		<pattern>/event/**</pattern> -->

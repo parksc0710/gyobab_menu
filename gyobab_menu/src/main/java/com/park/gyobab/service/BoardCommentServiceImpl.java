@@ -71,4 +71,10 @@ public class BoardCommentServiceImpl implements BoardCommentService {
 		dao.deleteBoardCommentWithParentAfter(board_comment_parent);	
 	}
 
+	@Override
+	public Integer selectBoardCommentCntWithBoardId(int board_comment_board) throws Exception {
+		int cnt = dao.selectBoardCommentCntWithBoardId(board_comment_board); 
+		return cnt;
+	}
+
 }

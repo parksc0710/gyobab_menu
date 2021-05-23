@@ -66,8 +66,10 @@
                                         <p> 2021-05-22
                                         	<span style="float:right;"><b>개발팀박성철</b></span>
                                         </p>
-                                        <p>
-                                        	<img src="https://www.gyobab.shop/images/board/3ec7e4a2-a78e-4f9f-8a53-74b804b899b2.jpg" style="width:100%"> <br><br>
+                                        <p>	
+                                        	<div class="img_div">
+                                        		<img src="https://www.gyobab.shop/images/board/3ec7e4a2-a78e-4f9f-8a53-74b804b899b2.jpg" style="max-width:100%;max-height:100%">
+                                       		</div>
 											<h4><b>&lt;업데이트 내역&gt;</b></h4><br>
 											<b>- 2021. 05. 22 : 메뉴 게시판에 댓글 기능이 추가되었습니다. 다양한 의견을 나눠주세요! (댓글 기능은 로그인을 해야 사용할 수 있습니다.)</b><br><br>
 											<b>- 2021. 05. 19 : 메뉴 게시판에 좋아요 기능이 추가되었습니다. 내가 좋아하는 메뉴가 나오면 좋아요를 눌러주세요! (좋아요는 로그인을 해야 사용할 수 있습니다. 내가 누른 좋아요 내역은 공개되지 않습니다.)</b><br><br>
@@ -146,7 +148,7 @@
             <div class="card mb-3">
                 <div class="card-header">
                     <span class="pull-right">
-	                    <a href="${pageContext.request.contextPath}/menu/main.do" class="btn btn-primary btn-sm btn-block" style="width:180px;">
+	                    <a href="${pageContext.request.contextPath}/board/menu.do" class="btn btn-primary btn-sm btn-block" style="width:180px;">
 							<i class="fas fa-search"></i> 메뉴 더 보기
 						</a>
                    	</span>
@@ -197,7 +199,9 @@
                                         </p>
                                         <p>
                                         	<c:if test="${!empty topMenu.board_thumb}">
-                                        		<img src="${topMenu.board_thumb }" style="width:100%; max-width:639px;"/> <br><br>
+                                        		<div class="img_div">
+                                        			<img src="${topMenu.board_thumb }" style="max-width:100%; max-height:100%;"/>
+                                        		</div>
                                         	</c:if>
                                         	${topMenu.board_txt}
                                         </p>
@@ -331,7 +335,7 @@
 	       type: "post", 
 	       dataType: "text", 
 	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
-	       url: "${pageContext.request.contextPath}/menu/insertLike.do",
+	       url: "${pageContext.request.contextPath}/board/insertLike.do",
 	       data : {boardId : boardId},
 	       success: function(rtn) {
 	    	  //alert("좋아요!.");
@@ -357,7 +361,7 @@
 	       type: "post", 
 	       dataType: "text", 
 	       contentType: "application/x-www-form-urlencoded;charset=utf-8",
-	       url: "${pageContext.request.contextPath}/menu/deleteLike.do",
+	       url: "${pageContext.request.contextPath}/board/deleteLike.do",
 	       data : {boardId : boardId},
 	       success: function(rtn) {
 	    	  //alert("좋아요!.");
