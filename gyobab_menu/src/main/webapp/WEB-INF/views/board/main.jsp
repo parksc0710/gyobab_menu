@@ -22,6 +22,9 @@ img {
 	max-width: 100%;
     max-height: 100%;
 }
+div{
+	overflow: none;
+}
 </style>
 <div class="content">
 	<div class="container-fluid">
