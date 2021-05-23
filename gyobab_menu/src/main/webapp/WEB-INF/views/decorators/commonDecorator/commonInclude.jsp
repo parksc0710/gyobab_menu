@@ -18,10 +18,10 @@
 <script src="${pageContext.request.contextPath}/assets/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/bootstrap.min.js"></script>
 
-<script src="${pageContext.request.contextPath}/assets/js/detect.js"></script>
+<%-- <script src="${pageContext.request.contextPath}/assets/js/detect.js"></script>
 <script src="${pageContext.request.contextPath}/assets/js/fastclick.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery.blockUI.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery.nicescroll.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery.blockUI.js"></script> --%>
+<%-- <script src="${pageContext.request.contextPath}/assets/js/jquery.nicescroll.js"></script> --%>
 
 <script src="${pageContext.request.contextPath}/assets/js/sweetalert.min.js"></script>
 

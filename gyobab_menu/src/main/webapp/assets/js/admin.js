@@ -110,9 +110,9 @@ var changeptype = function(){
     dw = $(document).width();
     dh = $(document).height();
 
-    if(jQuery.browser.mobile === true){
+    /*if(jQuery.browser.mobile === true){
         $("body").addClass("mobile").removeClass("adminbody");
-    }
+    }*/
 
     if(!$("#main").hasClass("forced")){
       if(w > 990){
