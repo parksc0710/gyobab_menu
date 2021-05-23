@@ -198,11 +198,6 @@
                                         	<span style="float:right;"><b>${topMenu.memberVO.member_name }</b></span>
                                         </p>
                                         <p>
-                                        	<c:if test="${!empty topMenu.board_thumb}">
-                                        		<div class="img_div">
-                                        			<img src="${topMenu.board_thumb }" style="max-width:100%; max-height:100%;"/>
-                                        		</div>
-                                        	</c:if>
                                         	${topMenu.board_txt}
                                         </p>
                                         <hr/>
