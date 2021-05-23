@@ -22,9 +22,6 @@ img {
 	max-width: 100%;
     max-height: 100%;
 }
-div{
-	overflow: none;
-}
 </style>
 <div class="content">
 	<div class="container-fluid">
@@ -67,7 +64,6 @@ div{
 	                <!-- end card-header -->
 		    			 <div class="card-body">
 		    			 	<c:if test="${board_id > 0 }"> 
-		    			 	<div class="table-responsive" style="overflow-x:hidden;">
 				    			<div class="row">
 			    			 		<table class="table table-bordered">
 		                            <tbody>
@@ -214,10 +210,8 @@ div{
 				                                </tr>
 			                            </tbody>
 			                        </table>
-		                        </div>
 	                        </div>
 		    			 	</c:if>
-		                    <div class="table-responsive" style="overflow-x:hidden;">
 				    			<div class="row">
 					               	<table class="table">
 									  <tbody>
@@ -249,7 +243,6 @@ div{
 									  </tbody>
 									</table>
 				              	</div>
-			              	</div>
 	               		</div>
 	               		<div class="row">
 			               	<div class="col-sm-12 col-md-5">
