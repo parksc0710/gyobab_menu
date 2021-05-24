@@ -115,7 +115,7 @@ img {
 					                                        <span><a href="${pageContext.request.contextPath}/board/updateOperator.do?boardid=${inBoard.board_id }&boardType=${boardType}&pageNum=${pageNum}" style="float:right;width:100px;" class="btn btn-primary btn-sm btn-block"><i class="far fa-edit"></i> Edit</a>                                                        
 					                                        <a href="javascript:deleteBoard(${inBoard.board_id }, '${inBoard.board_tit }')" class="btn btn-danger btn-sm btn-block mt-2" style="width:100px;"><i class="fas fa-trash"></i> Delete</a></span>                                                        
 					                                    </security:authorize>
-					                                    <security:authorize ifAnyGranted="ROLE_ADMIN">
+					                                    <security:authorize ifAnyGranted="ROLE_ADMIN, ROLE_USER">
 					                                   		<security:authentication property="principal.member_id" var="memberId"/>
 															<c:if test="${inBoard.memberVO.member_id == memberId}">
 							                                        <span><a href="${pageContext.request.contextPath}/board/update.do?boardid=${inBoard.board_id }&boardType=${boardType}&pageNum=${pageNum}" style="float:right;width:100px;" class="btn btn-primary btn-sm btn-block"><i class="far fa-edit"></i> Edit</a>                                                        

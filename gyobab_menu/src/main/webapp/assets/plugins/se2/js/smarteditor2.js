@@ -4528,11 +4528,11 @@ nhn.husky.SE_EditingAreaManager = jindo.$Class({
 		var oWidth = this._getSize([oDimension.nWidth, oDimension.width, this.elEditingAreaContainer.offsetWidth], this.nMinWidth);
 		var oHeight = this._getSize([oDimension.nHeight, oDimension.height, this.elEditingAreaContainer.offsetHeight], this.nMinHeight);
 
-		this.elEditingAreaContainer.style.width = oWidth.nSize + oWidth.sUnit;
+		//this.elEditingAreaContainer.style.width = oWidth.nSize + oWidth.sUnit;
 		this.elEditingAreaContainer.style.height = oHeight.nSize + oHeight.sUnit;
 		
 		if(oWidth.sUnit === "px"){
-			elAppContainer.style.width = (oWidth.nSize + 2) + "px";	
+			//elAppContainer.style.width = (oWidth.nSize + 2) + "px";	
 		}else if(oWidth.sUnit === "%"){
 			elAppContainer.style.minWidth = this.nMinWidth + "px";
 		}
@@ -6205,7 +6205,7 @@ nhn.husky.SE_EditingArea_WYSIWYG = jindo.$Class({
 			this.iframe.style.height = "0px";
 		}
 
-		nBodyHeight = this._getResizeHeight();
+		//nBodyHeight = this._getResizeHeight();
 
 		if(oBrowser.ie){
 			// 내용 뒤로 공간이 남아 보일 수 있으나 추가로 Container높이를 더하지 않으면

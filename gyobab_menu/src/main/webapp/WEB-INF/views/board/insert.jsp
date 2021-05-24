@@ -30,7 +30,7 @@
             </div><br>
 		    <div class="form-group beforeSpan">
 		   		<label for="exampleInputEmail1"><b>내용</b></label>
-                <textarea name="boardTxt" id="boardTxt" rows="10" cols="100"></textarea>
+                <textarea name="boardTxt" id="boardTxt" rows="10" cols="100" style="width:100%; min-width:260px;"></textarea>
             </div>
             <br>
             <button type="submit" class="btn btn-primary" id="insertBtn">등록하기</button>
