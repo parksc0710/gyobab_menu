@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.imgscalr.Scalr;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.mortennobel.imagescaling.AdvancedResizeOp;
-import com.mortennobel.imagescaling.MultiStepRescaleOp;
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Directory;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifIFD0Directory;
+import com.drew.metadata.jpeg.JpegDirectory;
 import com.park.gyobab.domain.BoardCommentVO;
 import com.park.gyobab.domain.BoardLikeVO;
 import com.park.gyobab.domain.BoardVO;
@@ -124,32 +126,60 @@ public class HomeController{
 		realFileNm = UUID.randomUUID().toString() + name.substring(name.lastIndexOf("."));
 		String rlFileNm = filePath + realFileNm;
 		String filename_ext = name.substring(name.lastIndexOf(".") + 1);
+		
+		File newFile = new File(rlFileNm);
+		
+		
 		///////////////// 서버에 파일쓰기 /////////////////
 	
-		mf.transferTo(new File(rlFileNm));
+		mf.transferTo(newFile);
 		
-		// imgResize 세로가 더 긴 사진을 올릴 때 width가 이상하게 잡히는 이슈가 있음... 해다 이슈 해결 전까진 리사이징 안하기
-//		BufferedImage img = ImageIO.read(new File(rlFileNm));
-//		if(img.getWidth() > 1600 || img.getHeight() > 1600) {
-//			int beforeWidth = img.getWidth();
-//			int beforeHeight = img.getHeight();
-//			int afterWidth = 0;
-//			int afterHeight = 0;
-//			if(beforeWidth >= beforeWidth) {
-//				afterWidth = 1600;
-//				afterHeight = (afterWidth * beforeHeight) / beforeWidth;
-//			} else {
-//				afterWidth = (afterHeight * beforeWidth) / beforeHeight;
-//				afterHeight = 1600;
-//			}
-//			
-//			MultiStepRescaleOp rescale = new MultiStepRescaleOp(afterWidth, afterHeight);
-//		    rescale.setUnsharpenMask(AdvancedResizeOp.UnsharpenMask.Soft);
-//		    BufferedImage resizedImage = rescale.filter(img, null);
-//		    
-//		    
-//		    ImageIO.write(resizedImage, filename_ext, new File(rlFileNm));
-//		}
+		int orientation = 1; // 회전정보, 1. 0도, 3. 180도, 6. 270도, 8. 90도 회전한 정보
+		
+		Metadata metadata; // 이미지 메타 데이터 객체
+		Directory directory; // 이미지의 Exif 데이터를 읽기 위한 객체
+		JpegDirectory jpegDirectory; // JPG 이미지 정보를 읽기 위한 객체
+		
+		try {
+			metadata = ImageMetadataReader.readMetadata(newFile);
+			directory = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+			jpegDirectory = metadata.getFirstDirectoryOfType(JpegDirectory.class);
+			if(directory != null){
+				orientation = directory.getInt(ExifIFD0Directory.TAG_ORIENTATION); // 회전정보
+			}
+	 
+		}catch (Exception e) {
+			e.printStackTrace();
+			orientation=1;
+		}
+		
+		// imgResize
+		BufferedImage img = ImageIO.read(new File(rlFileNm));
+		if(img.getWidth() > 1600) {
+			
+			BufferedImage thumbImage = Scalr.resize(img, Scalr.Method.AUTOMATIC, Scalr.Mode.FIT_TO_WIDTH, 1600);
+		    
+			switch (orientation) {
+			case 6:
+				thumbImage = Scalr.rotate(thumbImage, Scalr.Rotation.CW_90, null); 
+				break;
+			case 1:
+		 
+				break;
+			case 3:
+				thumbImage = Scalr.rotate(thumbImage, Scalr.Rotation.CW_180, null);
+				break;
+			case 8:
+				thumbImage = Scalr.rotate(thumbImage, Scalr.Rotation.CW_270, null);
+				break;
+		 
+			default:
+				orientation=1;
+				break;
+			}
+			
+		    ImageIO.write(thumbImage, filename_ext, new File(rlFileNm));
+		}
 		
 		JSONObject outData = new JSONObject();
 		outData.put("uploaded", true);
