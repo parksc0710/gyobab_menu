@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.mortennobel.imagescaling.AdvancedResizeOp;
 import com.mortennobel.imagescaling.MultiStepRescaleOp;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 import com.park.gyobab.domain.BoardCommentVO;
 import com.park.gyobab.domain.BoardLikeVO;
 import com.park.gyobab.domain.BoardVO;
@@ -101,82 +104,49 @@ public class HomeController{
 		return stoName;
 	}
 	
-	// 네이버 스마트에디터 이미지 업로드 용
+	// ckeditor5 이미지 업로드 용
 	@RequestMapping(value = "multiImageUploader", method = RequestMethod.POST)
-	public String file_uploader(HttpServletRequest request, HttpServletResponse response, Editor editor) {
+	public void file_uploader(HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest mtf) throws IOException {
 		
-		MultipartFile mf = editor.getFiledata();
+		MultipartFile mf = mtf.getFile("upload");
 		
-		String return1 = request.getParameter("callback");
-		String return2 = "?callback_func=" + request.getParameter("callback_func");
-		String return3 = "";
-		String name = "";
-		try {
-			if (mf != null && mf.getOriginalFilename() != null && !mf.getOriginalFilename().equals("")) {
-				// 기존 상단 코드를 막고 하단코드를 이용
-				name = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf(File.separator) + 1);
-				String filename_ext = name.substring(name.lastIndexOf(".") + 1);
-				filename_ext = filename_ext.toLowerCase();
-				String[] allow_file = { "jpg", "png", "bmp", "gif" };
-				int cnt = 0;
-				for (int i = 0; i < allow_file.length; i++) {
-					if (filename_ext.equals(allow_file[i])) {
-						cnt++;
-					}
-				}
-				if (cnt == 0) {
-					return3 = "&errstr=" + name;
-				} else {
-					// 파일 기본경로 _ 상세경로
-					String filePath = "/home/parksc0710/images/board_new/";
-					File file = new File(filePath);
-					if (!file.exists()) {
-						file.mkdirs();
-					}
-					String realFileNm = "";
-					realFileNm = UUID.randomUUID().toString() + name.substring(name.lastIndexOf("."));
-					String rlFileNm = filePath + realFileNm;
-					///////////////// 서버에 파일쓰기 /////////////////
-				
-					mf.transferTo(new File(rlFileNm));
-					
-					// imgResize
-					BufferedImage img = ImageIO.read(new File(rlFileNm));
-					if(img.getWidth() > 1600) {
-						int beforeWidth = img.getWidth();
-						int beforeHeight = img.getHeight();
-						int afterWidth = 1600;
-						int afterHeight = (afterWidth * beforeHeight) / beforeWidth;
-						MultiStepRescaleOp rescale = new MultiStepRescaleOp(afterWidth, afterHeight);
-					    rescale.setUnsharpenMask(AdvancedResizeOp.UnsharpenMask.Soft);
-					    BufferedImage resizedImage = rescale.filter(img, null);
-					    
-					    ImageIO.write(resizedImage, filename_ext, new File(rlFileNm));
-					}
-					///////////////// 서버에 파일쓰기 /////////////////
-				    
-					return3 += "&bNewLine=true";
-					return3 += "&sFileName=" + name;
-					return3 += "&sFileURL=https://www.gyobab.shop/images/board_new/" + realFileNm;
-				}
-			} else {
-				return3 += "&errstr=error";
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		int maxRequestSize = 1024 * 1024 * 50;
+		
+		request.setCharacterEncoding("UTF-8");
+		
+		String name = mf.getOriginalFilename().substring(mf.getOriginalFilename().lastIndexOf(File.separator) + 1);
+		String filePath = "/home/parksc0710/images/board_new/";
+		File file = new File(filePath);
+		if (!file.exists()) {
+			file.mkdirs();
 		}
-		return "redirect:" + return1 + return2 + return3;
+		String realFileNm = "";
+		realFileNm = UUID.randomUUID().toString() + name.substring(name.lastIndexOf("."));
+		String rlFileNm = filePath + realFileNm;
+		String filename_ext = name.substring(name.lastIndexOf(".") + 1);
+		///////////////// 서버에 파일쓰기 /////////////////
+	
+		mf.transferTo(new File(rlFileNm));
+		
+		// imgResize
+		BufferedImage img = ImageIO.read(new File(rlFileNm));
+		if(img.getWidth() > 1600) {
+			int beforeWidth = img.getWidth();
+			int beforeHeight = img.getHeight();
+			int afterWidth = 1600;
+			int afterHeight = (afterWidth * beforeHeight) / beforeWidth;
+			MultiStepRescaleOp rescale = new MultiStepRescaleOp(afterWidth, afterHeight);
+		    rescale.setUnsharpenMask(AdvancedResizeOp.UnsharpenMask.Soft);
+		    BufferedImage resizedImage = rescale.filter(img, null);
+		    
+		    ImageIO.write(resizedImage, filename_ext, new File(rlFileNm));
+		}
+		
+		JSONObject outData = new JSONObject();
+		outData.put("uploaded", true);
+		outData.put("url", "https://www.gyobab.shop/images/board_new/"+realFileNm);
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
+		response.getWriter().print(outData.toString());
 	}
-}
-
-class Editor {
-	private MultipartFile Filedata;
-
-	public MultipartFile getFiledata() {
-		return Filedata;
-	}
-
-	public void setFiledata(MultipartFile filedata) {
-		Filedata = filedata;
-	}
-}
+}	

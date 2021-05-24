@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>     
 <security:authentication property="principal.member_id" var="memberId"/>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/plugins/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
 <div class="content">
 	<div class="card mb-3" style="max-width:960px;">
 	    <div class="card-header">
@@ -19,7 +19,7 @@
             </div><br>
 		    <div class="form-group beforeSpan">
 		   		<label for="exampleInputEmail1"><b>내용</b></label>
-                <textarea name="boardTxt" id="boardTxt" rows="10" cols="100" style="width:100%; min-width:260px;">${inBoard.board_txt }</textarea>
+               <div id="editor">${inBoard.board_txt }</div>
             </div>
 	    
             <br>
@@ -29,14 +29,21 @@
 	</div>
 </div>
 
-<script type="text/javascript">
-	var oEditors = [];
-	nhn.husky.EZCreator.createInIFrame({
-	 oAppRef: oEditors,
-	 elPlaceHolder: "boardTxt",
-	 sSkinURI: "${pageContext.request.contextPath}/assets/plugins/se2/SmartEditor2Skin.html",
-	 fCreator: "createSEditor2"
-	});
+<script>
+	var editor;
+    ClassicEditor
+	    .create( document.querySelector( '#editor' ),{
+	    	language: 'ko', 
+	    	ckfinder: {
+				uploadUrl: '${pageContext.request.contextPath}/multiImageUploader.do',
+			}
+	    } )
+	    .then( newEditor => {
+	        editor = newEditor;
+	    } )
+	    .catch( error => {
+	        console.error( error );
+	    } );
 </script>
 
 <script>
