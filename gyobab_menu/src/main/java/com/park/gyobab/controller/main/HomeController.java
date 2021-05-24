@@ -130,11 +130,19 @@ public class HomeController{
 		
 		// imgResize
 		BufferedImage img = ImageIO.read(new File(rlFileNm));
-		if(img.getWidth() > 1600) {
+		if(img.getWidth() > 1600 || img.getHeight() > 1600) {
 			int beforeWidth = img.getWidth();
 			int beforeHeight = img.getHeight();
-			int afterWidth = 1600;
-			int afterHeight = (afterWidth * beforeHeight) / beforeWidth;
+			int afterWidth = 0;
+			int afterHeight = 0;
+			if(beforeWidth >= beforeWidth) {
+				afterWidth = 1600;
+				afterHeight = (afterWidth * beforeHeight) / beforeWidth;
+			} else {
+				afterWidth = (afterHeight * beforeWidth) / beforeHeight;
+				afterHeight = 1600;
+			}
+			
 			MultiStepRescaleOp rescale = new MultiStepRescaleOp(afterWidth, afterHeight);
 		    rescale.setUnsharpenMask(AdvancedResizeOp.UnsharpenMask.Soft);
 		    BufferedImage resizedImage = rescale.filter(img, null);
