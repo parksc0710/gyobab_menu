@@ -19,7 +19,7 @@
             </div><br>
 		    <div class="form-group beforeSpan">
 		   		<label for="exampleInputEmail1"><b>내용</b></label>
-                <textarea name="boardTxt" id="boardTxt" rows="10" cols="100">${inBoard.board_txt }</textarea>
+                <textarea name="boardTxt" id="boardTxt" rows="10" cols="100" style="width:100%; min-width:260px;">${inBoard.board_txt }</textarea>
             </div>
 	    
             <br>
