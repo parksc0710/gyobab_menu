@@ -16,7 +16,7 @@ img {
 </style>
 <div class="content">
 	<div class="row">
-	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:650px;">
+	    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:900px;">
 		    <div class="card mb-3">
 		    	<div class="card-body">
  					<security:authorize ifAnyGranted="ROLE_OPERATOR">
@@ -41,7 +41,7 @@ img {
 	</div>
 	
 	<div class="row">
-       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width:650px;">
+       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width:900px;">
            <div class="card mb-3">
           		<div class="card-header">
                     <span class="pull-right">
@@ -100,10 +100,10 @@ img {
 	<c:choose>
 		<c:when test="${memberPass == '' || memberPass == null}">
 			<div class="row">
-			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:650px;">
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:900px;">
 			        <div class="card mb-3">
 			            <div class="card-header">
-			                <h3 style="display:inline"><b>내 온누리교회 바코드</b></h3><a href="${pageContext.request.contextPath}/user/main.do" class="btn btn-primary btn-sm btn-block" style="width:80px;display:inline;float: right;">
+			                <h3 style="display:inline"><b>나의 온누리교회 바코드</b></h3><a href="${pageContext.request.contextPath}/user/main.do" class="btn btn-primary btn-sm btn-block" style="width:80px;display:inline;float: right;">
 								<i class="fas fa-search"></i> 등록</a>
 			            </div>
 			            <div class="card-body">
@@ -115,7 +115,7 @@ img {
 		</c:when>
 		<c:otherwise>
 			<div class="row">
-			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6" style="max-width:650px;">
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6" style="max-width:900px;">
 			        <div class="card mb-3">
 			            <div class="card-header">
 			                <h3 style="display:inline"><b>내 온누리교회 바코드</b></h3>
@@ -124,7 +124,7 @@ img {
 								</a>
 			            </div>
 			            <div class="card-body">
-			            	<img src="${memberPass }" style="display: block; margin: 0px auto; width: 100%; max-width:639px;"/>
+			            	<img src="${memberPass }" style="display: block; margin: 0px auto; width: 100%; max-width:900px;"/>
 			            </div>
 			        </div>
 			    </div>
@@ -135,7 +135,7 @@ img {
 	</security:authorize>
 	<security:authorize ifNotGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
 		<div class="row">
-		    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:650px;">
+		    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:900px;">
 		        <div class="card mb-3">
 		            <div class="card-header">
 		                <h3 style="display:inline"><b>내 온누리교회 바코드</b></h3>
@@ -149,7 +149,7 @@ img {
 		</div>
 	</security:authorize>
 	<div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width:650px;">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width:900px;">
             <div class="card mb-3">
                 <div class="card-header">
                     <span class="pull-right">

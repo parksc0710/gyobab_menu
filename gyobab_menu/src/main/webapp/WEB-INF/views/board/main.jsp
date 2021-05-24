@@ -22,6 +22,7 @@ img {
 	max-width: 100%;
     max-height: 600px;
 }
+
 </style>
 
 <head>
@@ -145,7 +146,9 @@ img {
 			                                        	<span style="float:right;"><b>${inBoard.memberVO.member_name  }</b></span>
 			                                        </p>
 			                                        <p>
-			                                      		${inBoard.board_txt}
+			                                        	<div class="board_txt">
+			                                      			${inBoard.board_txt}
+			                                      		</div>
 			                                        </p>
 			                                        <p style="height:31px;">
 			                                        	<security:authorize ifAnyGranted="ROLE_OPERATOR">
@@ -250,9 +253,12 @@ img {
 			                        </table>
 		                        </div>
 	                        </div>
+	                        <br><br>
 		    			 	</c:if>
 			    			<div class="row">
 		                    	<div class="table-responsive" style="overflow-x:hidden;">
+		                    	 	<h6><b>목록</b></h6>
+		                    	 	<hr/>
 					               	<table class="table">
 									  <tbody>
 									  	<c:forEach var="list" items="${list}">
