@@ -1,16 +1,13 @@
 package com.park.gyobab.controller.main;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.mortennobel.imagescaling.AdvancedResizeOp;
+import com.mortennobel.imagescaling.MultiStepRescaleOp;
 import com.park.gyobab.domain.BoardCommentVO;
 import com.park.gyobab.domain.BoardLikeVO;
 import com.park.gyobab.domain.BoardVO;
@@ -138,8 +137,24 @@ public class HomeController{
 					realFileNm = UUID.randomUUID().toString() + name.substring(name.lastIndexOf("."));
 					String rlFileNm = filePath + realFileNm;
 					///////////////// 서버에 파일쓰기 /////////////////
+				
 					mf.transferTo(new File(rlFileNm));
+					
+					// imgResize
+					BufferedImage img = ImageIO.read(new File(rlFileNm));
+					if(img.getWidth() > 1600) {
+						int beforeWidth = img.getWidth();
+						int beforeHeight = img.getHeight();
+						int afterWidth = 1600;
+						int afterHeight = (afterWidth * beforeHeight) / beforeWidth;
+						MultiStepRescaleOp rescale = new MultiStepRescaleOp(afterWidth, afterHeight);
+					    rescale.setUnsharpenMask(AdvancedResizeOp.UnsharpenMask.Soft);
+					    BufferedImage resizedImage = rescale.filter(img, null);
+					    
+					    ImageIO.write(resizedImage, filename_ext, new File(rlFileNm));
+					}
 					///////////////// 서버에 파일쓰기 /////////////////
+				    
 					return3 += "&bNewLine=true";
 					return3 += "&sFileName=" + name;
 					return3 += "&sFileURL=https://www.gyobab.shop/images/board_new/" + realFileNm;
