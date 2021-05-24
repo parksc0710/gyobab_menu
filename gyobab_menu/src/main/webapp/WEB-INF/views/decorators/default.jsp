@@ -17,14 +17,21 @@
 	<link rel="icon" type="image/png"  href="${pageContext.request.contextPath}/assets/images/favicon.ico"/>
 	<%@ include file="/WEB-INF/views/decorators/commonDecorator/commonInclude.jsp" %>
 	<!-- //공통 추가 -->
-
-	<title>오늘의 교밥</title>
-	<meta property="og:title" content="오늘의 교밥" />
-	<%-- <meta property="og:image" content="${pageContext.request.contextPath}/assets/images/common/img_meta_972x511.jpg" /> --%>
-	<meta property="og:description"	content="오늘의 교밥은?" />
-	<meta property="og:url" content="https://www.gyobab.shop/">
-	<meta property="og:image" content="https://www.gyobab.shop/images/hello.jpg">
-
+	
+	<c:set var = "nowUrl" value="${pageContext.request.requestURL}" />
+	
+	<c:choose>
+	
+		<c:when test="${!fn:contains(nowUrl , 'board/')}">
+			<title>오늘의 교밥</title>
+			<meta property="og:title" content="오늘의 교밥" />
+			<%-- <meta property="og:image" content="${pageContext.request.contextPath}/assets/images/common/img_meta_972x511.jpg" /> --%>
+			<meta property="og:description"	content="오늘의 교밥은?" />
+			<meta property="og:url" content="https://www.gyobab.shop/">
+			<meta property="og:image" content="https://www.gyobab.shop/images/hello.jpg">
+		</c:when>
+		
+	</c:choose>
 	
 	<decorator:head />
 </head>

@@ -23,6 +23,43 @@ img {
     max-height: 100%;
 }
 </style>
+
+<head>
+
+	<c:set var="boardTypeKr" value="" />
+	
+	<c:choose>
+		<c:when test="${boardType eq 'notice'}">
+			<c:set var="boardTypeKr" value="공지사항"/>
+  		</c:when>
+  		<c:when test="${boardType eq 'free' }">
+			<c:set var="boardTypeKr" value="자유게시판"/>
+  		</c:when>
+  		<c:when test="${boardType eq 'menu' }">
+			<c:set var="boardTypeKr" value="오늘의 점심 메뉴"/>
+  		</c:when>
+  	</c:choose>
+  	
+	<c:choose>
+  		<c:when test="${inBoard ne null }">
+			<meta property="og:title"       content="${inBoard.board_tit } | ${boardTypeKr } | 오늘의 교밥" />
+			<meta property="og:type"        content="website" />
+			<meta property="og:image" content="https://www.gyobab.shop/images/hello.jpg">
+			<script>
+				document.title = "${inBoard.board_tit } | ${boardTypeKr } | 오늘의 교밥"; 
+			</script>
+  		</c:when>
+  		<c:otherwise>
+  			<meta property="og:title"       content="${boardTypeKr } | 오늘의 교밥" />
+			<meta property="og:type"        content="website" />
+			<meta property="og:image" content="https://www.gyobab.shop/images/hello.jpg">
+			<script>
+				document.title = "${boardTypeKr } | 오늘의 교밥"; 
+			</script>
+		</c:otherwise>
+ 	</c:choose> 
+</head>
+
 <div class="content">
 	<div class="container-fluid">
 	    <div class="row">
