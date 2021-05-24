@@ -25,4 +25,4 @@
 
 <script src="${pageContext.request.contextPath}/assets/js/sweetalert.min.js"></script>
 
-
+<script async charset="utf-8" src="//cdn.embedly.com/widgets/platform.js"></script>
