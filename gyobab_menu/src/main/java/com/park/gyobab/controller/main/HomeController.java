@@ -128,27 +128,28 @@ public class HomeController{
 	
 		mf.transferTo(new File(rlFileNm));
 		
-		// imgResize
-		BufferedImage img = ImageIO.read(new File(rlFileNm));
-		if(img.getWidth() > 1600 || img.getHeight() > 1600) {
-			int beforeWidth = img.getWidth();
-			int beforeHeight = img.getHeight();
-			int afterWidth = 0;
-			int afterHeight = 0;
-			if(beforeWidth >= beforeWidth) {
-				afterWidth = 1600;
-				afterHeight = (afterWidth * beforeHeight) / beforeWidth;
-			} else {
-				afterWidth = (afterHeight * beforeWidth) / beforeHeight;
-				afterHeight = 1600;
-			}
-			
-			MultiStepRescaleOp rescale = new MultiStepRescaleOp(afterWidth, afterHeight);
-		    rescale.setUnsharpenMask(AdvancedResizeOp.UnsharpenMask.Soft);
-		    BufferedImage resizedImage = rescale.filter(img, null);
-		    
-		    ImageIO.write(resizedImage, filename_ext, new File(rlFileNm));
-		}
+		// imgResize 세로가 더 긴 사진을 올릴 때 width가 이상하게 잡히는 이슈가 있음... 해다 이슈 해결 전까진 리사이징 안하기
+//		BufferedImage img = ImageIO.read(new File(rlFileNm));
+//		if(img.getWidth() > 1600 || img.getHeight() > 1600) {
+//			int beforeWidth = img.getWidth();
+//			int beforeHeight = img.getHeight();
+//			int afterWidth = 0;
+//			int afterHeight = 0;
+//			if(beforeWidth >= beforeWidth) {
+//				afterWidth = 1600;
+//				afterHeight = (afterWidth * beforeHeight) / beforeWidth;
+//			} else {
+//				afterWidth = (afterHeight * beforeWidth) / beforeHeight;
+//				afterHeight = 1600;
+//			}
+//			
+//			MultiStepRescaleOp rescale = new MultiStepRescaleOp(afterWidth, afterHeight);
+//		    rescale.setUnsharpenMask(AdvancedResizeOp.UnsharpenMask.Soft);
+//		    BufferedImage resizedImage = rescale.filter(img, null);
+//		    
+//		    
+//		    ImageIO.write(resizedImage, filename_ext, new File(rlFileNm));
+//		}
 		
 		JSONObject outData = new JSONObject();
 		outData.put("uploaded", true);
