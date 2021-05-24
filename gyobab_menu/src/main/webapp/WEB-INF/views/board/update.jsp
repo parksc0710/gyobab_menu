@@ -58,9 +58,7 @@
 			alert("제목을 입력하여주세요!");
 			return;
 		} else {
-			
-			oEditors.getById["boardTxt"].exec("UPDATE_CONTENTS_FIELD",[]);
-			boardTxt = $("#boardTxt").val();
+			boardTxt = editor.getData();
 			
 			$.ajax({
 		       type: "post", 

@@ -70,10 +70,10 @@
 			return;
 		} else {
 			boardTxt = editor.getData();
-			console.log("boardType : " + boardType + " // boardTit : " + boardTit + " // boardMember : " + boardMember);
-			console.log("boardTxt : " + boardTxt);
+			//console.log("boardType : " + boardType + " // boardTit : " + boardTit + " // boardMember : " + boardMember);
+			//console.log("boardTxt : " + boardTxt);
 			
-			/* $.ajax({
+			$.ajax({
 		       type: "post", 
 		       dataType: "text", 
 		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
@@ -85,7 +85,7 @@
 		       error:function(request,status,error){
 		           alert("게시글 등록에 실패했습니다. 관리자에게 문의하세요.");
 		       }
-		    }); */
+		    });
 		}
 		
 	});
