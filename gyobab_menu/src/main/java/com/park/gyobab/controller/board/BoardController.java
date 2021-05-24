@@ -101,6 +101,15 @@ public class BoardController {
 			inBoardLike = boardLikeService.selectBoardLikes(board_id);
 			inBoardComment = boardCommentService.selectBoardComments(board_id);
 		}
+				
+		// 메뉴게시판 처음 들어오면 첫 게시글 조회해서 보여줌
+		if(boardType.equalsIgnoreCase(BOARD_TYPE_MENU) && board_id == 0 && pageNum == 1) {
+			inBoard = boardService.selectTop1Board(boardType);
+			board_id = inBoard.getBoard_id();
+			inBoardLike = boardLikeService.selectBoardLikes(board_id);
+			inBoardComment = boardCommentService.selectBoardComments(board_id);
+		}
+		
 		
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("pageNum", pageNum);
@@ -164,7 +173,7 @@ public class BoardController {
 		return rtn;
 	}
 	
-	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
+	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN", "ROLE_USER"})
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	public String update(Model model, @RequestParam(value = "boardid", required = true) int boardId,
 			@RequestParam(value = "pageNum", required = true, defaultValue = "1") int pageNum,
@@ -207,7 +216,7 @@ public class BoardController {
 	}
 	
 	
-	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
+	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN", "ROLE_USER"})
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
 	@ResponseBody
 	public String update(Model model,
@@ -227,7 +236,7 @@ public class BoardController {
 	}
 	
 	
-	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
+	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN", "ROLE_USER"})
 	@RequestMapping(value = "deleteBoard", produces = "application/json;charset=utf-8", method = RequestMethod.POST)
 	@ResponseBody
 	public String deleteMember( 
