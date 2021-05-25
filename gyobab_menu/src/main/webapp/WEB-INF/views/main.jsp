@@ -67,7 +67,7 @@ img {
                                 	    <div class="blog_list"></div>
                                         <h4 style="color:red;"> ${topNotice.board_tit }
                                         </h4>
-                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${topMenu.update_date}" />
+                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${topNotice.update_date}" />
                                         	<span style="float:right;"><b>${topNotice.memberVO.member_name }</b></span>
                                         </p>
                                         <p>	
@@ -263,7 +263,7 @@ img {
 <script>
 	
 	// 신규 공지 등록 후 보이게 하려면 newNoticeTime을 수정 시간으로 설정
-	var newNoticeTime = new Date("${topMenu.update_date}");
+	var newNoticeTime = new Date("${topNotice.update_date}");
 	
 	var noticeCloseTime = new Date(getCookie("notice_close"));
 	
