@@ -32,14 +32,17 @@ img {
 		<c:when test="${boardType eq 'notice'}">
 			<c:set var="boardTypeKr" value="공지사항"/>
   		</c:when>
-  		<c:when test="${boardType eq 'free' }">
-			<c:set var="boardTypeKr" value="자유게시판"/>
-  		</c:when>
   		<c:when test="${boardType eq 'menu' }">
 			<c:set var="boardTypeKr" value="오늘의 점심 메뉴"/>
   		</c:when>
+  		<c:when test="${boardType eq 'restaurant' }">
+			<c:set var="boardTypeKr" value="주변 식당 정보"/>
+  		</c:when>
   		<c:when test="${boardType eq 'humor' }">
 			<c:set var="boardTypeKr" value="유머게시판"/>
+  		</c:when>
+  		<c:when test="${boardType eq 'free' }">
+			<c:set var="boardTypeKr" value="자유게시판"/>
   		</c:when>
   	</c:choose>
   	

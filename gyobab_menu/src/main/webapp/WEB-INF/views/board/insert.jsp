@@ -11,20 +11,31 @@
     min-height: 400px;
 }
 </style>
+
+<c:set var="boardTypeKr" value="" />
+	
+	<c:choose>
+		<c:when test="${boardType eq 'notice'}">
+			<c:set var="boardTypeKr" value="공지사항"/>
+  		</c:when>
+  		<c:when test="${boardType eq 'menu' }">
+			<c:set var="boardTypeKr" value="오늘의 점심 메뉴"/>
+  		</c:when>
+  		<c:when test="${boardType eq 'restaurant' }">
+			<c:set var="boardTypeKr" value="주변 식당 정보"/>
+  		</c:when>
+  		<c:when test="${boardType eq 'humor' }">
+			<c:set var="boardTypeKr" value="유머게시판"/>
+  		</c:when>
+  		<c:when test="${boardType eq 'free' }">
+			<c:set var="boardTypeKr" value="자유게시판"/>
+  		</c:when>
+  	</c:choose>
+  	
 <div class="content">
 	<div class="card mb-3" style="max-width:960px;">
 	    <div class="card-header">
-	    	<c:choose>
-	    		<c:when test="${boardType eq 'notice' }">
-	    			<h3><b>공지사항 등록</b></h3>
-	    		</c:when>
-	    		<c:when test="${boardType eq 'free' }">
-	    			<h3><b>자유게시판 등록</b></h3>
-	    		</c:when>
-	    		<c:otherwise>
-	    			<h3><b>자유게시판 등록</b></h3>
-	    		</c:otherwise>
-	    	</c:choose>
+	    	<h3><b>${boardTypeKr } 등록</b></h3>
 	    </div>
 	
 	    <div class="card-body">
