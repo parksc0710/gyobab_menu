@@ -65,23 +65,13 @@ img {
 	                            <tr>
                                     <td>
                                 	    <div class="blog_list"></div>
-                                        <h4 style="color:red;"> 공지사항입니다!
+                                        <h4 style="color:red;"> ${topNotice.board_tit }
                                         </h4>
-                                        <p> 2021-05-24
-                                        	<span style="float:right;"><b>개발팀박성철</b></span>
+                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${topMenu.update_date}" />
+                                        	<span style="float:right;"><b>${topNotice.memberVO.member_name }</b></span>
                                         </p>
                                         <p>	
-                                        	<div class="img_div">
-                                        		<img src="https://www.gyobab.shop/images/board/3ec7e4a2-a78e-4f9f-8a53-74b804b899b2.jpg" style="max-width:100%;max-height:100%">
-                                       		</div>
-											<h4><b>&lt;업데이트 내역&gt;</b></h4><br>
-											<b>- 2021. 05. 24 : 공지사항 게시판, 자유 게시판이 추가되었습니다. 그리고 게시판 템플릿이 변경되었어요! 혹시 사용중에 버그나 건의 사항 있으시면 자유 게시판이나 댓글로 남겨주세요!</b><br><br>
-											<b>- 2021. 05. 22 : 메뉴 게시판에 댓글 기능이 추가되었습니다. 다양한 의견을 나눠주세요! (댓글 기능은 로그인을 해야 사용할 수 있습니다.)</b><br><br>
-											<b>- 2021. 05. 19 : 메뉴 게시판에 좋아요 기능이 추가되었습니다. 내가 좋아하는 메뉴가 나오면 좋아요를 눌러주세요! (좋아요는 로그인을 해야 사용할 수 있습니다. 내가 누른 좋아요 내역은 공개되지 않습니다.)</b><br><br>
-											
-											<hr/>
-											<h4><b>&lt;중요 공지&gt;</b></h4><br>
-											<b>공지 닫기를 누르시면 새로운 공지가 등록되기 전까지는 공지가 열리지 않습니다. <br><br>그러다가 새로운 공지가 올라오면 다시 열려요! <br><br>만약, 공지가 열리면 내용을 꼭 확인해주세요.</b>
+                                        	${topNotice.board_txt }
                                         </p>
                                     </td>
                                 </tr>
@@ -273,7 +263,7 @@ img {
 <script>
 	
 	// 신규 공지 등록 후 보이게 하려면 newNoticeTime을 수정 시간으로 설정
-	var newNoticeTime = new Date("2021-05-24 04:05:00");
+	var newNoticeTime = new Date("${topMenu.update_date}");
 	
 	var noticeCloseTime = new Date(getCookie("notice_close"));
 	
