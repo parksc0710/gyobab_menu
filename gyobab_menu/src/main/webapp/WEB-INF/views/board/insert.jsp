@@ -7,6 +7,9 @@
 <security:authentication property="principal.member_id" var="memberId"/>
 <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
 <style>
+.ck-editor__editable_inline {
+    min-height: 400px;
+}
 </style>
 <div class="content">
 	<div class="card mb-3" style="max-width:960px;">
