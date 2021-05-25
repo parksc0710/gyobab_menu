@@ -263,7 +263,7 @@ img {
 <script>
 	
 	// 신규 공지 등록 후 보이게 하려면 newNoticeTime을 수정 시간으로 설정
-	var newNoticeTime = new Date("${topNotice.update_date}");
+	var newNoticeTime = new Date('<fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${topNotice.update_date}" />');
 	
 	var noticeCloseTime = new Date(getCookie("notice_close"));
 	
