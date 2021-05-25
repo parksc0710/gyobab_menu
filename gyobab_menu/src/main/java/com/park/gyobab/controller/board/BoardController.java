@@ -132,10 +132,12 @@ public class BoardController {
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insert(Model model, HttpServletRequest req, @RequestParam(value = "boardType", required = true) String boardType) throws Exception {
 		
-		if(boardType.equalsIgnoreCase(BOARD_TYPE_NOTICE) && req.isUserInRole("ROLE_OPERATOR")) {
+		if(boardType.equalsIgnoreCase(BOARD_TYPE_NOTICE)) {
 			boardType = BOARD_TYPE_NOTICE;
 		} else if(boardType.equalsIgnoreCase(BOARD_TYPE_FREE)) {
 			boardType = BOARD_TYPE_FREE;
+		} else if(boardType.equalsIgnoreCase(BOARD_TYPE_MENU)) {
+			boardType = BOARD_TYPE_MENU;
 		} else {
 			boardType = BOARD_TYPE_FREE;
 		}
