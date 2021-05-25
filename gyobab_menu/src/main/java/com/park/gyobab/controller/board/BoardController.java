@@ -46,6 +46,26 @@ public class BoardController {
 	private static final String BOARD_TYPE_NOTICE = "notice";
 	private static final String BOARD_TYPE_MENU = "menu";
 	private static final String BOARD_TYPE_FREE = "free";
+	private static final String BOARD_TYPE_HUMOR = "humor";
+	private static final String BOARD_TYPE_RESTAURANT = "restaurant";
+	
+	private String checkBoardType(String inBoardType) {
+		String rtn = "";
+		if(inBoardType.equalsIgnoreCase(BOARD_TYPE_NOTICE)) {
+			rtn = BOARD_TYPE_NOTICE;
+		} else if(inBoardType.equalsIgnoreCase(BOARD_TYPE_FREE)) {
+			rtn = BOARD_TYPE_FREE;
+		} else if(inBoardType.equalsIgnoreCase(BOARD_TYPE_MENU)) {
+			rtn = BOARD_TYPE_MENU;
+		} else if(inBoardType.equalsIgnoreCase(BOARD_TYPE_HUMOR)) {
+			rtn = BOARD_TYPE_HUMOR;
+		} else if(inBoardType.equalsIgnoreCase(BOARD_TYPE_RESTAURANT)) {
+			rtn = BOARD_TYPE_RESTAURANT;
+		} else {
+			rtn = BOARD_TYPE_FREE;
+		}
+		return rtn;
+	}
 	
 	@RequestMapping(value = "/{boardType}", method = RequestMethod.GET)
 	public String main(Model model,
@@ -55,15 +75,7 @@ public class BoardController {
 			@RequestParam(value = "bid", required = false, defaultValue = "0") int board_id
 		) throws Exception {
 		
-		if(boardType.equalsIgnoreCase(BOARD_TYPE_NOTICE)) {
-			boardType = BOARD_TYPE_NOTICE;
-		} else if(boardType.equalsIgnoreCase(BOARD_TYPE_FREE)) {
-			boardType = BOARD_TYPE_FREE;
-		} else if(boardType.equalsIgnoreCase(BOARD_TYPE_MENU)) {
-			boardType = BOARD_TYPE_MENU;
-		} else {
-			boardType = BOARD_TYPE_FREE;
-		}
+		boardType = checkBoardType(boardType);
 		
 		Criteria cri = new Criteria(pageNum, pageSize);
 		
@@ -132,15 +144,7 @@ public class BoardController {
 	@RequestMapping(value = "/insert", method = RequestMethod.GET)
 	public String insert(Model model, HttpServletRequest req, @RequestParam(value = "boardType", required = true) String boardType) throws Exception {
 		
-		if(boardType.equalsIgnoreCase(BOARD_TYPE_NOTICE)) {
-			boardType = BOARD_TYPE_NOTICE;
-		} else if(boardType.equalsIgnoreCase(BOARD_TYPE_FREE)) {
-			boardType = BOARD_TYPE_FREE;
-		} else if(boardType.equalsIgnoreCase(BOARD_TYPE_MENU)) {
-			boardType = BOARD_TYPE_MENU;
-		} else {
-			boardType = BOARD_TYPE_FREE;
-		}
+		boardType = checkBoardType(boardType);
 		
 		model.addAttribute("boardType", boardType);
 		

@@ -150,8 +150,22 @@
                 </li>
                 
                 <li class="submenu">
-                    <a class='<c:if test="${fn:contains(nowUrl , 'board/free')}">active</c:if>' href="${pageContext.request.contextPath}/board/free.do">
+                    <a class='<c:if test="${fn:contains(nowUrl , 'board/restaurant')}">active</c:if>' href="${pageContext.request.contextPath}/board/restaurant.do">
+                        <i class="fa-2x mr-2 fas fa-store"></i>
+                        <span>  주변 식당 정보 </span>
+                    </a>
+                </li>
+                
+                <li class="submenu">
+                    <a class='<c:if test="${fn:contains(nowUrl , 'board/humor')}">active</c:if>' href="${pageContext.request.contextPath}/board/humor.do">
                         <i class="fa-2x mr-2 far fa-smile"></i>
+                        <span>  유머게시판 </span>
+                    </a>
+                </li>
+                
+                <li class="submenu">
+                    <a class='<c:if test="${fn:contains(nowUrl , 'board/free')}">active</c:if>' href="${pageContext.request.contextPath}/board/free.do">
+                        <i class="fa-2x mr-2 far fa-file-alt"></i>
                         <span>  자유게시판 </span>
                     </a>
                 </li>

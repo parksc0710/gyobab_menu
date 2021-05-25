@@ -38,6 +38,9 @@ img {
   		<c:when test="${boardType eq 'menu' }">
 			<c:set var="boardTypeKr" value="오늘의 점심 메뉴"/>
   		</c:when>
+  		<c:when test="${boardType eq 'humor' }">
+			<c:set var="boardTypeKr" value="유머게시판"/>
+  		</c:when>
   	</c:choose>
   	
 	<c:choose>
@@ -75,14 +78,6 @@ img {
 						       	</span>
 						        <a href="${pageContext.request.contextPath}/board/notice.do"><h5><i class="fa-2x mr-2 far fa-check-circle" style="font-size:20px;"></i><b>공지사항</b></h5></a>
 				    		</c:when>
-				    		<c:when test="${boardType eq 'free' }">
-				    			<span class="pull-right">
-				    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
-			                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
-			                    	</security:authorize>
-						       	</span>
-						        <a href="${pageContext.request.contextPath}/board/free.do"><h5><i class="fa-2x mr-2 far fa-smile" style="font-size:20px;"></i><b>자유게시판</b></h5></a>
-				    		</c:when>
 				    		<c:when test="${boardType eq 'menu' }">
 				    			<span class="pull-right">
 				    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN">
@@ -90,6 +85,30 @@ img {
 			                    	</security:authorize>
 						       	</span>
 						         <a href="${pageContext.request.contextPath}/board/menu.do"><h5><i class="fa-2x mr-2 fas fa-star" style="font-size:20px;"></i><b>오늘의 점심 메뉴</b></h5></a>
+				    		</c:when>
+				    		<c:when test="${boardType eq 'restaurant' }">
+				    			<span class="pull-right">
+				    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
+			                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
+			                    	</security:authorize>
+						       	</span>
+						        <a href="${pageContext.request.contextPath}/board/humor.do"><h5><i class="fa-2x mr-2 fas fa-store" style="font-size:20px;"></i><b>주변 식당 정보</b></h5></a>
+				    		</c:when>
+				    		<c:when test="${boardType eq 'humor' }">
+				    			<span class="pull-right">
+				    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
+			                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
+			                    	</security:authorize>
+						       	</span>
+						        <a href="${pageContext.request.contextPath}/board/humor.do"><h5><i class="fa-2x mr-2 far fa-smile" style="font-size:20px;"></i><b>유머게시판</b></h5></a>
+				    		</c:when>
+				    		<c:when test="${boardType eq 'free' }">
+				    			<span class="pull-right">
+				    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
+			                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
+			                    	</security:authorize>
+						       	</span>
+						        <a href="${pageContext.request.contextPath}/board/free.do"><h5><i class="fa-2x mr-2 far fa-file-alt" style="font-size:20px;"></i><b>자유게시판</b></h5></a>
 				    		</c:when>
 				    		<c:otherwise>
 				    			<span class="pull-right">
