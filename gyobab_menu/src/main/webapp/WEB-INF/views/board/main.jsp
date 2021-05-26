@@ -136,7 +136,7 @@ img {
 					    		<c:when test="${boardType eq 'restaurant' }">
 					    			<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '' }">active</c:if>">전체</a>
 						    		<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=식권가능" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '식권가능' }">active</c:if>">식권가능</a>
-					    			<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=식권불가능" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '식권불가능' }">active</c:if>">식권불가</a>
+					    			<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=식권불가능" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '식권불가능' }">active</c:if>">식권불가능</a>
 					    		</c:when>
 					    		<c:when test="${boardType eq 'humor' }">
 						    		<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '' }">active</c:if>">전체</a>
