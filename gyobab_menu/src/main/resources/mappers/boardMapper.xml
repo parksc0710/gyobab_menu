@@ -16,6 +16,7 @@
   	<resultMap type="com.park.gyobab.domain.BoardVO" id="BoardVO">
 		<result column="board_id" property="board_id" />
 		<result column="board_type" property="board_type" />
+		<result column="board_cate" property="board_cate" />
 		<result column="board_tit" property="board_tit" />
 		<result column="board_txt" property="board_txt" />
 		<result column="board_view" property="board_view" />
@@ -29,9 +30,9 @@
 	
 	<insert id="insertBoard">
   		INSERT INTO `board`
-			(board_type, board_tit, board_txt, board_member, board_thumb)
+			(board_type, board_cate, board_tit, board_txt, board_member, board_thumb)
 		VALUES
-			(#{board_type}, #{board_tit}, #{board_txt}, #{memberVO.member_id}, #{board_thumb});
+			(#{board_type}, #{board_cate}, #{board_tit}, #{board_txt}, #{memberVO.member_id}, #{board_thumb});
   	</insert>
   	
   	<select id="selectBoards" parameterType="hashmap" resultMap="BoardVO">
@@ -41,6 +42,7 @@
 			 (select 
 					`board`.`board_id`,
 					`board`.`board_type`,
+					`board`.`board_cate`,
 					`board`.`board_tit`,					
 					`member`.`member_id`,
 					`board`.`board_thumb`,
@@ -53,6 +55,7 @@
 				ON `board`.`board_member` = `member`.`member_id`
 			    JOIN (SELECT @rownum:=0) TMP
 			    WHERE `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = #{board_type}
+			    and `board`.`board_cate` like CONCAT('%',#{board_cate},'%')
 			    and `member`.`act_flg` = 1 and `member`.`del_flg` = 0
 				ORDER BY `board_id` desc
 			    ) A
@@ -61,18 +64,20 @@
 		]]>
   	</select>
   	
-  	<select id="selectBoardCnt" resultType="Integer">
+  	<select id="selectBoardCnt" parameterType="hashmap" resultType="Integer">
   		select count(`board`.`board_id`) 
   		from `board` 
   		INNER JOIN `gyobab`.`member`
 		ON `board`.`board_member` = `member`.`member_id`
   		where `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = #{board_type} 
+  		and `board`.`board_cate` like CONCAT('%',#{board_cate},'%')  
   		and `member`.`act_flg` = 1 and `member`.`del_flg` = 0;
   	</select>
   	
   	<select id="selectTop1Board" parameterType="string" resultMap="BoardVO">
   		SELECT `board`.`board_id`,
 		    `board`.`board_type`,
+		    `board`.`board_cate`,
 		    `board`.`board_tit`,
 		    `board`.`board_txt`,
 		    `member`.`member_id`,
@@ -92,6 +97,7 @@
   	<select id="selectBoardById" parameterType="int" resultMap="BoardVO">
   		SELECT `board`.`board_id`,
 		    `board`.`board_type`,
+		    `board`.`board_cate`,
 		    `board`.`board_tit`,
 		    `board`.`board_txt`,
 		    `member`.`member_id`,
@@ -117,7 +123,7 @@
   	
   	<update id="updateBoard" parameterType="com.park.gyobab.domain.BoardVO" >
   		UPDATE `board`
-			set board_tit = #{board_tit}, board_txt = #{board_txt}, board_thumb = #{board_thumb}, update_date = now()
+			set board_tit = #{board_tit}, board_txt = #{board_txt}, board_cate = #{board_cate}, board_thumb = #{board_thumb}, update_date = now()
 		WHERE
 			board_id = #{board_id}
   	</update>

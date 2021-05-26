@@ -52,8 +52,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public Integer selectBoardCnt(String board_type) throws Exception {
-		int cnt = sqlSession.selectOne(namespace + ".selectBoardCnt", board_type);
+	public Integer selectBoardCnt(HashMap<String, Object> map) throws Exception {
+		int cnt = sqlSession.selectOne(namespace + ".selectBoardCnt", map);
 		return cnt;
 	}
 

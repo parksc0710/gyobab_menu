@@ -39,7 +39,34 @@
 	    </div>
 	
 	    <div class="card-body">
-	
+		
+			<div class="form-group">
+           		<label for="exampleInputEmail1"><b>분류</b></label>
+           		<select class="form-control" id="cateSelect">
+           			<c:choose>
+			    		<c:when test="${boardType eq 'notice' }">
+			    			<option selecetd>공지</option>
+			    		</c:when>
+			    		<c:when test="${boardType eq 'menu' }">
+			    			<option selecetd>서빙고온누리</option>
+			    		</c:when>
+			    		<c:when test="${boardType eq 'restaurant' }">
+				    		<option selecetd>식권가능</option>
+			    			<option>식권불가능</option></a>
+			    		</c:when>
+			    		<c:when test="${boardType eq 'humor' }">
+			    			<option selecetd>유머</option>
+			    			<option selecetd>감동</option>
+			    		</c:when>
+			    		<c:when test="${boardType eq 'free' }">
+			    			<option selecetd>잡담</option>
+			    			<option>문의</option>
+			    		</c:when>
+			    		<c:otherwise>
+			    		</c:otherwise>
+			    	</c:choose>
+                </select>
+            </div><br>
             <div class="form-group">
                 <label for="exampleInputEmail1"><b>제목</b></label>
                 <input type="text" class="form-control" id="boardTit" >
@@ -77,6 +104,7 @@
 	$("#insertBtn").click(function() {
 		
 		var boardType = "${boardType}";
+		var boardCate = $("#cateSelect option:selected").val();
 		var boardTit = $("#boardTit").val();
 		var boardMember = "${memberId}";
 		var boardTxt = "";
@@ -94,7 +122,7 @@
 		       dataType: "text", 
 		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
 		       url: "${pageContext.request.contextPath}/board/insert.do",
-		       data : {boardType : boardType, boardTit : boardTit, boardTxt : boardTxt, boardMember : boardMember},
+		       data : {boardType : boardType, boardTit : boardTit, boardTxt : boardTxt, boardMember : boardMember, boardCate : boardCate},
 		       success: function(rtn) {
 	        	  window.location.href = '${pageContext.request.contextPath}/board/${boardType}.do';
 		       },

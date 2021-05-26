@@ -51,8 +51,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public Integer selectBoardCnt(String board_type) throws Exception {
-		int cnt = dao.selectBoardCnt(board_type); 
+	public Integer selectBoardCnt(HashMap<String, Object> map) throws Exception {
+		int cnt = dao.selectBoardCnt(map); 
 		return cnt;
 	}
 	

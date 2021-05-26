@@ -15,6 +15,7 @@ public class BoardVO implements Serializable{
 	
 	private int board_id;
 	private String board_type;
+	private String board_cate;
     private String board_tit;
     private String board_txt;
     private MemberVO memberVO;
@@ -36,6 +37,12 @@ public class BoardVO implements Serializable{
 	}
 	public void setBoard_type(String board_type) {
 		this.board_type = board_type;
+	}
+	public String getBoard_cate() {
+		return board_cate;
+	}
+	public void setBoard_cate(String board_cate) {
+		this.board_cate = board_cate;
 	}
 	public String getBoard_tit() {
 		return board_tit;

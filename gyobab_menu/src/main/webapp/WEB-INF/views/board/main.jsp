@@ -72,53 +72,86 @@ img {
 	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width:960px;">
 	            <div class="card mb-3">
 	                <div class="card-header">
-	                    <c:choose>
-				    		<c:when test="${boardType eq 'notice' }">
-				    			<span class="pull-right">
-					    			<security:authorize ifAnyGranted="ROLE_OPERATOR">
-			                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
-			                    	</security:authorize>
-						       	</span>
-						        <a href="${pageContext.request.contextPath}/board/notice.do"><h5><i class="fa-2x mr-2 far fa-check-circle" style="font-size:20px;"></i><b>공지사항</b></h5></a>
-				    		</c:when>
-				    		<c:when test="${boardType eq 'menu' }">
-				    			<span class="pull-right">
-				    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN">
-			                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
-			                    	</security:authorize>
-						       	</span>
-						         <a href="${pageContext.request.contextPath}/board/menu.do"><h5><i class="fa-2x mr-2 fas fa-star" style="font-size:20px;"></i><b>오늘의 점심 메뉴</b></h5></a>
-				    		</c:when>
-				    		<c:when test="${boardType eq 'restaurant' }">
-				    			<span class="pull-right">
-				    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
-			                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
-			                    	</security:authorize>
-						       	</span>
-						        <a href="${pageContext.request.contextPath}/board/humor.do"><h5><i class="fa-2x mr-2 fas fa-store" style="font-size:20px;"></i><b>주변 식당 정보</b></h5></a>
-				    		</c:when>
-				    		<c:when test="${boardType eq 'humor' }">
-				    			<span class="pull-right">
-				    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
-			                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
-			                    	</security:authorize>
-						       	</span>
-						        <a href="${pageContext.request.contextPath}/board/humor.do"><h5><i class="fa-2x mr-2 far fa-smile" style="font-size:20px;"></i><b>유머게시판</b></h5></a>
-				    		</c:when>
-				    		<c:when test="${boardType eq 'free' }">
-				    			<span class="pull-right">
-				    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
-			                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
-			                    	</security:authorize>
-						       	</span>
-						        <a href="${pageContext.request.contextPath}/board/free.do"><h5><i class="fa-2x mr-2 far fa-file-alt" style="font-size:20px;"></i><b>자유게시판</b></h5></a>
-				    		</c:when>
-				    		<c:otherwise>
-				    			<span class="pull-right">
-						       	</span>
-						         <a href="${pageContext.request.contextPath}/board/notice.do"><h5><i class="fa-2x mr-2 far fa-check-circle" style="font-size:20px;"></i><b>공지사항</b></h5></a>
-				    		</c:otherwise>
-				    	</c:choose>
+	                	<div class="type_list" style="float:left;">
+		                    <c:choose>
+					    		<c:when test="${boardType eq 'notice' }">
+					    			<span class="pull-right">
+						    			<security:authorize ifAnyGranted="ROLE_OPERATOR">
+				                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
+				                    	</security:authorize>
+							       	</span>
+							        <a href="${pageContext.request.contextPath}/board/notice.do"><h5><i class="fa-2x mr-2 far fa-check-circle" style="font-size:20px;"></i><b>공지사항</b></h5></a>
+					    		</c:when>
+					    		<c:when test="${boardType eq 'menu' }">
+					    			<span class="pull-right">
+								        <a href="${pageContext.request.contextPath}/board/menu.do"><h5><i class="fa-2x mr-2 fas fa-star" style="font-size:20px;"></i><b>오늘의 점심 메뉴</b></h5></a>
+					    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN">
+				                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
+				                    	</security:authorize>
+							       	</span>
+					    		</c:when>
+					    		<c:when test="${boardType eq 'restaurant' }">
+					    			<span class="pull-right">
+							        	<a href="${pageContext.request.contextPath}/board/humor.do"><h5><i class="fa-2x mr-2 fas fa-store" style="font-size:20px;"></i><b>주변 식당 정보</b></h5></a>
+					    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
+				                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
+				                    	</security:authorize>
+							       	</span>
+					    		</c:when>
+					    		<c:when test="${boardType eq 'humor' }">
+					    			<span class="pull-right">
+							        	<a href="${pageContext.request.contextPath}/board/humor.do"><h5><i class="fa-2x mr-2 far fa-smile" style="font-size:20px;"></i><b>유머게시판</b></h5></a>
+					    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
+				                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
+				                    	</security:authorize>
+							       	</span>
+					    		</c:when>
+					    		<c:when test="${boardType eq 'free' }">
+					    			<span class="pull-right">
+							        	<a href="${pageContext.request.contextPath}/board/free.do"><h5><i class="fa-2x mr-2 far fa-file-alt" style="font-size:20px;"></i><b>자유게시판</b></h5></a>
+					    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
+				                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
+				                    	</security:authorize>
+							       	</span>
+					    		</c:when>
+					    		<c:otherwise>
+							        <span class="pull-right">
+							        	<a href="${pageContext.request.contextPath}/board/free.do"><h5><i class="fa-2x mr-2 far fa-file-alt" style="font-size:20px;"></i><b>자유게시판</b></h5></a>
+					    				<security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_USER, ROLE_ADMIN">
+				                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
+				                    	</security:authorize>
+							       	</span>
+					    		</c:otherwise>
+					    	</c:choose>
+				    	</div>
+				    	<div class="cate_list" style="float:right;margin-top:5px;">
+				    		<c:choose>
+					    		<c:when test="${boardType eq 'notice' }">
+						    		<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '' }">active</c:if>">전체</a>
+					    		</c:when>
+					    		<c:when test="${boardType eq 'menu' }">
+					    			<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '' }">active</c:if>">전체</a>
+					    			<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=서빙고온누리" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '서빙고온누리' }">active</c:if>">서빙고온누리</a>
+					    		</c:when>
+					    		<c:when test="${boardType eq 'restaurant' }">
+					    			<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '' }">active</c:if>">전체</a>
+						    		<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=식권가능" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '식권가능' }">active</c:if>">식권가능</a>
+					    			<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=식권불가능" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '식권불가능' }">active</c:if>">식권불가</a>
+					    		</c:when>
+					    		<c:when test="${boardType eq 'humor' }">
+						    		<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '' }">active</c:if>">전체</a>
+						    		<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=유머" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '유머' }">active</c:if>">유머</a>
+					    			<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=감동" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '감동' }">active</c:if>">감동</a>
+					    		</c:when>
+					    		<c:when test="${boardType eq 'free' }">
+					    			<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '' }">active</c:if>">전체</a>
+						    		<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=잡담" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '잡담' }">active</c:if>">잡담</a>
+					    			<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum=1&boardCate=문의" type="button" class="btn btn-outline-primary mb-2 <c:if test="${board_cate eq '문의' }">active</c:if>">문의</a>
+					    		</c:when>
+					    		<c:otherwise>
+					    		</c:otherwise>
+					    	</c:choose>
+				    	</div>
 	                </div>
 	                <!-- end card-header -->
 		    			 <div class="card-body">
@@ -143,7 +176,7 @@ img {
 				                            <tr>
 			                                    <td>
 			                                        <div class="blog_list" style="width:100%; height:100%;">
-			                                        	<span style="width:80%;float:left;padding-right:10px;<c:if test="${inBoard.memberVO.member_id == 1}">color:red;</c:if>"><h4>${inBoard.board_tit }</h4></span> 
+			                                        	<span style="width:80%;float:left;padding-right:10px;<c:if test="${inBoard.memberVO.member_id == 1}">color:red;</c:if>"><c:if test="${inBoard.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${inBoard.board_cate}]</span><br></c:if><h4>${inBoard.board_tit }</h4></span> 
 			                                        	<span style="width:50px;float:right;">
 				                                        	<span style="line-height:2;">
 				                                        	<c:choose>
@@ -285,8 +318,9 @@ img {
 									  	<c:forEach var="list" items="${list}">
 										  	<tr>
 										      <td <c:if test="${list.board_id eq inBoard.board_id }">style="background-color:#c3e6cb;"</c:if>>
-										      	<a href="${pageContext.request.contextPath}/board/${boardType}.do?bid=${list.board_id}&pageNum=${pageNum}">
+										      	<a href="${pageContext.request.contextPath}/board/${boardType}.do?bid=${list.board_id}&pageNum=${pageNum}&boardCate=${board_cate}">
 											     	<div class="blog_list tit">
+											     		<c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if> 
 			                                        	<span class="tit_span" <c:if test="${list.memberVO.member_id == 1}">style="color:red;"</c:if>>${list.board_tit}</span> 
 			                                        	<span class="view_span">
 			                                        		<span class="like_icon">
@@ -346,7 +380,7 @@ img {
 		       data : {boardId : boardId},
 		       success: function(rtn) {
 		    	  alert("삭제가 완료되었습니다.");
-	        	  window.location.href = '${pageContext.request.contextPath}/board/${boardType}.do?pageNum=${pageNum}';
+	        	  window.location.href = '${pageContext.request.contextPath}/board/${boardType}.do?pageNum=${pageNum}&boardCate=${board_cate}';
 		       },
 		       error:function(request,status,error){
 		           alert("에러발생. 관리자에게 문의하세요.");
@@ -388,12 +422,12 @@ img {
 
 		if (nPageCount > nPageRange) {
 			retVal += '<li class="paginate_button page-item previous" id="dataTable_previous">';
-			retVal += '<a href="${pageContext.request.contextPath}/board/${boardType}.do" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link"><<</a></li>';
+			retVal += '<a href="${pageContext.request.contextPath}/board/${boardType}.do?boardCate=${board_cate}" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link"><<</a></li>';
 		}
 		
 		if (nPrev > 0) {
 			retVal += '<li class="paginate_button page-item previous" id="dataTable_previous">';
-			retVal += '<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum='+(nPrev+3)+'" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link"><</a></li>';
+			retVal += '<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum='+(nPrev+3)+'&boardCate=${board_cate}" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link"><</a></li>';
 		} else {
 			retVal = "&nbsp;";
 		}
@@ -403,11 +437,11 @@ img {
 		do {
 			if (pCurPage == nCur) {
 				retVal += '<li class="paginate_button page-item active">';
-				retVal += 	'<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum='+nCur+'" aria-controls="dataTable" data-dt-idx="'+nCur+'" tabindex="0" class="page-link">'+nCur+'</a>';
+				retVal += 	'<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum='+nCur+'&boardCate=${board_cate}" aria-controls="dataTable" data-dt-idx="'+nCur+'" tabindex="0" class="page-link">'+nCur+'</a>';
 				retVal += '</li>';
 			} else {
 				retVal += '<li class="paginate_button page-item">';
-				retVal += 	'<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum='+nCur+'" aria-controls="dataTable" data-dt-idx="'+nCur+'" tabindex="0" class="page-link">'+nCur+'</a>';
+				retVal += 	'<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum='+nCur+'&boardCate=${board_cate}" aria-controls="dataTable" data-dt-idx="'+nCur+'" tabindex="0" class="page-link">'+nCur+'</a>';
 				retVal += '</li>';
 			}
 
@@ -417,10 +451,10 @@ img {
 
 		if (nNext <= nPageCount) {
 			retVal += '<li class="paginate_button page-item previous" id="dataTable_previous">';
-			retVal += '<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum='+nNext+'" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">></a></li>';
+			retVal += '<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum='+nNext+'&boardCate=${board_cate}" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">></a></li>';
 			
 			retVal += '<li class="paginate_button page-item previous" id="dataTable_previous">';
-			retVal += '<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum='+nPageCount+'" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">>></a></li>';
+			retVal += '<a href="${pageContext.request.contextPath}/board/${boardType}.do?pageNum='+nPageCount+'&boardCate=${board_cate}" aria-controls="dataTable" data-dt-idx="0" tabindex="0" class="page-link">>></a></li>';
 
 		} else {
 			

@@ -17,7 +17,7 @@ public interface BoardService {
 	
 	public List<BoardVO> selectBoards(HashMap<String, Object> map) throws Exception;
 
-	public Integer selectBoardCnt(String board_type) throws Exception;
+	public Integer selectBoardCnt(HashMap<String, Object> map) throws Exception;
 	
 	public void updateBoard(BoardVO vo);
 	

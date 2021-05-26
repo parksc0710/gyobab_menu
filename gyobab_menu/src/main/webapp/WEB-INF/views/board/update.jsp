@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>     
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <security:authentication property="principal.member_id" var="memberId"/>
 <script src="https://cdn.ckeditor.com/ckeditor5/27.1.0/classic/ckeditor.js"></script>
 <style>
@@ -17,7 +19,34 @@
 	    </div>
 	
 	    <div class="card-body">
-	
+	    
+			<div class="form-group">
+           		<label for="exampleInputEmail1"><b>분류</b></label>
+           		<select class="form-control" id="cateSelect">
+           			<c:choose>
+			    		<c:when test="${boardType eq 'notice' }">
+			    			<option <c:if test="${boardCate eq '공지' }">selected</c:if>>공지</option>
+			    		</c:when>
+			    		<c:when test="${boardType eq 'menu' }">
+			    			<option <c:if test="${boardCate eq '서빙고온누리' }">selected</c:if>>서빙고온누리</option>
+			    		</c:when>
+			    		<c:when test="${boardType eq 'restaurant' }">
+				    		<option <c:if test="${boardCate eq '식권가능' }">selected</c:if>>식권가능</option>
+			    			<option <c:if test="${boardCate eq '식권불가능' }">selected</c:if>>식권불가능</option>
+			    		</c:when>
+			    		<c:when test="${boardType eq 'humor' }">
+			    			<option <c:if test="${boardCate eq '유머' }">selected</c:if>>유머</option>
+			    			<option <c:if test="${boardCate eq '감동' }">selected</c:if>>감동</option>
+			    		</c:when>
+			    		<c:when test="${boardType eq 'free' }">
+			    			<option <c:if test="${boardCate eq '잡담' }">selected</c:if>>잡담</option>
+			    			<option <c:if test="${boardCate eq '문의' }">selected</c:if>>문의</option>
+			    		</c:when>
+			    		<c:otherwise>
+			    		</c:otherwise>
+			    	</c:choose>
+                </select>
+            </div><br>
             <div class="form-group">
                 <label for="exampleInputEmail1"><b>제목</b></label>
                 <input type="text" class="form-control" id="boardTit" value="${inBoard.board_tit }">
@@ -56,6 +85,7 @@
 	$("#insertBtn").click(function() {
 		
 		var boardTit = $("#boardTit").val();
+		var boardCate = $("#cateSelect option:selected").val();
 		var boardId = "${inBoard.board_id}";
 		var boardTxt = "";
 		
@@ -70,7 +100,7 @@
 		       dataType: "text", 
 		       contentType: "application/x-www-form-urlencoded;charset=utf-8",
 		       url: "${pageContext.request.contextPath}/board/update.do",
-		       data : {boardTit : boardTit, boardTxt : boardTxt, boardId : boardId},
+		       data : {boardTit : boardTit, boardTxt : boardTxt, boardId : boardId, boardCate : boardCate},
 		       success: function(rtn) {
 	        	  window.location.href = '${pageContext.request.contextPath}/board/${boardType}.do?bid='+boardId+'&pageNum=${pageNum}';
 		       },

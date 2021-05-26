@@ -69,7 +69,8 @@ public class BoardController {
 	
 	@RequestMapping(value = "/{boardType}", method = RequestMethod.GET)
 	public String main(Model model,
-			@PathVariable("boardType") String boardType, 
+			@PathVariable("boardType") String boardType,
+			@RequestParam(value = "boardCate", required = false, defaultValue = "") String boardCate,
 			@RequestParam(value = "pageSize", required = false, defaultValue = "10") int pageSize,
 			@RequestParam(value = "pageNum", required = true, defaultValue = "1") int pageNum,
 			@RequestParam(value = "bid", required = false, defaultValue = "0") int board_id
@@ -81,10 +82,14 @@ public class BoardController {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("board_type", boardType);
+		map.put("board_cate", boardCate);
 		map.put("cri", cri);
 		
 		// 총 갯수 구하기
-		int totalCnt = boardService.selectBoardCnt(boardType);
+		HashMap<String, Object> cntMap = new HashMap<String, Object>();
+		cntMap.put("board_type", boardType);
+		cntMap.put("board_cate", boardCate);
+		int totalCnt = boardService.selectBoardCnt(cntMap);
 		
 		// 게시판 리스트 구하기
 		List<BoardVO> list = boardService.selectBoards(map);
@@ -128,6 +133,7 @@ public class BoardController {
 		model.addAttribute("totalCnt", totalCnt);
 		
 		model.addAttribute("board_id", board_id);
+		model.addAttribute("board_cate", boardCate);
 		
 		model.addAttribute("inBoard", inBoard);
 		model.addAttribute("inBoardLike", inBoardLike);
@@ -155,7 +161,8 @@ public class BoardController {
 	@RequestMapping(value = "/insert", method = RequestMethod.POST)
 	@ResponseBody
 	public String insert(Model model, HttpServletRequest req,
-			@RequestParam(value = "boardType", required = true) String boardType,				
+			@RequestParam(value = "boardType", required = true) String boardType,
+			@RequestParam(value = "boardCate", required = true) String boardCate,
 			@RequestParam(value = "boardTit", required = true) String boardTit,
 			@RequestParam(value = "boardTxt", required = true) String boardTxt,
 			@RequestParam(value = "boardMember", required = true) int boardMember
@@ -171,6 +178,7 @@ public class BoardController {
 		MemberVO tmpMember = memberService.selectMemberById(boardMember);
 		BoardVO tmp = new BoardVO();
 		tmp.setBoard_type(boardType);
+		tmp.setBoard_cate(boardCate);
 		tmp.setBoard_tit(boardTit);
 		tmp.setBoard_txt(boardTxt);
 		tmp.setMemberVO(tmpMember);
@@ -193,9 +201,11 @@ public class BoardController {
 		if(nowUser.getMember_id() == inBoard.getMemberVO().getMember_id()) {
 			String tmp = inBoard.getBoard_txt().replace("<br/>", "\r\n");
 			inBoard.setBoard_txt(tmp);
+			String boardCate = inBoard.getBoard_cate();
 			model.addAttribute("inBoard", inBoard);
 			model.addAttribute("pageNum", pageNum);
 			model.addAttribute("boardType", boardType);
+			model.addAttribute("boardCate", boardCate);
 			return "board/update";
 		} else {
 			return "board/main";
@@ -213,10 +223,12 @@ public class BoardController {
 		
 		String tmp = inBoard.getBoard_txt().replace("<br/>", "\r\n");
 		inBoard.setBoard_txt(tmp);
+		String boardCate = inBoard.getBoard_cate();
 		
 		model.addAttribute("inBoard", inBoard);
 		model.addAttribute("pageNum", pageNum);
 		model.addAttribute("boardType", boardType);
+		model.addAttribute("boardCate", boardCate);
 		
 		return "board/update";
 	}
@@ -228,7 +240,8 @@ public class BoardController {
 	public String update(Model model,
 			@RequestParam(value = "boardTit", required = true) String boardTit,
 			@RequestParam(value = "boardTxt", required = true) String boardTxt,
-			@RequestParam(value = "boardId", required = true) int boardId
+			@RequestParam(value = "boardId", required = true) int boardId,
+			@RequestParam(value = "boardCate", required = true) String boardCate
 			) throws Exception {
 		
 		String rtn = "";
@@ -236,6 +249,7 @@ public class BoardController {
 		BoardVO tmp = boardService.selectBoardById(boardId);
 		tmp.setBoard_tit(boardTit);
 		tmp.setBoard_txt(boardTxt);
+		tmp.setBoard_cate(boardCate);
 		boardService.updateBoard(tmp);
 		
 		return rtn;
