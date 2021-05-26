@@ -16,8 +16,8 @@
 						<h4><i class="fas fa-user"></i> <b>마이페이지</b></h4>
 				        <span class="pull-right">
 					        <a href="${pageContext.request.contextPath}/user/main.do" type="button" class="btn btn-outline-primary mb-2">내 정보</a>
-				    		<a href="${pageContext.request.contextPath}/user/board.do" type="button" class="btn btn-outline-primary mb-2 active">작성 글</a>
-			    			<a href="${pageContext.request.contextPath}/user/comment.do" type="button" class="btn btn-outline-primary mb-2">작성 댓글</a>
+				    		<a href="${pageContext.request.contextPath}/user/board.do" type="button" class="btn btn-outline-primary mb-2">작성 글</a>
+			    			<a href="${pageContext.request.contextPath}/user/comment.do" type="button" class="btn btn-outline-primary mb-2 active">작성 댓글</a>
 				       	</span>
 				    </div>
 				   
