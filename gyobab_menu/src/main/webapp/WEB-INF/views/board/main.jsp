@@ -227,7 +227,7 @@ img {
 								                            	<security:authentication property="principal.grantVO.grant_name" var="memberGrant"/>
 								                            </security:authorize>
 			                                        		
-			                                        		<div class="form-group beforeSpan comment_list <c:if test="${item.board_comment_depth == 1}">reply</c:if>">
+			                                        		<div class="form-group beforeSpan comment_list <c:if test="${item.board_comment_depth == 1}">reply</c:if>" id="comment${item.board_comment_id}">
 					                                        	<div class="form-group beforeSpan comment_tit <c:if test="${item.memberVO.member_id == memberId}">my_comment</c:if> <c:if test="${item.memberVO.member_id == inBoard.memberVO.member_id}">writer_comment</c:if>" style="<c:if test="${item.memberVO.member_id == 1}">color:red;</c:if>"> 
 					                                        		<c:choose>
 					                                        			<c:when test="${item.memberVO.member_name eq null }">
@@ -691,4 +691,27 @@ img {
 
         element.appendChild( anchor );
     } );
+   
+   $(window).load(function(){
+   		checkBnr(window.location.href);
+	});
+   
+   
+   function checkBnr(inUrl) {
+		
+		if(!inUrl.match("#")) {
+			console.log("not included commentId");
+			return false;
+		}
+		
+		var commentId = inUrl.substring(inUrl.indexOf("#") + 1 , inUrl.length).split("_")[1];
+		
+		var targetId = "comment"+commentId;
+		
+		var navHeight = $("nav.navbar-custom").height();
+		var commentTop = $("#"+targetId).offset().top;
+		var moveTop = commentTop - navHeight;
+		
+		$( 'html, body' ).animate( { scrollTop : moveTop }, 400 );
+	}
 </script>

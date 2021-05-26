@@ -57,5 +57,17 @@ public class BoardDAOImpl implements BoardDAO {
 		return cnt;
 	}
 
+	@Override
+	public List<BoardVO> selectBoardsByMember(HashMap<String, Object> map) throws Exception {
+		List<BoardVO> list = sqlSession.selectList(namespace + ".selectBoardsByMember", map);
+		return list;
+	}
+
+	@Override
+	public Integer selectBoardCntByMember(HashMap<String, Object> map) throws Exception {
+		int cnt = sqlSession.selectOne(namespace + ".selectBoardCntByMember", map);
+		return cnt;
+	}
+
 
 }

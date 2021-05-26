@@ -74,7 +74,7 @@
 	                    
 	                    <a href="${pageContext.request.contextPath}/user/main.do" class="dropdown-item notify-item">
 	                        <i class="fas fa-user"></i>
-	                        <span>내 정보</span>
+	                        <span>마이페이지</span>
 	                    </a>
 	
 	                    <a href="${pageContext.request.contextPath}/logout" class="dropdown-item notify-item">
@@ -103,7 +103,7 @@
 	
 	                    <a href="${pageContext.request.contextPath}/user/main.do" class="dropdown-item notify-item">
 	                        <i class="fas fa-user"></i>
-	                        <span>내 정보</span>
+	                        <span>마이페이지</span>
 	                    </a>
 	
 	                    <a href="${pageContext.request.contextPath}/logout" class="dropdown-item notify-item">
@@ -174,7 +174,7 @@
                 <li class="submenu">
                     <a class='<c:if test="${fn:contains(nowUrl , 'user/')}">active</c:if>' href="${pageContext.request.contextPath}/user/main.do">
                         <i class="fa-2x mr-2 fas fa-user"></i>
-                        <span> 내 정보 </span>
+                        <span> 마이페이지 </span>
                     </a>
                 </li>
                 </security:authorize>

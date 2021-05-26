@@ -21,6 +21,8 @@
 	
   	<resultMap type="com.park.gyobab.domain.BoardVO" id="BoardVO">
 		<result column="board_id" property="board_id" />
+		<result column="board_type" property="board_type" />
+		<result column="board_tit" property="board_tit" />
 		<result column="act_flg" property="act_flg" />
 		<result column="del_flg" property="del_flg" />
 	</resultMap>
@@ -125,6 +127,32 @@
 		]]>
   	</select>
   	
+  	<select id="selectBoardCommentsByMember" parameterType="hashmap" resultMap="BoardCommentVO">
+  		<![CDATA[
+	  		select * from
+			(select A.*, @ROWNUM := @ROWNUM + 1 AS `ROWNUM` from
+			 (SELECT 
+	  			`board_comment`.`board_comment_id`,
+			    `board_comment`.`board_comment_parent`,
+			    a.`board_id`,
+			    a.`board_type`,
+			    a.`board_tit`,
+			    `board_comment`.`board_comment_txt`,
+			    b.`member_id`,
+			    b.`member_name`
+			FROM `gyobab`.`board_comment`
+			JOIN (SELECT @rownum:=0) TMP
+			inner join `gyobab`.`board` a on a.`board_id` = `board_comment`.`board_comment_board`
+			left join `gyobab`.`member` b on b.`member_id` = `board_comment`.`board_comment_member`
+			where `board_comment`.`board_comment_member` = #{member_id} and `board_comment`.`act_flg` = 1 and `board_comment`.`del_flg` = 0
+			order by `board_comment`.`board_comment_id` desc
+			) A
+		   ) tmp
+		where `ROWNUM` >= ((#{cri.pageNum}-1) * #{cri.amount} + 1) and `ROWNUM` <= (#{cri.pageNum} * #{cri.amount})
+
+		]]>
+  	</select>
+  	
   	<update id="deleteBoardComment" parameterType="int">
   		update `board_comment` set `act_flg` = 0, `del_flg` = 1, `update_date` = NOW() where `board_comment`.`board_comment_id` = #{board_comment_id}
   	</update>
@@ -177,6 +205,12 @@
   		select count(`board_comment`.`board_comment_id`) 
   		from `board_comment` 
   		where `board_comment`.`board_comment_parent` = #{board_comment_parent} and `board_comment`.`view_flg` = 0;
+  	</select>
+  	
+  	<select id="selectBoardCommentCntByMember" resultType="Integer" parameterType="int" >
+  		select count(`board_comment`.`board_comment_id`) 
+  		from `board_comment` 
+  		where `board_comment`.`board_comment_member` = #{board_comment_member} and `act_flg` = 1 and `del_flg` = 0;
   	</select>
   	
   	<select id="deleteBoardCommentWithParentAfter" resultType="Integer" parameterType="int" >

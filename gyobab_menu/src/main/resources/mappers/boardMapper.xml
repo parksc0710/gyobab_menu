@@ -64,6 +64,34 @@
 		]]>
   	</select>
   	
+  	<select id="selectBoardsByMember" parameterType="hashmap" resultMap="BoardVO">
+  		<![CDATA[
+	  		select * from
+			(select A.*, @ROWNUM := @ROWNUM + 1 AS `ROWNUM` from
+			 (select 
+					`board`.`board_id`,
+					`board`.`board_type`,
+					`board`.`board_cate`,
+					`board`.`board_tit`,					
+					`member`.`member_id`,
+					`board`.`board_thumb`,
+					`board`.`board_view`,
+					`board`.`create_date`,
+					`board`.`update_date`,
+					`member`.`member_name`
+				FROM `gyobab`.`board`  
+				INNER JOIN `gyobab`.`member`
+				ON `board`.`board_member` = `member`.`member_id`
+			    JOIN (SELECT @rownum:=0) TMP
+			    WHERE `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `member`.`member_id` = #{member_id}
+			    and `member`.`act_flg` = 1 and `member`.`del_flg` = 0
+				ORDER BY `board`.`board_type` asc, `board`.`board_id` desc
+			    ) A
+			) tmp
+			where `ROWNUM` >= ((#{cri.pageNum}-1) * #{cri.amount} + 1) and `ROWNUM` <= (#{cri.pageNum} * #{cri.amount})
+		]]>
+  	</select>
+  	
   	<select id="selectBoardCnt" parameterType="hashmap" resultType="Integer">
   		select count(`board`.`board_id`) 
   		from `board` 
@@ -71,6 +99,15 @@
 		ON `board`.`board_member` = `member`.`member_id`
   		where `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = #{board_type} 
   		and `board`.`board_cate` like CONCAT('%',#{board_cate},'%')  
+  		and `member`.`act_flg` = 1 and `member`.`del_flg` = 0;
+  	</select>
+  	
+  	<select id="selectBoardCntByMember" parameterType="hashmap" resultType="Integer">
+  		select count(`board`.`board_id`) 
+  		from `board` 
+  		INNER JOIN `gyobab`.`member`
+		ON `board`.`board_member` = `member`.`member_id`
+  		where `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `member`.`member_id` = #{member_id}   
   		and `member`.`act_flg` = 1 and `member`.`del_flg` = 0;
   	</select>
   	

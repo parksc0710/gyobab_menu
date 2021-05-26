@@ -55,5 +55,17 @@ public class BoardServiceImpl implements BoardService {
 		int cnt = dao.selectBoardCnt(map); 
 		return cnt;
 	}
+
+	@Override
+	public List<BoardVO> selectBoardsByMember(HashMap<String, Object> map) throws Exception {
+		List<BoardVO> list = dao.selectBoardsByMember(map);
+		return list;
+	}
+
+	@Override
+	public Integer selectBoardCntByMember(HashMap<String, Object> map) throws Exception {
+		int cnt = dao.selectBoardCntByMember(map); 
+		return cnt;
+	}
 	
 }

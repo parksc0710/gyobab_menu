@@ -14,6 +14,8 @@ public interface BoardCommentService {
 	
 	public List<BoardCommentVO> selectBoardComments(int board_comment_board) throws Exception;
 	
+	public List<BoardCommentVO> selectBoardCommentsByMember(HashMap<String, Object> map) throws Exception;
+	
 	public void deleteBoardComment(int board_comment_id);
 	
 	public void deleteBoardCommentWithParent(int board_comment_id);
@@ -30,4 +32,5 @@ public interface BoardCommentService {
 	
 	public Integer selectBoardCommentCntWithCommentParentAfter(int board_comment_parent) throws Exception;
 
+	public Integer selectBoardCommentCntByMember(int board_comment_member) throws Exception;
 }

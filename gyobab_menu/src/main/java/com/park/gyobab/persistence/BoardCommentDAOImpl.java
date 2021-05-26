@@ -79,4 +79,16 @@ public class BoardCommentDAOImpl implements BoardCommentDAO {
 		return cnt;
 	}
 
+	@Override
+	public List<BoardCommentVO> selectBoardCommentsByMember(HashMap<String, Object> map) throws Exception {
+		List<BoardCommentVO> list = sqlSession.selectList(namespace + ".selectBoardCommentsByMember", map);
+		return list;
+	}
+
+	@Override
+	public Integer selectBoardCommentCntByMember(int board_comment_member) throws Exception {
+		int cnt = sqlSession.selectOne(namespace + ".selectBoardCommentCntByMember", board_comment_member);
+		return cnt;
+	}
+
 }
