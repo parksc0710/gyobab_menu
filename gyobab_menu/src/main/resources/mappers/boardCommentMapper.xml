@@ -145,6 +145,7 @@
 			inner join `gyobab`.`board` a on a.`board_id` = `board_comment`.`board_comment_board`
 			left join `gyobab`.`member` b on b.`member_id` = `board_comment`.`board_comment_member`
 			where `board_comment`.`board_comment_member` = #{member_id} and `board_comment`.`act_flg` = 1 and `board_comment`.`del_flg` = 0
+			and a.`act_flg` = 1 and a.`del_flg` = 0
 			order by `board_comment`.`board_comment_id` desc
 			) A
 		   ) tmp
@@ -210,7 +211,9 @@
   	<select id="selectBoardCommentCntByMember" resultType="Integer" parameterType="int" >
   		select count(`board_comment`.`board_comment_id`) 
   		from `board_comment` 
-  		where `board_comment`.`board_comment_member` = #{board_comment_member} and `act_flg` = 1 and `del_flg` = 0;
+  		inner join `gyobab`.`board` a on a.`board_id` = `board_comment`.`board_comment_board`
+  		where `board_comment`.`board_comment_member` = #{board_comment_member} and `board_comment`.`act_flg` = 1 and `board_comment`.`del_flg` = 0
+  		and a.`act_flg` = 1 and a.`del_flg` = 0;
   	</select>
   	
   	<select id="deleteBoardCommentWithParentAfter" resultType="Integer" parameterType="int" >
