@@ -75,12 +75,12 @@ img {
 	                	<div class="type_list" style="float:left;">
 		                    <c:choose>
 					    		<c:when test="${boardType eq 'notice' }">
+							        <a href="${pageContext.request.contextPath}/board/notice.do"><h5><i class="fa-2x mr-2 far fa-check-circle" style="font-size:20px;"></i><b>공지사항</b></h5></a>
 					    			<span class="pull-right">
 						    			<security:authorize ifAnyGranted="ROLE_OPERATOR">
 				                    		<a href="${pageContext.request.contextPath}/board/insert.do?boardType=${boardType}" class="btn btn-primary btn-sm"><i class="fas fa-plus" aria-hidden="true"></i> 새 글 등록하기</a>
 				                    	</security:authorize>
 							       	</span>
-							        <a href="${pageContext.request.contextPath}/board/notice.do"><h5><i class="fa-2x mr-2 far fa-check-circle" style="font-size:20px;"></i><b>공지사항</b></h5></a>
 					    		</c:when>
 					    		<c:when test="${boardType eq 'menu' }">
 					    			<span class="pull-right">
