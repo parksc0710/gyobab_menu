@@ -18,6 +18,16 @@
 	<%@ include file="/WEB-INF/views/decorators/commonDecorator/commonInclude.jsp" %>
 	<!-- //공통 추가 -->
 	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-RG4WG5H8X6"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', 'G-RG4WG5H8X6');
+	</script>
+	
 	<c:set var = "nowUrl" value="${pageContext.request.requestURL}" />
 	
 	<c:choose>
