@@ -165,6 +165,12 @@
 			board_id = #{board_id}
   	</update>
   	
+  	<update id="updateViewCnt" parameterType="int" >
+  		UPDATE `board`
+			set board_view = (board_view + 1)
+		WHERE
+			board_id = #{board_id}
+  	</update>
   	
   </mapper>
  

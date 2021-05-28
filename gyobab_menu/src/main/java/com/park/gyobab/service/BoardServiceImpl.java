@@ -67,5 +67,10 @@ public class BoardServiceImpl implements BoardService {
 		int cnt = dao.selectBoardCntByMember(map); 
 		return cnt;
 	}
+
+	@Override
+	public void updateViewCnt(int board_id) {
+		dao.updateViewCnt(board_id);		
+	}
 	
 }

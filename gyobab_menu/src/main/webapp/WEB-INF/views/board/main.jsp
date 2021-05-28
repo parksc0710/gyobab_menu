@@ -21,7 +21,9 @@ a {
 img {
 	max-width: 100%;
 }
-
+em {
+	font-size: 14px;
+}
 </style>
 
 <head>
@@ -179,20 +181,21 @@ img {
 			                                        	<span style="width:80%;float:left;padding-right:10px;<c:if test="${inBoard.memberVO.member_id == 1}">color:red;</c:if>"><c:if test="${inBoard.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${inBoard.board_cate}]</span><br></c:if><h4>${inBoard.board_tit }</h4></span> 
 			                                        	<span style="width:50px;float:right;">
 				                                        	<span style="line-height:2;">
+				                                        	<em class="fa-2x mr-2 far fa-eye" style="font-size:16px;"></em><span style="float:right;" class="like_cnt">${inBoard.board_view }</span>
 				                                        	<c:choose>
 					                                        	<c:when test="${contains}">
 					                                        		<a href="javascript:deleteLike('${inBoard.board_id }', 'like${inBoard.board_id }')" style="color:red;" id="like${inBoard.board_id }">
-					                                        			<em class="fa-2x mr-2 fas fa-heart" style="font-size:20px;"></em>
+					                                        			<em class="fa-2x mr-2 fas fa-heart" style="font-size:16px;"></em>
 					                                        		</a>
 					                                        	</c:when>
 					                                        	<c:otherwise>
 					                                        		<a href="javascript:insertLike('${inBoard.board_id }', 'like${inBoard.board_id }')" style="color:red;" id="like${inBoard.board_id }">
-					                                        			<em class="fa-2x mr-2 far fa-heart" style="font-size:20px;"></em>
+					                                        			<em class="fa-2x mr-2 far fa-heart" style="font-size:16px;"></em>
 					                                        		</a>
 					                                        	</c:otherwise>
 				                                        	</c:choose>
 				                                        	</span>
-				                                        	<span style="float:right;" class="like_cnt"><c:out value="${fn:length(inBoardLike)}"/></span>
+				                                        	<span style="float:right;line-height: 2;" class="like_cnt"><c:out value="${fn:length(inBoardLike)}"/></span>
 			                                        	</span>
 			                                        </div>
 			                                        <br>
@@ -323,14 +326,15 @@ img {
 											     		<c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if> 
 			                                        	<span class="tit_span" <c:if test="${list.memberVO.member_id == 1}">style="color:red;"</c:if>>${list.board_tit}</span> 
 			                                        	<span class="view_span">
-			                                        		<span class="like_icon">
-			                                        			<em class="fa-2x mr-2 far fa-heart"></em>
+			                                        		<span class="like_icon" style="float:right;">
+			                                        			<em class="fa-2x mr-2 far fa-eye" style="font-size:12px;"></em>${list.board_view }
 				                                        	</span>
-				                                        	<span class="like_cnt">${likes[list]}</span>
-				                                        	<span class="like_icon">
-			                                        			<em class="fa-2x mr-2 fas fa-comments"></em>
+			                                        		<span class="like_icon" style="float:right;">
+			                                        			<em class="fa-2x mr-2 far fa-heart"style="font-size:12px;"></em>${likes[list]}
 				                                        	</span>
-				                                        	<span class="like_cnt">${comments[list]}</span>
+				                                        	<span class="like_icon" style="float:right;">
+			                                        			<em class="fa-2x mr-2 fas fa-comments"style="font-size:12px;"></em>${comments[list]}
+				                                        	</span>
 			                                        	</span>
 			                                        </div>
 			                                        <div class="blog_list sub">

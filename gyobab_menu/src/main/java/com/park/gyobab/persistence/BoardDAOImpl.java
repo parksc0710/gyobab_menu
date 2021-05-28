@@ -69,5 +69,10 @@ public class BoardDAOImpl implements BoardDAO {
 		return cnt;
 	}
 
+	@Override
+	public void updateViewCnt(int board_id) {
+		sqlSession.update(namespace + ".updateViewCnt", board_id); 		
+	}
+
 
 }

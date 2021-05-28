@@ -25,4 +25,6 @@ public interface BoardDAO {
 	
 	public void updateBoard(BoardVO vo);
 	
+	public void updateViewCnt(int board_id);
+	
 }

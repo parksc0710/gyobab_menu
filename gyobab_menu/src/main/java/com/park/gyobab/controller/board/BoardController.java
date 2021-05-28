@@ -114,6 +114,7 @@ public class BoardController {
 		
 		// bid 있으면 DB 조회
 		if(board_id > 0) {
+			boardService.updateViewCnt(board_id);
 			inBoard = boardService.selectBoardById(board_id);
 			inBoardLike = boardLikeService.selectBoardLikes(board_id);
 			inBoardComment = boardCommentService.selectBoardComments(board_id);
@@ -123,6 +124,7 @@ public class BoardController {
 		if(boardType.equalsIgnoreCase(BOARD_TYPE_MENU) && board_id == 0 && pageNum == 1) {
 			inBoard = boardService.selectTop1Board(boardType);
 			board_id = inBoard.getBoard_id();
+			boardService.updateViewCnt(board_id);
 			inBoardLike = boardLikeService.selectBoardLikes(board_id);
 			inBoardComment = boardCommentService.selectBoardComments(board_id);
 		}

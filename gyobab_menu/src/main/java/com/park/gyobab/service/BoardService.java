@@ -25,4 +25,5 @@ public interface BoardService {
 	
 	public void updateBoard(BoardVO vo);
 	
+	public void updateViewCnt(int board_id);
 }
