@@ -56,7 +56,7 @@
 									  	</c:choose>
 							  			</td>
 							  			<td>
-							  				<a href="${pageContext.request.contextPath}/board/${list.board_type}.do?bid=${list.board_id}" target="_blank">${list.board_tit}</a>
+							  				<a href="${pageContext.request.contextPath}/board/${list.board_type}.do?bid=${list.board_id}&pageNum=0" target="_blank">${list.board_tit}</a>
 							  			</td>
 							  			<td>
 							  				${likes[list]}

@@ -73,4 +73,9 @@ public class BoardServiceImpl implements BoardService {
 		dao.updateViewCnt(board_id);		
 	}
 	
+	@Override
+	public HashMap<String, Object> selectBoardByIdWithOutPage(HashMap<String, Object> parammap) throws Exception {
+		HashMap<String, Object> map = dao.selectBoardByIdWithOutPage(parammap); 
+		return map;
+	}
 }

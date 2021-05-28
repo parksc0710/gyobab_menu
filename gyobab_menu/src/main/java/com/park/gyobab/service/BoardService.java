@@ -13,6 +13,8 @@ public interface BoardService {
 	
 	public BoardVO selectBoardById(int board_id) throws Exception;
 	
+	public HashMap<String, Object> selectBoardByIdWithOutPage(HashMap<String, Object> map) throws Exception;
+	
 	public BoardVO selectTop1Board(String board_type) throws Exception;
 	
 	public List<BoardVO> selectBoards(HashMap<String, Object> map) throws Exception;

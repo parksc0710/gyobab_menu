@@ -74,5 +74,11 @@ public class BoardDAOImpl implements BoardDAO {
 		sqlSession.update(namespace + ".updateViewCnt", board_id); 		
 	}
 
+	@Override
+	public HashMap<String, Object> selectBoardByIdWithOutPage(HashMap<String, Object> parammap) throws Exception {
+		HashMap<String, Object> map = sqlSession.selectOne(namespace + ".selectBoardByIdWithOutPage", parammap);
+		return map;
+	}
+
 
 }

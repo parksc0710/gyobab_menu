@@ -35,10 +35,10 @@
 							  	<c:forEach var="list" items="${list}">
 							  		<tr>
 							  			<td>
-							  				<a href="${pageContext.request.contextPath}/board/${list.boardVO.board_type}.do?bid=${list.boardVO.board_id}" target="_blank">${list.boardVO.board_tit}</a>
+							  				<a href="${pageContext.request.contextPath}/board/${list.boardVO.board_type}.do?bid=${list.boardVO.board_id}&pageNum=0" target="_blank">${list.boardVO.board_tit}</a>
 							  			</td>
 							  			<td>
-							  				<a href="${pageContext.request.contextPath}/board/${list.boardVO.board_type}.do?bid=${list.boardVO.board_id}#comment_${list.board_comment_id}" target="_blank">${list.board_comment_txt}</a>
+							  				<a href="${pageContext.request.contextPath}/board/${list.boardVO.board_type}.do?bid=${list.boardVO.board_id}&pageNum=0#comment_${list.board_comment_id}" target="_blank">${list.board_comment_txt}</a>
 							  			</td>
 							  		</tr>
 							    </c:forEach>

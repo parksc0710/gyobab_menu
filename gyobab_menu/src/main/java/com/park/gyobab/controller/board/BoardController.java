@@ -78,6 +78,17 @@ public class BoardController {
 		
 		boardType = checkBoardType(boardType);
 		
+		if(pageNum == 0) {
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("board_type", boardType);
+			map.put("board_cate", boardCate);
+			map.put("board_id", board_id);
+			
+			HashMap<String, Object> tmpMap = boardService.selectBoardByIdWithOutPage(map);
+			int rownum = Integer.parseInt(String.valueOf(tmpMap.get("ROWNUM")).split("\\.")[0]);
+			pageNum = (rownum/10)+1;
+		}
+		
 		Criteria cri = new Criteria(pageNum, pageSize);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -128,7 +139,6 @@ public class BoardController {
 			inBoardLike = boardLikeService.selectBoardLikes(board_id);
 			inBoardComment = boardCommentService.selectBoardComments(board_id);
 		}
-		
 		
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("pageNum", pageNum);

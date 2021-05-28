@@ -151,6 +151,35 @@
 		LIMIT 1
   	</select>
   	
+  	<select id="selectBoardByIdWithOutPage" parameterType="hashmap" resultType="java.util.HashMap">
+  		<![CDATA[
+	  		select * from
+			(select A.*, @ROWNUM := @ROWNUM + 1 AS `ROWNUM` from
+			 (select 
+					`board`.`board_id`,
+					`board`.`board_type`,
+					`board`.`board_cate`,
+					`board`.`board_tit`,					
+					`member`.`member_id`,
+					`board`.`board_thumb`,
+					`board`.`board_view`,
+					`board`.`create_date`,
+					`board`.`update_date`,
+					`member`.`member_name`
+				FROM `gyobab`.`board`  
+				INNER JOIN `gyobab`.`member`
+				ON `board`.`board_member` = `member`.`member_id`
+			    JOIN (SELECT @rownum:=0) TMP
+			    WHERE `board`.`act_flg` = 1 and `board`.`del_flg` = 0 and `board`.`board_type` = #{board_type}
+			    and `board`.`board_cate` like CONCAT('%',#{board_cate},'%')
+			    and `member`.`act_flg` = 1 and `member`.`del_flg` = 0
+				ORDER BY `board_id` desc
+			    ) A
+			) tmp
+			where tmp.`board_id` = #{board_id}
+		]]>
+  	</select>
+  	
   	<update id="deleteBoard" parameterType="int">
   		UPDATE `board`
 			set act_flg = 0, del_flg = 1
