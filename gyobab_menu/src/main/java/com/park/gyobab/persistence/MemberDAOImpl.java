@@ -1,5 +1,6 @@
 package com.park.gyobab.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -81,6 +82,11 @@ public class MemberDAOImpl implements MemberDAO {
 	public Integer selectMemberCnt() throws Exception {
 		int cnt = sqlSession.selectOne(namespace + ".selectMemberCnt");
 		return cnt;
+	}
+
+	@Override
+	public void updateMemberLoginDate(HashMap<String, Object> map) {
+		sqlSession.update(namespace + ".updateMemberLoginDate", map); 		
 	}
 
 }

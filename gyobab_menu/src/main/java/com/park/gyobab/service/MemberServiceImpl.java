@@ -1,5 +1,6 @@
 package com.park.gyobab.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -70,5 +71,10 @@ public class MemberServiceImpl implements MemberService {
 	public Integer selectMemberCnt() throws Exception {
 		int cnt = dao.selectMemberCnt(); 
 		return cnt;
+	}
+
+	@Override
+	public void updateMemberLoginDate(HashMap<String, Object> map) {
+		dao.updateMemberLoginDate(map);		
 	}
 }

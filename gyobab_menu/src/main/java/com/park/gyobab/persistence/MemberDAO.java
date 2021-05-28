@@ -1,5 +1,6 @@
 package com.park.gyobab.persistence;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.park.gyobab.domain.Criteria;
@@ -28,5 +29,7 @@ public interface MemberDAO {
 	public void updateMember(MemberVO vo);
 	
 	public void updateMemberGrant(MemberVO vo);
+	
+	public void updateMemberLoginDate(HashMap<String, Object> map);
 	
 }

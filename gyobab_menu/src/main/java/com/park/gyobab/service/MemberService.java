@@ -1,5 +1,6 @@
 package com.park.gyobab.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.park.gyobab.domain.Criteria;
@@ -26,4 +27,6 @@ public interface MemberService {
 	public void updateMember(MemberVO vo);
 	
 	public void updateMemberGrant(MemberVO vo);
+	
+	public void updateMemberLoginDate(HashMap<String, Object> map);
 }

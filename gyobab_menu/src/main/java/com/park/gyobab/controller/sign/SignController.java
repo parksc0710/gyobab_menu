@@ -1,8 +1,9 @@
 package com.park.gyobab.controller.sign;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.park.gyobab.domain.MemberVO;
@@ -295,6 +295,17 @@ public class SignController {
 		MemberVO nowUser = (MemberVO) (SecurityContextHolder.getContext().getAuthentication().getPrincipal());
 		if(nowUser != null) {
 			System.out.println(nowUser.getMember_email() + " // " + nowUser.getGrantVO().getGrant_name());
+			
+			SimpleDateFormat format1 = new SimpleDateFormat ( "yyyy-MM-dd HH:mm:ss");
+			Date time = new Date();
+			String time1 = format1.format(time);
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("last_login_date", time1);
+			map.put("member_id", nowUser.getMember_id());
+			
+			service.updateMemberLoginDate(map);
+			
 		} else {
 			System.out.println("nowUser is null");
 		}

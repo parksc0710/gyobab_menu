@@ -105,6 +105,13 @@
 			member_id = #{member_id}
   	</update>
   	
+  	<update id="updateMemberLoginDate" parameterType="hashmap">
+  		UPDATE `member`
+			set `last_login_date` = #{last_login_date}
+		WHERE
+			member_id = #{member_id}
+  	</update>
+  	
   </mapper>
  
  
