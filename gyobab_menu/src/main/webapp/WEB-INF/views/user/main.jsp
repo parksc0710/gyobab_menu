@@ -9,7 +9,7 @@
 
 	    <div class="row">
 	
-	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width:650px;">
+	        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width:960px">
 	
 	            <div class="card mb-3">
 					<div class="card-header">
@@ -21,7 +21,7 @@
 				       	</span>
 				    </div>
 				   
-				   <div class="card-body" style="max-width:650px;">
+				   <div class="card-body" style="max-width:960px">
 				
 				          <div class="form-group">
 				              <label for="exampleInputEmail1">E-mail</label>
