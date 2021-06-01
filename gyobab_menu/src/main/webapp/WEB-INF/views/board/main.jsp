@@ -323,8 +323,7 @@ em {
 										      <td <c:if test="${list.board_id eq inBoard.board_id }">style="background-color:#c3e6cb;"</c:if>>
 										      	<a href="${pageContext.request.contextPath}/board/${boardType}.do?bid=${list.board_id}&pageNum=${pageNum}&boardCate=${board_cate}">
 											     	<div class="blog_list tit">
-											     		<c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if> 
-			                                        	<span class="tit_span" <c:if test="${list.memberVO.member_id == 1}">style="color:red;"</c:if>>${list.board_tit}</span> 
+			                                        	<span class="tit_span" <c:if test="${list.memberVO.member_id == 1}">style="color:red;"</c:if>><c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if>${list.board_tit}</span> 
 			                                        	<span class="view_span">
 			                                        		<span class="like_icon" style="float:right;">
 			                                        			<em class="fa-2x mr-2 far fa-eye" style="font-size:12px;"></em>${list.board_view }

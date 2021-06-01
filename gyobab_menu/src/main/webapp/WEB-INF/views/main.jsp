@@ -65,8 +65,7 @@ em {
 								      <td>
 								      	<a href="${pageContext.request.contextPath}/board/notice.do?bid=${list.board_id}&pageNum=0&boardCate=">
 									     	<div class="blog_list tit">
-									     		<c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if> 
-	                                        	<span class="tit_span">${list.board_tit}</span> 
+	                                        	<span class="tit_span"><c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if>${list.board_tit}</span> 
 	                                        	<span class="view_span">
 	                                        		<span class="like_icon" style="float:right;">
 	                                        			<em class="fa-2x mr-2 far fa-eye" style="font-size:12px;"></em>${list.board_view }
@@ -107,8 +106,7 @@ em {
 								      <td>
 								      	<a href="${pageContext.request.contextPath}/board/menu.do?bid=${list.board_id}&pageNum=0&boardCate=">
 									     	<div class="blog_list tit">
-									     		<c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if> 
-	                                        	<span class="tit_span">${list.board_tit}</span> 
+	                                        	<span class="tit_span"><c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if>${list.board_tit}</span> 
 	                                        	<span class="view_span">
 	                                        		<span class="like_icon" style="float:right;">
 	                                        			<em class="fa-2x mr-2 far fa-eye" style="font-size:12px;"></em>${list.board_view }
@@ -145,8 +143,7 @@ em {
 								      <td>
 								      	<a href="${pageContext.request.contextPath}/board/restaurant.do?bid=${list.board_id}&pageNum=0&boardCate=">
 									     	<div class="blog_list tit">
-									     		<c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if> 
-	                                        	<span class="tit_span">${list.board_tit}</span> 
+	                                        	<span class="tit_span"><c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if>${list.board_tit}</span> 
 	                                        	<span class="view_span">
 	                                        		<span class="like_icon" style="float:right;">
 	                                        			<em class="fa-2x mr-2 far fa-eye" style="font-size:12px;"></em>${list.board_view }
@@ -187,8 +184,7 @@ em {
 								      <td>
 								      	<a href="${pageContext.request.contextPath}/board/humor.do?bid=${list.board_id}&pageNum=0&boardCate=">
 									     	<div class="blog_list tit">
-									     		<c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if> 
-	                                        	<span class="tit_span">${list.board_tit}</span> 
+	                                        	<span class="tit_span"><c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if>${list.board_tit}</span> 
 	                                        	<span class="view_span">
 	                                        		<span class="like_icon" style="float:right;">
 	                                        			<em class="fa-2x mr-2 far fa-eye" style="font-size:12px;"></em>${list.board_view }
@@ -225,8 +221,7 @@ em {
 								      <td>
 								      	<a href="${pageContext.request.contextPath}/board/free.do?bid=${list.board_id}&pageNum=0&boardCate=">
 									     	<div class="blog_list tit">
-									     		<c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if> 
-	                                        	<span class="tit_span">${list.board_tit}</span> 
+	                                        	<span class="tit_span"><c:if test="${list.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${list.board_cate}]</span></c:if>${list.board_tit}</span> 
 	                                        	<span class="view_span">
 	                                        		<span class="like_icon" style="float:right;">
 	                                        			<em class="fa-2x mr-2 far fa-eye" style="font-size:12px;"></em>${list.board_view }
