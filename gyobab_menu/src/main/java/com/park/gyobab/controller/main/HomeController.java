@@ -63,7 +63,7 @@ public class HomeController{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("board_type", boardType);
 		map.put("board_cate", "");
-		map.put("cri", cri);
+		map.put("cri", new Criteria(1, 3));
 		List<BoardVO> noticeList = boardService.selectBoards(map);
 		
 		boardType = "menu";
