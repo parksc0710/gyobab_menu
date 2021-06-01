@@ -3,6 +3,7 @@ package com.park.gyobab.controller.main;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -30,6 +31,7 @@ import com.drew.metadata.jpeg.JpegDirectory;
 import com.park.gyobab.domain.BoardCommentVO;
 import com.park.gyobab.domain.BoardLikeVO;
 import com.park.gyobab.domain.BoardVO;
+import com.park.gyobab.domain.Criteria;
 import com.park.gyobab.service.BoardCommentService;
 import com.park.gyobab.service.BoardLikeService;
 import com.park.gyobab.service.BoardService;
@@ -55,16 +57,40 @@ public class HomeController{
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) throws Exception {
 		
+		String boardType = "notice";
+		Criteria cri = new Criteria(1, 5);
 		
-		BoardVO topNotice = boardService.selectTop1Board("notice");
-		BoardVO topMenu = boardService.selectTop1Board("menu");
-		List<BoardLikeVO> likelist = boardLikeService.selectBoardLikes(topMenu.getBoard_id());
-		List<BoardCommentVO> commentlist = boardCommentService.selectBoardComments(topMenu.getBoard_id());
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("board_type", boardType);
+		map.put("board_cate", "");
+		map.put("cri", cri);
+		List<BoardVO> noticeList = boardService.selectBoards(map);
 		
-		model.addAttribute("topNotice", topNotice);
-		model.addAttribute("topMenu", topMenu);
-		model.addAttribute("likelist", likelist);
-		model.addAttribute("commentlist", commentlist);
+		boardType = "menu";
+		map.put("board_type", boardType);
+		map.put("board_cate", "");
+		List<BoardVO> menuList = boardService.selectBoards(map);
+		
+		boardType = "free";
+		map.put("board_type", boardType);
+		map.put("board_cate", "");
+		List<BoardVO> freeList = boardService.selectBoards(map);
+		
+		boardType = "humor";
+		map.put("board_type", boardType);
+		map.put("board_cate", "");
+		List<BoardVO> humorList = boardService.selectBoards(map);
+		
+		boardType = "restaurant";
+		map.put("board_type", boardType);
+		map.put("board_cate", "");
+		List<BoardVO> restaurantList = boardService.selectBoards(map);
+		
+		model.addAttribute("noticeList", noticeList);
+		model.addAttribute("menuList", menuList);
+		model.addAttribute("freeList", freeList);
+		model.addAttribute("humorList", humorList);
+		model.addAttribute("restaurantList", restaurantList);
 		
 		return "main";
 	}
