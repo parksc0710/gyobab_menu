@@ -66,24 +66,22 @@ public class HomeController{
 		map.put("cri", new Criteria(1, 3));
 		List<BoardVO> noticeList = boardService.selectBoards(map);
 		
+		map.put("cri", cri);
+		
 		boardType = "menu";
 		map.put("board_type", boardType);
-		map.put("board_cate", "");
 		List<BoardVO> menuList = boardService.selectBoards(map);
 		
 		boardType = "free";
 		map.put("board_type", boardType);
-		map.put("board_cate", "");
 		List<BoardVO> freeList = boardService.selectBoards(map);
 		
 		boardType = "humor";
 		map.put("board_type", boardType);
-		map.put("board_cate", "");
 		List<BoardVO> humorList = boardService.selectBoards(map);
 		
 		boardType = "restaurant";
 		map.put("board_type", boardType);
-		map.put("board_cate", "");
 		List<BoardVO> restaurantList = boardService.selectBoards(map);
 		
 		model.addAttribute("noticeList", noticeList);
