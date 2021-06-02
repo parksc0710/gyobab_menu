@@ -124,7 +124,7 @@ em {
 									</a>
 				            </div>
 				            <div class="card-body">
-				            	<img src="${memberPass }" style="display: block; margin: 0px auto; width: 100%; max-width:900px;"/>
+				            	<img src="${memberPass }" style="display: block; margin: 0px auto; width: 100%; max-width:450px;"/>
 				            </div>
 				        </div>
 					</c:otherwise>
