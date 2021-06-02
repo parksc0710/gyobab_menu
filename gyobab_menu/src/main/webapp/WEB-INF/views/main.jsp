@@ -29,28 +29,6 @@ em {
 		
 		<!-- 공지사항 -->
 		<div class="row">
-			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:450px;">
-			    <div class="card mb-3">
-			    	<div class="card-body">
-	 					<security:authorize ifAnyGranted="ROLE_OPERATOR">
-						<security:authentication property="principal.member_name" var="memberName"/>
-							<h6><b>최고관리자</b></h6>
-							<h5><b>${memberName}</b>님 안녕하세요!</h5><br>
-						</security:authorize>
-						<security:authorize ifAnyGranted="ROLE_ADMIN">
-						<security:authentication property="principal.member_name" var="memberName"/>
-							<h6><b>관리자</b></h6>
-							<h5><b>${memberName}</b>님 안녕하세요!</h5><br>
-						</security:authorize>
-						<security:authorize ifAnyGranted="ROLE_USER">
-						<security:authentication property="principal.member_name" var="memberName"/>
-							<h5><b>${memberName}</b>님 안녕하세요!</h5><br>
-						</security:authorize>
-			    		<h5><b>오늘의 교밥에 오신걸 환영합니다. <br>오늘도 맛점하세요!</b></h5>
-			    		<%@ include file="/WEB-INF/views/main_img.jsp" %>
-					</div>
-				</div>
-		    </div>
 	       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12" style="max-width:450px;">
 	           <div class="card mb-3">
 	          		<div class="card-header">
@@ -88,6 +66,48 @@ em {
 	           </div>
 	           <!-- end card -->
 	       </div>
+	       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-6"  style="max-width:450px;">
+			    <security:authorize ifAnyGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
+				<security:authentication property="principal.member_pass" var="memberPass"/>
+				<c:choose>
+					<c:when test="${memberPass == '' || memberPass == null}">
+				        <div class="card mb-3">
+				            <div class="card-header">
+				                <h3 style="display:inline;color:black;"><b>나의 온누리교회 바코드</b></h3><a href="${pageContext.request.contextPath}/user/main.do" class="btn btn-primary btn-sm btn-block" style="width:80px;display:inline;float: right;">
+									<i class="fas fa-search"></i> 등록</a>
+				            </div>
+				            <div class="card-body">
+				            	온누리 교회 바코드를 등록하시면 편리하게 볼 수 있습니다.
+				            </div>
+				        </div>
+					</c:when>
+					<c:otherwise>
+				        <div class="card mb-3">
+				            <div class="card-header">
+				                <h3 style="display:inline;color:black;"><b>내 온누리교회 바코드</b></h3>
+				                	<a href="${pageContext.request.contextPath}/user/main.do" class="btn btn-primary btn-sm btn-block" style="width:80px;display:inline;float: right;">
+										<i class="far fa-edit"></i> 변경
+									</a>
+				            </div>
+				            <div class="card-body">
+				            	<img src="${memberPass }" style="display: block; margin: 0px auto; width: 100%; max-width:900px;"/>
+				            </div>
+				        </div>
+					</c:otherwise>
+				</c:choose>
+				</security:authorize>
+				<security:authorize ifNotGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
+			        <div class="card mb-3">
+			            <div class="card-header">
+			                <h3 style="display:inline;color:black;"><b>내 온누리교회 바코드</b></h3>
+			            </div>
+			            <div class="card-body">
+			            	소셜 회원가입 후 온누리 교회 바코드를 등록하시면 편리하게 볼 수 있습니다.<br><br>
+			            	<b>회원 가입 시 이메일을 제외한 어떠한 정보도 저장하지 않습니다</b>
+			            </div>
+			        </div>
+				</security:authorize>
+		    </div>
 	       <!-- end col -->
 	   </div>
 	
