@@ -70,7 +70,7 @@ em {
 	                        </span>공지 열기
                         </a>
                    	</span>
-                    <h3><b>공지사항</b></h3>
+                    <h3 style="color:black;"><b><a href="${pageContext.request.contextPath}/board/notice.do">공지사항</a></b></h3>
                 </div>
                <div class="card-body" id="noticeTable" style="display:none;">
                    <div class="table-responsive">
