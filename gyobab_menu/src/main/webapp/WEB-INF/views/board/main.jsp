@@ -178,7 +178,7 @@ em {
 				                            <tr>
 			                                    <td>
 			                                        <div class="blog_list" style="width:100%; height:100%;">
-			                                        	<span style="width:80%;float:left;padding-right:10px;<c:if test="${inBoard.memberVO.member_id == 1}">color:red;</c:if>"><c:if test="${inBoard.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${inBoard.board_cate}]</span></c:if><h4>${inBoard.board_tit }</h4></span> 
+			                                        	<span style="width:80%;float:left;padding-right:10px;<c:if test="${inBoard.memberVO.member_id == 1}">color:red;</c:if>"><c:if test="${inBoard.board_cate ne ''}"><span class="cate_span" style="float:left;margin-right:5px;font-size:13px;color:#7b7b7b;">[${inBoard.board_cate}]</span><br></c:if><h4>${inBoard.board_tit }</h4></span> 
 			                                        	<span style="width:50px;float:right;">
 				                                        	<span style="line-height:2;">
 				                                        	<em class="fa-2x mr-2 far fa-eye" style="font-size:16px;"></em><span style="float:right;" class="like_cnt">${inBoard.board_view }</span>

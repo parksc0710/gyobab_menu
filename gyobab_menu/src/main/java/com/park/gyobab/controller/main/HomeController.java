@@ -84,6 +84,18 @@ public class HomeController{
 		map.put("board_type", boardType);
 		List<BoardVO> restaurantList = boardService.selectBoards(map);
 		
+		String board_type = "menu";
+		BoardVO topMenu = boardService.selectTop1Board(board_type);
+		List<BoardLikeVO> likelist = boardLikeService.selectBoardLikes(topMenu.getBoard_id());
+		List<BoardCommentVO> commentlist = boardCommentService.selectBoardComments(topMenu.getBoard_id());
+		
+		BoardVO topNotice = boardService.selectTop1Board("notice");
+		model.addAttribute("topNotice", topNotice);
+		
+		model.addAttribute("topMenu", topMenu);
+		model.addAttribute("likelist", likelist);
+		model.addAttribute("commentlist", commentlist);
+		
 		model.addAttribute("noticeList", noticeList);
 		model.addAttribute("menuList", menuList);
 		model.addAttribute("freeList", freeList);
