@@ -84,7 +84,7 @@ em {
 					<c:otherwise>
 				        <div class="card mb-3">
 				            <div class="card-header">
-				                <h3 style="display:inline;color:black;"><b>내 온누리교회 바코드</b></h3>
+				                <h3 style="display:inline;color:black;"><b>나의 온누리교회 바코드</b></h3>
 				                	<a href="${pageContext.request.contextPath}/user/main.do" class="btn btn-primary btn-sm btn-block" style="width:80px;display:inline;float: right;">
 										<i class="far fa-edit"></i> 변경
 									</a>
@@ -99,7 +99,7 @@ em {
 				<security:authorize ifNotGranted="ROLE_OPERATOR, ROLE_ADMIN, ROLE_USER">
 			        <div class="card mb-3">
 			            <div class="card-header">
-			                <h3 style="display:inline;color:black;"><b>내 온누리교회 바코드</b></h3>
+			                <h3 style="display:inline;color:black;"><b>나의 온누리교회 바코드</b></h3>
 			            </div>
 			            <div class="card-body">
 			            	소셜 회원가입 후 온누리 교회 바코드를 등록하시면 편리하게 볼 수 있습니다.<br><br>
