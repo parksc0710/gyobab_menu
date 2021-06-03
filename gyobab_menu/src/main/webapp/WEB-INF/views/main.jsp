@@ -81,7 +81,7 @@ em {
                                 	    <div class="blog_list"></div>
                                         <h4 style="color:red;"> ${topNotice.board_tit }
                                         </h4>
-                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${topNotice.update_date}" />
+                                        <p> <fmt:formatDate pattern="yyyy-MM-dd" value="${topNotice.update_date}" />
                                         	<span style="float:right;"><b>${topNotice.memberVO.member_name }</b></span>
                                         </p>
                                         <p>	
@@ -187,7 +187,7 @@ em {
 	                                        	<span style="float:right;" class="like_cnt"><c:out value="${fn:length(likelist)}"/></span>
 	                                       	</span>
                                        	</div>
-                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${topMenu.update_date}" />
+                                        <p> <fmt:formatDate pattern="yyyy-MM-dd" value="${topMenu.update_date}" />
                                         	<span style="float:right;"><b>${topMenu.memberVO.member_name }</b></span>
                                         </p>
                                         <p>

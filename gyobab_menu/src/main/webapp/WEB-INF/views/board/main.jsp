@@ -199,7 +199,7 @@ em {
 			                                        	</span>
 			                                        </div>
 			                                        <br>
-			                                        <p> <fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${inBoard.update_date}" />
+			                                        <p> <fmt:formatDate pattern="yyyy-MM-dd" value="${inBoard.update_date}" />
 			                                        	<span style="float:right;"><b>${inBoard.memberVO.member_name  }</b></span>
 			                                        </p>
 			                                        <p>
